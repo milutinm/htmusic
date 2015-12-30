@@ -11,10 +11,10 @@
 
     <title>HT Music</title>
 
-    <link href="/css/all.css" rel="stylesheet">
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ elixir("css/all.css") }}" rel="stylesheet">
+    <link href="{{ elixir("css/app.css") }}" rel="stylesheet">
 
-    <script src="/js/all.js"></script>
+    <script src="{{ elixir("js/all.js") }}"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
