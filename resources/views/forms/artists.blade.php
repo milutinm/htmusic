@@ -22,31 +22,41 @@
 					<div class="form-group">
 							{!! Form::label('begin_date', trans('htmusic.begin_date').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('begin_date', '', ['class' => 'form-control']) !!}
+							<div class="input-group date" id="begin_date_group">
+								{!! Form::text('begin_date', '', ['class' => 'form-control', 'id' => 'begin_date']) !!}
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+								</div>
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('is_ended', trans('htmusic.is_ended').':', ['class' => 'col-md-2 control-label']) !!}
-						<div class="col-md-10">
-							{!! Form::text('is_ended', '', ['class' => 'form-control']) !!}
+						<div class="col-md-1">
+							{!! Form::checkbox('is_ended', ',', 0, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('end_date', trans('htmusic.end_date').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('end_date', '', ['class' => 'form-control']) !!}
+							<div class="input-group date" id="end_date_group">
+							{!! Form::text('end_date', '', ['class' => 'form-control', 'id' => 'end_date']) !!}
+							<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+								</div>
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('type_id', '', ['class' => 'form-control']) !!}
+							{!! Form::select('type_id', ['TODO add type'], '', ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('gender', trans('htmusic.gender').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('gender', '', ['class' => 'form-control']) !!}
+							{!! Form::select('gender', ['other' => trans('htmusic.other'), 'male' => trans('htmusic.male'), 'female' => trans('htmusic.female')], '', ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
@@ -69,4 +79,22 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		$(function () {
+			$(' #begin_date_group').datetimepicker({
+				format: 'YYYY-MM-DD'
+			});
+			$('#end_date_group').datetimepicker({
+				format: 'YYYY-MM-DD',
+				useCurrent: false //Important! See issue #1075
+			});
+			$("#begin_date_group").on("dp.change", function (e) {
+				$('#end_date_group').data("DateTimePicker").minDate(e.date);
+			});
+			$("#end_date_group").on("dp.change", function (e) {
+				$('#begin_date_group').data("DateTimePicker").maxDate(e.date);
+			});
+		});
+	</script>
 @stop

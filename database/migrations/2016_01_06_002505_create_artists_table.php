@@ -15,7 +15,7 @@ class CreateArtistsTable extends Migration {
 			$table->boolean('is_ended');
 			$table->date('end_date');
 			$table->integer('type_id')->unsigned();
-			$table->enum('gender', array('Male', 'Female', 'Other'));
+			$table->enum('gender', array('male', 'female', 'other'));
 			$table->text('bio');
 			$table->string('photo_url', 50);
 			$table->timestamps();

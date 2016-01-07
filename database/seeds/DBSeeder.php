@@ -105,7 +105,7 @@ class DBSeeder extends Seeder
 			'is_ended'			=> '',
 			'end_date'			=> '',
 			'type_id'			=> 1,
-			'gender'			=> '',
+			'gender'			=> 'other',
 			'bio'				=> '',
 			'photo_url'			=> '',
 		];

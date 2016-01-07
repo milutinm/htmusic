@@ -21,4 +21,8 @@ return [
 	'gender'		=> 'gender',
 	'bio'			=> 'bio',
 	'photo_url'		=> 'photo URL',
+
+	'male'			=> 'male',
+	'female'		=> 'female',
+	'other'			=> 'other',
 ];
