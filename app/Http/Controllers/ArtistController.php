@@ -1,4 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
+
+use \App\ArtistType;
+use \App\Artist;
+
 
 class ArtistController extends Controller {
 
@@ -9,7 +15,10 @@ class ArtistController extends Controller {
    */
   public function index()
   {
-    return view('home');
+//	  $out['artists']	= Artist::orderBy('sort_name')->simplePaginate(15);//->take(30)->get();
+	  $out['artists']	= Artist::orderBy('sort_name')->paginate(45);//->take(30)->get();
+
+	  return view('artists.list',$out);
   }
 
   /**
@@ -19,7 +28,7 @@ class ArtistController extends Controller {
    */
   public function create()
   {
-    $out	= [
+	  $out	= [
 		  'form_route' => [
 			  'route'	=> 'artist.store',
 			  'method'	=> 'POST',
@@ -27,7 +36,11 @@ class ArtistController extends Controller {
 		  ]
 	  ];
 
-	  return view('forms.artists',$out);
+	  $out['artist']	= Artist::findOrNew(0);
+
+	  $out['artist_types']	= ArtistType::lists('name','id');
+
+	  return view('artists.form',$out);
   }
 
   /**
@@ -48,7 +61,9 @@ class ArtistController extends Controller {
    */
   public function show($id)
   {
-    return view('home');
+	  $out['artist']	= Artist::findOrNew((int)$id);
+
+	  return view('artists.show', $out);
   }
 
   /**
@@ -70,7 +85,11 @@ class ArtistController extends Controller {
 		  ]
 	  ];
 
-	  return view('forms.artists',$out);
+	  $out['artist']	= Artist::findOrNew((int)$id);
+
+	  $out['artist_types']	= ArtistType::lists('name','id');
+
+	  return view('artists.form',$out);
   }
 
   /**

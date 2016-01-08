@@ -10,4 +10,9 @@ class ReleaseType extends Model {
 	public $timestamps = true;
 	protected $fillable = array('name');
 
+	public function release()
+	{
+		return $this->belongsToMany('Release');
+	}
+
 }

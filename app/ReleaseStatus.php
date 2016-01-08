@@ -10,4 +10,9 @@ class ReleaseStatus extends Model {
 	public $timestamps = true;
 	protected $fillable = array('name');
 
+	public function release()
+	{
+		return $this->belongsTo('Release');
+	}
+
 }

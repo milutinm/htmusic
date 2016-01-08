@@ -9,9 +9,12 @@
 return [
 	// general
 	'submit'		=> 'submit',
+	'delete'		=> 'delete',
+	'edit'			=> 'edit',
 
 	// DB data
     'artist'		=> 'artist',
+    'artists'		=> 'artists',
     'name'			=> 'name',
     'sort_name'		=> 'sort name',
 	'begin_date'	=> 'begin date',
@@ -22,7 +25,16 @@ return [
 	'bio'			=> 'bio',
 	'photo_url'		=> 'photo URL',
 
+	'aliases'		=> 'aliases',
+	'alias'			=> 'alias',
+
 	'male'			=> 'male',
 	'female'		=> 'female',
 	'other'			=> 'other',
+
+	// messages
+	'no_artists_found'	=> 'No artists found!',
+	'no_releases_found'	=> 'No releases found!',
+
+
 ];

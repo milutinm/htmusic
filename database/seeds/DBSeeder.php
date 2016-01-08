@@ -66,14 +66,27 @@ class DBSeeder extends Seeder
 					'artist_count'	=> 0,
 					'ref_count'		=> 0,
 				]
+			],
+			'work_type'		=> [
+				['name'	=>	'N/A'],
+				['name'	=> 'Producer'],
+				['name'	=> 'Co-Producer'],
+				['name'	=> 'Writer'],
+				['name'	=> 'Executive Producer'],
+				['name'	=> 'Artwork'],
+				['name'	=> 'Composer'],
+				['name'	=> 'Vocal'],
 			]
 		];
 
 		foreach ($base_tables as $table => $data) {
+			echo 'TABLE: '.$table.PHP_EOL;
 			DB::table($table)->delete();
 
 			foreach ($data as $n => $row) {
-				$row['id']	= $n + 1;
+				if (!isset($row['id'])) {
+					$row['id']	= $n + 1;
+				}
 				DB::table($table)->insert($row);
 			}
 		}
@@ -132,6 +145,24 @@ class DBSeeder extends Seeder
 			'notes'				=> '',
 		];
 
+		// relations
+		$artist_credit_name_d	= [
+//			'id'				=> '',
+			'artist_credit_id'	=> '',
+			'artist_id'			=> '',
+			'work_type_id'		=> 1,
+			'position'			=> '',
+			'name'				=> '',
+			'join_phrase'		=> '&',
+		];
+
+		$artist_credit_d	= [
+//			'id'			=> '',
+			'name'			=> '',
+			'artist_count'	=> 1,
+			'ref_count'		=> 1,
+		];
+
 		$file = base_path('_storage/seed.csv');
 
 		$content = file_get_contents($file);
@@ -187,6 +218,18 @@ class DBSeeder extends Seeder
 
 		//		print_r($artist);
 				$out['artists'][]	= $artist;
+
+				$artist_credit	= $artist_credit_d;
+				$artist_credit['id']	= $row['artists_id'];
+				$artist_credit['name']	= $artist['name'];
+				$out['artist_credit'][]	= $artist_credit;
+
+				$artist_credit_name						= $artist_credit_name_d;
+				$artist_credit_name['id']				= $row['artists_id'];
+				$artist_credit_name['artist_credit_id']	= $row['artists_id'];
+				$artist_credit_name['artist_id']		= $row['artists_id'];
+				$artist_credit_name['name']				= $artist['name'];
+				$out['artist_credit_name'][]			= $artist_credit_name;
 			}
 
 			$row['albums_id'] = array_search($row['head_album'],$releases_id);
@@ -195,9 +238,10 @@ class DBSeeder extends Seeder
 				$row['albums_id'] = array_search($row['head_album'],$releases_id);
 
 				$release = $release_d;
-				$release['id']	= $row['albums_id'];
-				$release['name']	= $row['head_album'];
-				$release['date']	= $row['year'].'-00-00';
+				$release['id']					= $row['albums_id'];
+				$release['artist_credit_id']	= $row['artists_id'];
+				$release['name']				= $row['head_album'];
+				$release['date']				= $row['year'].'-00-00';
 				if (isset($mediums_id[$row['medium']])) {
 					$release['medium_id'] = $mediums_id[$row['medium']];
 				}
@@ -211,8 +255,7 @@ class DBSeeder extends Seeder
 			$track['name']		= $row['track_title'];
 			$track['number']	= $row['track_number'];
 			$track['position']	= $row['track_number'];
-
-
+			$track['artist_credit_id']	= $row['artists_id'];
 
 		//	print_r($track);
 			$out['tracks'][]	= $track;
@@ -226,7 +269,7 @@ class DBSeeder extends Seeder
 		// labels
 		$label_id	= ['N/A'];
 		$label_d	= [
-			'id'			=> '',
+//			'id'			=> '',
 			'name'			=> '',
 			'begin_date'	=> '',
 			'is_ended'		=> '',
@@ -291,12 +334,20 @@ class DBSeeder extends Seeder
 			}
 		}
 		//---------------------
+		// Relations  tables
+
+
+
+		//---------------------
 
 		foreach ($out as $table => $data) {
+			echo 'TABLE: '.$table.PHP_EOL;
 			DB::table($table)->delete();
 
 			foreach ($data as $n => $row) {
-				$row['id']	= $n + 1;
+				if (!isset($row['id'])) {
+					$row['id']	= $n + 1;
+				}
 				DB::table($table)->insert($row);
 			}
 		}

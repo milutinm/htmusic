@@ -10,9 +10,14 @@ class Genre extends Model {
 	public $timestamps = true;
 	protected $fillable = array('name');
 
-	public function releases()
+	public function release()
 	{
-		return $this->belongsToMany('App\Release')->withPivot('genre_release');
+		return $this->hasManyThrough('Release', 'GenreRelease');
+	}
+
+	public function tracks()
+	{
+		return $this->hasManyThrough('Track', 'GenreTrack');
 	}
 
 }

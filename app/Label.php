@@ -15,9 +15,9 @@ class Label extends Model {
 	protected $dates = ['deleted_at'];
 	protected $fillable = array('name', 'begin_date', 'is_ended', 'end_date', 'description');
 
-	public function Release()
+	public function release()
 	{
-		return $this->belongsToMany('App\Release')->withPivot('label_release');
+		return $this->hasManyThrough('Release', 'LabelRelease');
 	}
 
 }

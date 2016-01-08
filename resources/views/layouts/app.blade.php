@@ -71,9 +71,8 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+	 <!-- Main jumbotron for a primary marketing message or call to action -->
+    {{--<div class="jumbotron">--}}
         {{--<div class="container">--}}
             {{--<h1>Hello, world!</h1>--}}
             {{--<p>This is a template for a simple marketing or informational--}}
@@ -82,7 +81,7 @@
                 {{--something more unique.</p>--}}
             {{--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>--}}
         {{--</div>--}}
-    </div>
+    {{--</div>--}}
 
     @yield('content')
 

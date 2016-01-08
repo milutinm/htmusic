@@ -10,4 +10,14 @@ class ArtistCredit extends Model {
 	public $timestamps = true;
 	protected $fillable = array('artist_count');
 
+	public function tracks()
+	{
+		return $this->belongsToMany('Track');
+	}
+
+	public function release()
+	{
+		return $this->belongsToMany('Release');
+	}
+
 }

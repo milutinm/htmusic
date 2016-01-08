@@ -10,20 +10,20 @@
 					<div class="form-group">
 							{!! Form::label('name', trans('htmusic.name').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('name', '', ['class' => 'form-control']) !!}
+							{!! Form::text('name', $artist->name, ['class' => 'form-control']) !!}
 						</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('sort_name', trans('htmusic.sort_name').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('sort_name', '', ['class' => 'form-control']) !!}
+							{!! Form::text('sort_name', $artist->sort_name, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('begin_date', trans('htmusic.begin_date').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
 							<div class="input-group date" id="begin_date_group">
-								{!! Form::text('begin_date', '', ['class' => 'form-control', 'id' => 'begin_date']) !!}
+								{!! Form::text('begin_date', $artist->begin_date, ['class' => 'form-control', 'id' => 'begin_date']) !!}
 								<span class="input-group-addon">
 									<span class="glyphicon glyphicon-calendar"></span>
 								</span>
@@ -33,14 +33,14 @@
 					<div class="form-group">
 							{!! Form::label('is_ended', trans('htmusic.is_ended').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-1">
-							{!! Form::checkbox('is_ended', ',', 0, ['class' => 'form-control']) !!}
+							{!! Form::checkbox('is_ended', ',', $artist->is_ended, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('end_date', trans('htmusic.end_date').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
 							<div class="input-group date" id="end_date_group">
-							{!! Form::text('end_date', '', ['class' => 'form-control', 'id' => 'end_date']) !!}
+							{!! Form::text('end_date', $artist->end_date, ['class' => 'form-control', 'id' => 'end_date']) !!}
 							<span class="input-group-addon">
 									<span class="glyphicon glyphicon-calendar"></span>
 								</span>
@@ -50,25 +50,25 @@
 					<div class="form-group">
 							{!! Form::label('type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::select('type_id', ['TODO add type'], '', ['class' => 'form-control']) !!}
+							{!! Form::select('type_id', $artist_types, $artist->type_id, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('gender', trans('htmusic.gender').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::select('gender', ['other' => trans('htmusic.other'), 'male' => trans('htmusic.male'), 'female' => trans('htmusic.female')], '', ['class' => 'form-control']) !!}
+							{!! Form::select('gender', ['other' => trans('htmusic.other'), 'male' => trans('htmusic.male'), 'female' => trans('htmusic.female')], $artist->gender, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('bio', trans('htmusic.bio').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::textarea('bio', '', ['class' => 'form-control']) !!}
+							{!! Form::textarea('bio', $artist->bio, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">
 							{!! Form::label('photo_url', trans('htmusic.photo_url').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('photo_url', '', ['class' => 'form-control']) !!}
+							{!! Form::text('photo_url', $artist->photo_url, ['class' => 'form-control']) !!}
 							</div>
 					</div>
 					<div class="form-group">

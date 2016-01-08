@@ -20,11 +20,6 @@ class Release extends Model {
 		return $this->hasOne('ReleaseStatus');
 	}
 
-	public function labels()
-	{
-		return $this->belongsToMany('App\Label')->withPivot('label_release');
-	}
-
 	public function releaseTypes()
 	{
 		return $this->hasOne('ReleaseType');
@@ -35,9 +30,19 @@ class Release extends Model {
 		return $this->hasOne('Medium');
 	}
 
+	public function credit()
+	{
+		return $this->hasMany('ArtistCredit');
+	}
+
+	public function label()
+	{
+		return $this->hasManyThrough('Label', 'LabelRelease');
+	}
+
 	public function genres()
 	{
-		return $this->belongsToMany('App\Genre')->withPivot('genre_release');
+		return $this->hasManyThrough('Genre', 'GenreRelease');
 	}
 
 }

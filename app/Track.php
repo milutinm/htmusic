@@ -20,9 +20,14 @@ class Track extends Model {
 		return $this->belongsTo('Release');
 	}
 
-	public function medium()
+	public function credit()
 	{
-		return $this->hasOne('Medium');
+		return $this->hasMany('ArtistCredit');
+	}
+
+	public function genre()
+	{
+		return $this->hasManyThrough('Genre', 'GenreTrack');
 	}
 
 }
