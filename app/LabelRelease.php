@@ -11,12 +11,12 @@ class LabelRelease extends Model {
 
 	public function release()
 	{
-		return $this->hasOne('Release');
+		return $this->belongsTo('Release');
 	}
 
 	public function label()
 	{
-		return $this->hasOne('Label');
+		return $this->belongsTo('Label');
 	}
 
 }

@@ -22,7 +22,7 @@ class ArtistAlias extends Model {
 
 	public function artistAliasType()
 	{
-		return $this->hasOne('ArtistAliasType');
+		return $this->belongsTo('ArtistAliasType');
 	}
 
 }

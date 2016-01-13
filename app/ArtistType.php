@@ -12,7 +12,7 @@ class ArtistType extends Model {
 
 	public function artists()
 	{
-		return $this->belongsToMany('Artist');
+		return $this->hasMany('Artist');
 	}
 
 }

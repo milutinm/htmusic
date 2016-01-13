@@ -11,6 +11,8 @@ return [
 	'submit'		=> 'submit',
 	'delete'		=> 'delete',
 	'edit'			=> 'edit',
+	'saved'			=> 'saved',
+	'deleted'		=> 'deleted',
 
 	// DB data
     'artist'		=> 'artist',

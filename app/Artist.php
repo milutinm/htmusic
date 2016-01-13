@@ -15,19 +15,18 @@ class Artist extends Model {
 	protected $dates = ['deleted_at'];
 	protected $fillable = array('name', 'sort_name', 'begin_date', 'is_ended', 'end_date', 'gender', 'bio', 'photo_url');
 
-	public function artistTypes()
+	public function type()
 	{
-		return $this->hasOne('ArtistType');
+		return $this->belongsTo('App\ArtistType','artist_type_id','id');
 	}
-
-	public function artistCreditName()
+///*
+	public function releases()
 	{
-		return $this->hasMany('ArtistCreditName');
+		return $this->hasMany('App\ArtistCreditName');
 	}
-
+//*/
 	public function aliases()
 	{
-		return $this->hasMany('ArtistAlias');
+		return $this->hasMany('App\ArtistAlias','artist_id','id');
 	}
-
 }

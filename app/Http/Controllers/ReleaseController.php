@@ -9,7 +9,10 @@ class ReleaseController extends Controller {
    */
   public function index()
   {
-    
+	  $out	= [];
+//	  $out['releases']	= Release::orderBy('name')->paginate(45);
+
+	  return view('releases.list',$out);
   }
 
   /**

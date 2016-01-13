@@ -15,19 +15,19 @@ class Track extends Model {
 	protected $dates = ['deleted_at'];
 	protected $fillable = array('name', 'length', 'notes');
 
-	public function releases()
+	public function release()
 	{
-		return $this->belongsTo('Release');
+		return $this->belongsTo('App\Release','release_id');
 	}
 
 	public function credit()
 	{
-		return $this->hasMany('ArtistCredit');
+		return $this->belongsTo('App\ArtistCredit','artist_credit_id');
 	}
 
 	public function genre()
 	{
-		return $this->hasManyThrough('Genre', 'GenreTrack');
+		return $this->hasManyThrough('App\Genre', 'GenreTrack');
 	}
 
 }

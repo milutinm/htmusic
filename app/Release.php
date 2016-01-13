@@ -15,34 +15,38 @@ class Release extends Model {
 	protected $dates = ['deleted_at'];
 	protected $fillable = array('name', 'barcode', 'date', 'notes');
 
+	public function tracks() {
+		return $this->hasMany('App\Track','release_id');
+	}
+
 	public function releaseStatus()
 	{
-		return $this->hasOne('ReleaseStatus');
+		return $this->belongsTo('App\ReleaseStatus');
 	}
 
 	public function releaseTypes()
 	{
-		return $this->hasOne('ReleaseType');
+		return $this->belongsTo('App\ReleaseType');
 	}
 
 	public function medium()
 	{
-		return $this->hasOne('Medium');
+		return $this->belongsTo('App\Medium');
 	}
 
 	public function credit()
 	{
-		return $this->hasMany('ArtistCredit');
+		return $this->belongsTo('App\ArtistCredit');
 	}
 
 	public function label()
 	{
-		return $this->hasManyThrough('Label', 'LabelRelease');
+		return $this->hasManyThrough('App\Label', 'LabelRelease');
 	}
 
 	public function genres()
 	{
-		return $this->hasManyThrough('Genre', 'GenreRelease');
+		return $this->hasManyThrough('App\Genre', 'GenreRelease');
 	}
 
 }

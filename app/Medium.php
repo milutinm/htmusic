@@ -12,7 +12,7 @@ class Medium extends Model {
 
 	public function release()
 	{
-		return $this->belongsToMany('Release');
+		return $this->hasMany('Release');
 	}
 
 }

@@ -11,12 +11,12 @@ class GenreRelease extends Model {
 
 	public function genre()
 	{
-		return $this->hasOne('Genre');
+		return $this->belongsTo('Genre');
 	}
 
 	public function release()
 	{
-		return $this->hasOne('Release');
+		return $this->belongsTo('Release');
 	}
 
 }

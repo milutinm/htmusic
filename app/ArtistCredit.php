@@ -12,12 +12,12 @@ class ArtistCredit extends Model {
 
 	public function tracks()
 	{
-		return $this->belongsToMany('Track');
+		return $this->hasMany('App\Track');
 	}
 
-	public function release()
+	public function releases()
 	{
-		return $this->belongsToMany('Release');
+		return $this->hasMany('App\Release');
 	}
 
 }

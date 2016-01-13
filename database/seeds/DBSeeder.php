@@ -117,7 +117,7 @@ class DBSeeder extends Seeder
 			'begin_date'		=> '',
 			'is_ended'			=> '',
 			'end_date'			=> '',
-			'type_id'			=> 1,
+			'artist_type_id'	=> 1,
 			'gender'			=> 'other',
 			'bio'				=> '',
 			'photo_url'			=> '',
@@ -138,6 +138,7 @@ class DBSeeder extends Seeder
 //			'id'				=> '',
 //			'recording_id'		=> 0, table removed
 			'position'			=> '',
+			'release_id'		=> 0,
 			'number'			=> '',
 			'name'				=> '',
 			'artist_credit_id'	=> 1,
@@ -252,10 +253,11 @@ class DBSeeder extends Seeder
 
 			$track	= $track_d;
 
-			$track['name']		= $row['track_title'];
-			$track['number']	= $row['track_number'];
-			$track['position']	= $row['track_number'];
+			$track['name']			= $row['track_title'];
+			$track['number']			= $row['track_number'];
+			$track['position']			= $row['track_number'];
 			$track['artist_credit_id']	= $row['artists_id'];
+			$track['release_id']		= $row['albums_id'];
 
 		//	print_r($track);
 			$out['tracks'][]	= $track;

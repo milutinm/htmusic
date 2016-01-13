@@ -12,7 +12,7 @@ class ReleaseStatus extends Model {
 
 	public function release()
 	{
-		return $this->belongsTo('Release');
+		return $this->hasMany('Release');
 	}
 
 }

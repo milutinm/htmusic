@@ -83,6 +83,26 @@
         {{--</div>--}}
     {{--</div>--}}
 
+	@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+	@endif
+
+	@if (isset($infos) && count($infos) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($infos->all() as $info)
+                <li>{{ $info }}</li>
+            @endforeach
+        </ul>
+    </div>
+	@endif
+
     @yield('content')
 
     <div class="container">

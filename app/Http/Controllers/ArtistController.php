@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use \App\ArtistType;
 use \App\Artist;
+use App\Http\Requests\ArtistRequest;
 
 
 class ArtistController extends Controller {
+
+	public function __construct()
+	{
+//		$this->middleware('web');
+	}
 
   /**
    * Display a listing of the resource.
@@ -15,8 +21,7 @@ class ArtistController extends Controller {
    */
   public function index()
   {
-//	  $out['artists']	= Artist::orderBy('sort_name')->simplePaginate(15);//->take(30)->get();
-	  $out['artists']	= Artist::orderBy('sort_name')->paginate(45);//->take(30)->get();
+	  $out['artists']	= Artist::orderBy('sort_name')->paginate(45);
 
 	  return view('artists.list',$out);
   }
@@ -48,9 +53,11 @@ class ArtistController extends Controller {
    *
    * @return Response
    */
-  public function store()
+  public function store(ArtistRequest $request)
   {
-    
+	  $artist = Artist::create($request->all());
+
+	  return redirect()->route('artist.show',['artist' => $artist->id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -80,7 +87,7 @@ class ArtistController extends Controller {
 				  'artist.update',
 				  $id
 			  ],
-			  'method'	=> 'POST',
+			  'method'	=> 'PUT',
 			  'class'	=> 'form-horizontal'
 		  ]
 	  ];
@@ -98,9 +105,11 @@ class ArtistController extends Controller {
    * @param  int  $id
    * @return Response
    */
-  public function update($id)
+  public function update(ArtistRequest $request, $id)
   {
-    
+	  Artist::find($id)->update($request->all());
+
+	  return redirect()->route('artist.show',['artist' => $id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -111,7 +120,9 @@ class ArtistController extends Controller {
    */
   public function destroy($id)
   {
-    
+	  Arduino::destroy($id);
+
+	  return redirect()->route('artist.index')->with('infos', [trans('htmusic.deleted')]);
   }
   
 }

@@ -19,26 +19,46 @@
 						@if($artist->aliases()->count() > 0)
 						<div class="col-md-2">{{ trans('htmusic.aliases') }}:</div>
 						<div class="col-md-10">
-							@foreach($artist->aliases() as $row)
+							@foreach($artist->aliases as $row)
 								{{ $row->name }}
 							@endforeach
 						</div>
 						@endif
 						<div class="col-md-2">{{ trans('htmusic.type') }}:</div>
-						<div class="col-md-10">{{ $artist->artistTypes()->first() }}</div>
+						<div class="col-md-10">{{ $artist->type->name }}</div>
 					</div>
 				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">Releases</div>
 				<div class="panel-body">
-{{--					@forelse ($artist->releases() as $row)--}}
-						{{--<div class="row">--}}
-							{{--<div class="col-md-4">{{ Html::linkRoute('release.show', $row->name, [$row->id])}}</div>--}}
-						{{--</div>--}}
-					{{--@empty--}}
-						{{--<div class="row">{{ trans('htmusic.no_releases_found') }}</div>--}}
-					{{--@endforelse--}}
+					{{--{{ $artist->releases() }}--}}
+					@forelse ($artist->releases as $row)
+						<div class="row">
+{{--							Work: {{ $row->work->name }}<br />--}}
+							{{--{{ $row->credit }}--}}
+							{{--<h3 class="row">tracks</h3>--}}
+							{{--@foreach ($row->credit->tracks as $track)--}}
+							{{--<div class="row">--}}
+								{{--{{ $track->release->name }} - {{ $track->name }}--}}
+							{{--</div>--}}
+							{{--@endforeach--}}
+
+							<h2>releases</h2>
+							@foreach ($row->credit->releases as $release)
+							<div class="row">
+								<h3>{{ $release->name }} - ({{ $release->date }})</h3>
+								@foreach ($release->tracks as $track)
+								<div class="row">
+									{{--{{ $track->release->name }} - --}} {{ $track->name }}
+								</div>
+								@endforeach
+							</div>
+							@endforeach
+						</div>
+					@empty
+						<div class="row">{{ trans('htmusic.no_releases_found') }}</div>
+					@endforelse
 				</div>
 			</div>
 		</div>

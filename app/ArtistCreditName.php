@@ -12,17 +12,17 @@ class ArtistCreditName extends Model {
 
 	public function artist()
 	{
-		return $this->belongsTo('Artist');
+		return $this->belongsTo('App\Artist');
 	}
 
 	public function work()
 	{
-		return $this->hasOne('WorkType');
+		return $this->belongsTo('App\WorkType','work_type_id','id');
 	}
 
-	public function artist_kredit()
+	public function credit()
 	{
-		return $this->hasOne('ArtistCredit');
+		return $this->belongsTo('App\ArtistCredit','artist_credit_id','id');
 	}
 
 }
