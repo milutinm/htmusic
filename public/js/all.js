@@ -6028,4 +6028,20 @@
     };
 }));
 
+/**
+ * Created by Milutin Milovanovic on 14/01/16.
+ */
+
+$(function(){
+   $('form.prompt-confirm').submit(function(e){
+       //e.preventDefault();
+
+       return confirm($(this).attr('msg'));
+
+       if(confirm($(this).attr('msg'))) {
+           //$(this).removeClass('prompt-confirm');
+           $(this).submit();
+       }
+   });
+});
 //# sourceMappingURL=all.js.map

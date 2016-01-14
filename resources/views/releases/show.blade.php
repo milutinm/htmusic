@@ -10,7 +10,25 @@
 	<div class="container">
 		<div class="row">
 			<div class="panel panel-default">
-				<div class="panel-heading">{{ $release->name }} ({{ Html::linkRoute('release.edit', trans('htmusic.edit'), [$release->id]) }})</div>
+				<div class="panel-heading collapse navbar-collapse">
+						<h2 class="col-md-4">{{ $release->name }}</h2>
+						{!! Form::open([
+							'method' => 'DELETE',
+							'route' => ['release.destroy', $release->id],
+							'class'	=> 'navbar-form navbar-right prompt-confirm',
+							'msg'	=> trans('htmusic.are_you_sure')
+						]) !!}
+							{!! Form::submit(trans('htmusic.delete'), ['class' => 'btn btn-danger']) !!}
+						{!! Form::close() !!}
+
+						{!! Form::open([
+							'method' => 'GET',
+							'route' => ['release.edit', $release->id],
+							'class'	=> 'navbar-form navbar-right'
+						]) !!}
+							{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
+						{!! Form::close() !!}
+				</div>
 				<div class="panel-body">
 					<div class="row">
 						{{--<div class="col-md-2">{{ trans('htmusic.name') }}:</div>--}}

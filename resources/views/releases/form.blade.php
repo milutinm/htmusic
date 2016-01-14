@@ -8,6 +8,7 @@
 				<div class="panel-body">
 					{!! Form::open($form_route) !!}
 					<div class="form-group @if ($errors->has('artist_credit_id')) has-error @endif ">
+						{{-- <!-- TODO select credits --> --}}
 						{!! Form::label('artist_credit_id', trans('htmusic.artist').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
 							{!! Form::select('artist_credit_id', $artist_credit, $release->artist_credit_id, ['class' => 'form-control']) !!}
@@ -22,7 +23,7 @@
 						@if ($errors->has('medium_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('medium_id') }}</div> @endif
 					</div>
 					<div class="form-group @if ($errors->has('release_status_id')) has-error @endif ">
-							{!! Form::label('type_id', trans('htmusic.release_status_id').':', ['class' => 'col-md-2 control-label']) !!}
+							{!! Form::label('type_id', trans('htmusic.status').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
 							{!! Form::select('release_status_id', $release_status, $release->release_status_id, ['class' => 'form-control']) !!}
 							</div>

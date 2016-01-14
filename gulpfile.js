@@ -13,7 +13,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     //mix.scriptsIn("resources/assets/js")
-    mix.scripts(['ie10-viewport-bug-workaround.js','moment.js','bootstrap-datetimepicker.js'])
+    mix.scripts(['ie10-viewport-bug-workaround.js','moment.js','bootstrap-datetimepicker.js','htmusic.js'])
         .stylesIn("resources/assets/css")
         .sass('app.scss')
         .version(["css/all.css", "css/app.css", "js/all.js"]);

@@ -4,7 +4,16 @@
 	<div class="container">
 		<div class="row">
 			<div class="panel panel-default">
-				<div class="panel-heading">{{ trans('htmusic.releases') }} ({{ $releases->total() }})</div>
+				<div class="panel-heading collapse navbar-collapse">
+					<h2 class="col-md-4">{{ trans('htmusic.artists') }} ({{ $releases->total() }})</h2>
+					{!! Form::open([
+						'method' => 'GET',
+						'route' => ['artist.create'],
+						'class'	=> 'navbar-form navbar-right',
+					]) !!}
+					{!! Form::submit(trans('htmusic.new'), ['class' => 'btn btn-primary']) !!}
+					{!! Form::close() !!}
+				</div>
 				<div class="panel-body">
 					<div class="row">
 					@forelse ($releases as $row)

@@ -10,7 +10,25 @@
 	<div class="container">
 		<div class="row">
 			<div class="panel panel-default">
-				<div class="panel-heading">{{ $artist->name }} ({{ Html::linkRoute('artist.edit', trans('htmusic.edit'), [$artist->id]) }})</div>
+				<div class="panel-heading collapse navbar-collapse">
+						<h2 class="col-md-4">{{ $artist->name }}</h2>
+						{!! Form::open([
+							'method' => 'DELETE',
+							'route' => ['artist.destroy', $artist->id],
+							'class'	=> 'navbar-form navbar-right prompt-confirm',
+							'msg'	=> trans('htmusic.are_you_sure')
+						]) !!}
+							{!! Form::submit(trans('htmusic.delete'), ['class' => 'btn btn-danger']) !!}
+						{!! Form::close() !!}
+
+						{!! Form::open([
+							'method' => 'GET',
+							'route' => ['artist.edit', $artist->id],
+							'class'	=> 'navbar-form navbar-right',
+						]) !!}
+							{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
+						{!! Form::close() !!}
+				</div>
 				<div class="panel-body">
 					<div class="row">
 						@if($artist->aliases()->count() > 0)

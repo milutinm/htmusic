@@ -10,9 +10,10 @@ return [
 	// general
 	'submit'		=> 'submit',
 	'delete'		=> 'delete',
+	'deleted'		=> 'deleted',
 	'edit'			=> 'edit',
 	'saved'			=> 'saved',
-	'deleted'		=> 'deleted',
+	'new'			=> 'new',
 
 	// DB data
 	// artist
@@ -31,16 +32,20 @@ return [
 	// release
 	'date'			=> 'date',
 	'barcode'		=> 'barcode',
+	'status'		=> 'status',
 	'note'			=> 'note',
+	'notes'			=> 'notes',
 
 	'credits'		=> 'credits',
 	'credit'		=> 'credit',
-
 	'tracks'		=> 'tracks',
 	'track'			=> 'track',
-
 	'aliases'		=> 'aliases',
 	'alias'			=> 'alias',
+	'medium'		=> 'medium',
+	'mediums'		=> 'mediums',
+	'release'		=> 'release',
+	'releases'		=> 'releases',
 
 	'male'			=> 'male',
 	'female'		=> 'female',
@@ -51,6 +56,7 @@ return [
 	'no_releases_found'	=> 'No releases found!',
 	'no_credits_found'	=> 'No credits found!',
 	'no_tracks_found'	=> 'No tracks found!',
+	'are_you_sure'		=> 'Are you sure?',
 
 
 ];
