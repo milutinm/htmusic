@@ -36,7 +36,7 @@ class Release extends Model {
 
 	public function credit()
 	{
-		return $this->belongsTo('App\ArtistCredit');
+		return $this->belongsTo('App\ArtistCredit','artist_credit_id');
 	}
 
 	public function label()
@@ -48,5 +48,4 @@ class Release extends Model {
 	{
 		return $this->hasManyThrough('App\Genre', 'GenreRelease');
 	}
-
 }

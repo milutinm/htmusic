@@ -20,4 +20,8 @@ class ArtistCredit extends Model {
 		return $this->hasMany('App\Release');
 	}
 
+	public function credit_name()
+	{
+		return $this->hasMany('App\ArtistCreditName','artist_credit_id');
+	}
 }

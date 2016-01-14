@@ -15,6 +15,7 @@ return [
 	'deleted'		=> 'deleted',
 
 	// DB data
+	// artist
     'artist'		=> 'artist',
     'artists'		=> 'artists',
     'name'			=> 'name',
@@ -27,6 +28,17 @@ return [
 	'bio'			=> 'bio',
 	'photo_url'		=> 'photo URL',
 
+	// release
+	'date'			=> 'date',
+	'barcode'		=> 'barcode',
+	'note'			=> 'note',
+
+	'credits'		=> 'credits',
+	'credit'		=> 'credit',
+
+	'tracks'		=> 'tracks',
+	'track'			=> 'track',
+
 	'aliases'		=> 'aliases',
 	'alias'			=> 'alias',
 
@@ -37,6 +49,8 @@ return [
 	// messages
 	'no_artists_found'	=> 'No artists found!',
 	'no_releases_found'	=> 'No releases found!',
+	'no_credits_found'	=> 'No credits found!',
+	'no_tracks_found'	=> 'No tracks found!',
 
 
 ];

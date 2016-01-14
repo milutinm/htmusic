@@ -12,7 +12,7 @@ class ArtistCreditName extends Model {
 
 	public function artist()
 	{
-		return $this->belongsTo('App\Artist');
+		return $this->belongsTo('App\Artist','artist_id');
 	}
 
 	public function work()

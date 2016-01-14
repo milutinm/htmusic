@@ -1,13 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-	 <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
             <h1>{{ $artist->name }}</h1>
             <p>{{ $artist->bio }}</p>
-            {{--<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>--}}
-{{--            <p>{{ Html::linkRoute('artist.edit', trans('htmusic.edit'), [$artist->id], ['class' => 'btn btn-primary btn-lg', 'role' => 'button']) }}</p>--}}
         </div>
     </div>
 	<div class="container">
@@ -35,22 +32,13 @@
 					{{--{{ $artist->releases() }}--}}
 					@forelse ($artist->releases as $row)
 						<div class="row">
-{{--							Work: {{ $row->work->name }}<br />--}}
-							{{--{{ $row->credit }}--}}
-							{{--<h3 class="row">tracks</h3>--}}
-							{{--@foreach ($row->credit->tracks as $track)--}}
-							{{--<div class="row">--}}
-								{{--{{ $track->release->name }} - {{ $track->name }}--}}
-							{{--</div>--}}
-							{{--@endforeach--}}
-
 							<h2>releases</h2>
 							@foreach ($row->credit->releases as $release)
 							<div class="row">
-								<h3>{{ $release->name }} - ({{ $release->date }})</h3>
+								<h3>{{ Html::linkRoute('release.show', $release->name, [$release->id]) }} ({{ Carbon::createFromFormat('Y-m-d',$release->date)->format('Y') }})</h3>
 								@foreach ($release->tracks as $track)
 								<div class="row">
-									{{--{{ $track->release->name }} - --}} {{ $track->name }}
+									{{ Html::linkRoute('track.show', $track->name, [$track->id]) }}
 								</div>
 								@endforeach
 							</div>

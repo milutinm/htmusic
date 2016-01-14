@@ -120,7 +120,7 @@ class ArtistController extends Controller {
    */
   public function destroy($id)
   {
-	  Arduino::destroy($id);
+	  Artist::destroy($id);
 
 	  return redirect()->route('artist.index')->with('infos', [trans('htmusic.deleted')]);
   }

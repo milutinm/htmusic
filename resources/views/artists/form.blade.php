@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-	{{--@if ($errors->any())--}}
-	{{--<ul class="alert alert-danger">--}}
-		{{--@foreach ($errors->all() as $error)--}}
-		{{--<li>{{ $error }}</li>--}}
-		{{--@endforeach--}}
-	{{--</ul>--}}
-	{{--@endif--}}
 	<div class="container">
 		<div class="row">
 			<div class="panel panel-default">

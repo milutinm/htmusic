@@ -9,7 +9,7 @@
 					<div class="row">
 					@forelse ($releases as $row)
 						{{--<div class="row">--}}
-							<div class="col-md-4">{{ Html::linkRoute('artist.show', $row->name, [$row->id])}}</div>
+							<div class="col-md-4">{{ Html::linkRoute('release.show', $row->name.' ('.$row->credit->name.')', [$row->id])}}</div>
 						{{--</div>--}}
 					@empty
 						<div class="row">{{ trans('htmusic.no_releases_found') }}</div>

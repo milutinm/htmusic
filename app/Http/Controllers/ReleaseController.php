@@ -1,4 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Release;
+use App\Medium;
+use App\ReleaseStatus;
 
 class ReleaseController extends Controller {
 
@@ -9,8 +15,7 @@ class ReleaseController extends Controller {
    */
   public function index()
   {
-	  $out	= [];
-//	  $out['releases']	= Release::orderBy('name')->paginate(45);
+	  $out['releases']	= Release::orderBy('name')->paginate(45);
 
 	  return view('releases.list',$out);
   }
@@ -22,7 +27,20 @@ class ReleaseController extends Controller {
    */
   public function create()
   {
-    
+	  $out	= [
+		  'form_route' => [
+			  'release.store',
+			  'method'	=> 'PUT',
+			  'class'	=> 'form-horizontal'
+		  ],
+		  'artist_credit'	=> [],
+	  ];
+
+	  $out['release']			= Release::findOrNew();
+	  $out['medium_types']		= Medium::lists('name','id');
+	  $out['release_status']	= ReleaseStatus::lists('name','id');
+
+	  return view('releases.form',$out);
   }
 
   /**
@@ -30,9 +48,11 @@ class ReleaseController extends Controller {
    *
    * @return Response
    */
-  public function store()
+  public function store(Request $request)
   {
-    
+	  $artist = Release::create($request->all());
+
+	  return redirect()->route('release.show',['artist' => $artist->id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -43,7 +63,9 @@ class ReleaseController extends Controller {
    */
   public function show($id)
   {
-    
+	  $out['release']	= Release::findOrNew((int)$id);
+
+	  return view('releases.show', $out);
   }
 
   /**
@@ -54,7 +76,23 @@ class ReleaseController extends Controller {
    */
   public function edit($id)
   {
-    
+	  $out	= [
+		  'form_route' => [
+			  'route'	=> [
+				  'release.update',
+				  $id
+			  ],
+			  'method'	=> 'PUT',
+			  'class'	=> 'form-horizontal'
+		  ],
+		  'artist_credit'	=> [],
+	  ];
+
+	  $out['release']			= Release::findOrNew((int)$id);
+	  $out['medium_types']		= Medium::lists('name','id');
+	  $out['release_status']	= ReleaseStatus::lists('name','id');
+
+	  return view('releases.form',$out);
   }
 
   /**
@@ -63,9 +101,11 @@ class ReleaseController extends Controller {
    * @param  int  $id
    * @return Response
    */
-  public function update($id)
+  public function update(Request $request, $id)
   {
-    
+	  Release::find($id)->update($request->all());
+
+	  return redirect()->route('release.show',['artist' => $id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -76,9 +116,9 @@ class ReleaseController extends Controller {
    */
   public function destroy($id)
   {
-    
+	  Release::destroy($id);
+
+	  return redirect()->route('release.index')->with('infos', [trans('htmusic.deleted')]);
   }
   
 }
-
-?>
