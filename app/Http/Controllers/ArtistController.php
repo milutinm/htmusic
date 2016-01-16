@@ -6,6 +6,13 @@ use \App\ArtistType;
 use \App\Artist;
 use App\Http\Requests\ArtistRequest;
 
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+//use Illuminate\Support\Facades\Gate;
+use Gate;
+//use Illuminate\Contracts\Auth\Access\Gate;
+
 
 class ArtistController extends Controller {
 
@@ -33,6 +40,12 @@ class ArtistController extends Controller {
    */
   public function create()
   {
+//	  \Illuminate\Support\Facades\Gate::denies('admin');
+
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  $out	= [
 		  'form_route' => [
 			  'route'	=> 'artist.store',
@@ -55,6 +68,10 @@ class ArtistController extends Controller {
    */
   public function store(ArtistRequest $request)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  $artist = Artist::create($request->all());
 
 	  return redirect()->route('artist.show',['artist' => $artist->id])->with('infos', [trans('htmusic.saved')]);
@@ -81,6 +98,10 @@ class ArtistController extends Controller {
    */
   public function edit($id)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  $out	= [
 		  'form_route' => [
 			  'route'	=> [
@@ -107,6 +128,10 @@ class ArtistController extends Controller {
    */
   public function update(ArtistRequest $request, $id)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  Artist::find($id)->update($request->all());
 
 	  return redirect()->route('artist.show',['artist' => $id])->with('infos', [trans('htmusic.saved')]);
@@ -120,6 +145,10 @@ class ArtistController extends Controller {
    */
   public function destroy($id)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  Artist::destroy($id);
 
 	  return redirect()->route('artist.index')->with('infos', [trans('htmusic.deleted')]);

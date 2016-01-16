@@ -14,6 +14,7 @@ return [
 	'edit'			=> 'edit',
 	'saved'			=> 'saved',
 	'new'			=> 'new',
+	'homepage'		=> 'home',
 
 	// DB data
 	// artist
@@ -35,6 +36,9 @@ return [
 	'status'		=> 'status',
 	'note'			=> 'note',
 	'notes'			=> 'notes',
+
+	// reacks
+	'length'		=> 'length',
 
 	'credits'		=> 'credits',
 	'credit'		=> 'credit',

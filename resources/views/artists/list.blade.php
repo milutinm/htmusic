@@ -6,6 +6,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
 					<h2 class="col-md-4">{{ trans('htmusic.artists') }} ({{ $artists->total() }})</h2>
+					@can('admin')
 						{!! Form::open([
 							'method' => 'GET',
 							'route' => ['artist.create'],
@@ -13,6 +14,7 @@
 						]) !!}
 							{!! Form::submit(trans('htmusic.new'), ['class' => 'btn btn-primary']) !!}
 						{!! Form::close() !!}
+					@endcan
 				</div>
 				<div class="panel-body">
 					<div class="row">

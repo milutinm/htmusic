@@ -52,6 +52,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
+				<li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">{{ trans('htmusic.homepage') }}</a></li>
+				<li class="{{ Request::is('artist*') ? 'active' : '' }}">{{ Html::linkRoute('artist.index', trans('htmusic.artists')) }}</li>
+				<li class="{{ Request::is('release*') ? 'active' : '' }}">{{ Html::linkRoute('release.index', trans('htmusic.releases')) }}</li>
+				<li class="{{ Request::is('track*') ? 'active' : '' }}">{{ Html::linkRoute('track.index', trans('htmusic.tracks')) }}</li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
@@ -108,7 +112,7 @@
     <div class="container">
         <hr />
         <footer>
-            <p>© {{ \Carbon\Carbon::today()->year }} Company, Inc.</p>
+            <p>© {{ \Carbon\Carbon::today()->year }} HT Music</p>
         </footer>
     </div>
 

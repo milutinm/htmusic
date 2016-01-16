@@ -1,4 +1,10 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\TrackRequest;
+use App\Track;
+use Illuminate\Support\Facades\Route;
 
 class TrackController extends Controller {
 
@@ -9,7 +15,9 @@ class TrackController extends Controller {
    */
   public function index()
   {
-    
+	  $out['tracks']	= Track::orderBy('name')->paginate(45);
+
+	  return view('tracks.list',$out);
   }
 
   /**
@@ -19,7 +27,22 @@ class TrackController extends Controller {
    */
   public function create()
   {
-    
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
+	  $out	= [
+		  'form_route' => [
+			  'track.store',
+			  'method'	=> 'PUT',
+			  'class'	=> 'form-horizontal'
+		  ],
+		  'artist_credit'	=> [],
+	  ];
+
+	  $out['track']			= Track::findOrNew(0);
+
+	  return view('tracks.form',$out);
   }
 
   /**
@@ -27,9 +50,15 @@ class TrackController extends Controller {
    *
    * @return Response
    */
-  public function store()
+  public function store(TrackRequest $request)
   {
-    
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
+	  $track = Track::create($request->all());
+
+	  return redirect()->route('track.show',['track' => $track->id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -40,7 +69,9 @@ class TrackController extends Controller {
    */
   public function show($id)
   {
-    
+	  $out['track']	= Track::findOrNew((int)$id);
+
+	  return view('tracks.show', $out);
   }
 
   /**
@@ -51,7 +82,25 @@ class TrackController extends Controller {
    */
   public function edit($id)
   {
-    
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
+	  $out	= [
+		  'form_route' => [
+			  'route'	=> [
+				  'track.update',
+				  $id
+			  ],
+			  'method'	=> 'PUT',
+			  'class'	=> 'form-horizontal'
+		  ],
+		  'artist_credit'	=> [],
+	  ];
+
+	  $out['track']			= Track::findOrNew((int)$id);
+
+	  return view('tracks.form',$out);
   }
 
   /**
@@ -60,9 +109,15 @@ class TrackController extends Controller {
    * @param  int  $id
    * @return Response
    */
-  public function update($id)
+  public function update(TrackRequest $request, $id)
   {
-    
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
+	  Track::find($id)->update($request->all());
+
+	  return redirect()->route('track.show',['track' => $id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -73,9 +128,13 @@ class TrackController extends Controller {
    */
   public function destroy($id)
   {
-    
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
+	  Track::destroy($id);
+
+	  return redirect()->route('track.index')->with('infos', [trans('htmusic.deleted')]);
   }
   
 }
-
-?>

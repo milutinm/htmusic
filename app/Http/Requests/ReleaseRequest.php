@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArtistRequest extends Request
+class ReleaseRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,8 @@ class ArtistRequest extends Request
      */
     public function authorize()
     {
-        return Auth::user()->isAdmin();
+		return Auth::user()->isAdmin();
+//		return Auth::check();
     }
 
     /**
@@ -24,17 +25,15 @@ class ArtistRequest extends Request
      */
     public function rules()
     {
-        return [
-			'id'		 		=> '',
+        return [ // release
+//			'id'				=> '',
+			'artist_credit_id'	=> 'exists:artist_credit,id',
+			'medium_id'			=> 'exists:mediums,id',
+			'release_status_id'	=> 'exists:release_status,id',
 			'name'				=> 'required',
-			'sort_name'			=> 'required',
-			'begin_date'		=> 'date|before:end_date',
-			'is_ended'			=> 'boolean',
-			'end_date'			=> 'date|after:begin_date',
-			'artist_type_id'	=> 'exists:artist_types,id',
-			'gender'			=> 'in:male,female,other',
-//			'bio'				=> '',
-			'photo_url'			=> 'url',
-        ];
+			'date'				=> 'date',
+//			'barcode'			=> '',
+//			'notes'				=> '',
+		];
     }
 }

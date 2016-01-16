@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Http\Requests\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ArtistRequest extends Request
+class TrackRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class ArtistRequest extends Request
      */
     public function authorize()
     {
-        return Auth::user()->isAdmin();
+		return Auth::user()->isAdmin();
     }
 
     /**
@@ -25,16 +25,14 @@ class ArtistRequest extends Request
     public function rules()
     {
         return [
-			'id'		 		=> '',
+//            'id'				=> '',
+			'position'			=> 'integer',
+			'release_id'		=> 'exists:release,id',
+			'number'			=> 'integer',
 			'name'				=> 'required',
-			'sort_name'			=> 'required',
-			'begin_date'		=> 'date|before:end_date',
-			'is_ended'			=> 'boolean',
-			'end_date'			=> 'date|after:begin_date',
-			'artist_type_id'	=> 'exists:artist_types,id',
-			'gender'			=> 'in:male,female,other',
-//			'bio'				=> '',
-			'photo_url'			=> 'url',
+			'artist_credit_id'	=> 'exists:artist_credit,id',
+			'length'			=> 'integer',
+//			'notes'				=> '',
         ];
     }
 }

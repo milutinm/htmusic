@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ArtistRequest;
 use App\Release;
 use App\Medium;
 use App\ReleaseStatus;
@@ -27,6 +28,10 @@ class ReleaseController extends Controller {
    */
   public function create()
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  $out	= [
 		  'form_route' => [
 			  'release.store',
@@ -36,7 +41,7 @@ class ReleaseController extends Controller {
 		  'artist_credit'	=> [],
 	  ];
 
-	  $out['release']			= Release::findOrNew();
+	  $out['release']			= Release::findOrNew(0);
 	  $out['medium_types']		= Medium::lists('name','id');
 	  $out['release_status']	= ReleaseStatus::lists('name','id');
 
@@ -46,13 +51,17 @@ class ReleaseController extends Controller {
   /**
    * Store a newly created resource in storage.
    *
-   * @return Response
+   * @return ReleaseRequest
    */
-  public function store(Request $request)
+  public function store(ReleaseRequest $request)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  $artist = Release::create($request->all());
 
-	  return redirect()->route('release.show',['artist' => $artist->id])->with('infos', [trans('htmusic.saved')]);
+	  return redirect()->route('release.show',['release' => $artist->id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
@@ -72,10 +81,13 @@ class ReleaseController extends Controller {
    * Show the form for editing the specified resource.
    *
    * @param  int  $id
-   * @return Response
    */
   public function edit($id)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  $out	= [
 		  'form_route' => [
 			  'route'	=> [
@@ -99,23 +111,30 @@ class ReleaseController extends Controller {
    * Update the specified resource in storage.
    *
    * @param  int  $id
-   * @return Response
+   * @return ReleaseRequest
    */
-  public function update(Request $request, $id)
+  public function update(ReleaseRequest $request, $id)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  Release::find($id)->update($request->all());
 
-	  return redirect()->route('release.show',['artist' => $id])->with('infos', [trans('htmusic.saved')]);
+	  return redirect()->route('release.show',['release' => $id])->with('infos', [trans('htmusic.saved')]);
   }
 
   /**
    * Remove the specified resource from storage.
    *
    * @param  int  $id
-   * @return Response
    */
-  public function destroy($id)
+  public function destroy(ArtistRequest $request ,$id)
   {
+	  if(Gate::denies('admin')) {
+		  abort(403);
+	  }
+
 	  Release::destroy($id);
 
 	  return redirect()->route('release.index')->with('infos', [trans('htmusic.deleted')]);
