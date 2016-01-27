@@ -13,25 +13,25 @@ class Release extends Model {
 	use SoftDeletes;
 
 	protected $dates = ['deleted_at'];
-	protected $fillable = array('name', 'barcode', 'date', 'notes');
+	protected $fillable = array('name', 'barcode', 'date', 'notes', 'artist_credit_id','medium_id','release_status_id','release_type_id');
 
 	public function tracks() {
 		return $this->hasMany('App\Track','release_id');
 	}
 
-	public function releaseStatus()
+	public function status()
 	{
-		return $this->belongsTo('App\ReleaseStatus');
+		return $this->belongsTo('App\ReleaseStatus','release_status_id');
 	}
 
-	public function releaseTypes()
+	public function type()
 	{
-		return $this->belongsTo('App\ReleaseType');
+		return $this->belongsTo('App\ReleaseType','release_type_id');
 	}
 
 	public function medium()
 	{
-		return $this->belongsTo('App\Medium');
+		return $this->belongsTo('App\Medium','medium_id');
 	}
 
 	public function credit()

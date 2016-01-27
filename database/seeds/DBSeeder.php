@@ -91,11 +91,6 @@ class DBSeeder extends Seeder
 			}
 		}
 
-
-
-
-
-
 		$mediums_id		= [
 			'CD'			=> 2,
 			'CDR'			=> 2,
@@ -106,7 +101,7 @@ class DBSeeder extends Seeder
 		$releases_id	= [''];
 		$artists_id		= [''];
 
-
+		$credit_id		= 0;
 
 		// Parsing CSV
 
@@ -208,39 +203,44 @@ class DBSeeder extends Seeder
 			$row = array_combine($keys,$row);
 
 			$row['artists_id'] = array_search($row['head_band'],$artists_id);
+
 			if ($row['artists_id'] === false) {
 				$artists_id[] = $row['head_band'];
-				$row['artists_id'] = array_search($row['head_band'],$artists_id);
+				$row['artists_id'] = array_search($row['head_band'], $artists_id);
 
 				$artist = $artist_d;
-				$artist['id']	= $row['artists_id'];
-				$artist['name']	= $row['head_band'];
-				$artist['sort_name']	= str_ireplace('the ','',$row['head_band']);
+				$artist['id'] = $row['artists_id'];
+				$artist['name'] = $row['head_band'];
+				$artist['sort_name'] = trim(str_ireplace('the', '', $row['head_band']));
 
-		//		print_r($artist);
-				$out['artists'][]	= $artist;
-
-				$artist_credit	= $artist_credit_d;
-				$artist_credit['id']	= $row['artists_id'];
-				$artist_credit['name']	= $artist['name'];
-				$out['artist_credit'][]	= $artist_credit;
-
-				$artist_credit_name						= $artist_credit_name_d;
-				$artist_credit_name['id']				= $row['artists_id'];
-				$artist_credit_name['artist_credit_id']	= $row['artists_id'];
-				$artist_credit_name['artist_id']		= $row['artists_id'];
-				$artist_credit_name['name']				= $artist['name'];
-				$out['artist_credit_name'][]			= $artist_credit_name;
+				$out['artists'][] = $artist;
 			}
+
+
 
 			$row['albums_id'] = array_search($row['head_album'],$releases_id);
 			if ($row['albums_id'] === false) {
+
+				$credit_id++;
+
+				$artist_credit	= $artist_credit_d;
+				$artist_credit['id']	= $credit_id;
+				$artist_credit['name']	= $row['head_band'];
+				$out['artist_credit'][]	= $artist_credit;
+
+				$artist_credit_name						= $artist_credit_name_d;
+				$artist_credit_name['id']				= $credit_id;
+				$artist_credit_name['artist_credit_id']	= $credit_id;
+				$artist_credit_name['artist_id']		= $row['artists_id'];
+				$artist_credit_name['name']				= $row['head_band'];
+				$out['artist_credit_name'][]			= $artist_credit_name;
+
 				$releases_id[] = $row['head_album'];
 				$row['albums_id'] = array_search($row['head_album'],$releases_id);
 
 				$release = $release_d;
 				$release['id']					= $row['albums_id'];
-				$release['artist_credit_id']	= $row['artists_id'];
+				$release['artist_credit_id']	= $credit_id;
 				$release['name']				= $row['head_album'];
 				$release['date']				= $row['year'].'-00-00';
 				if (isset($mediums_id[$row['medium']])) {
@@ -251,12 +251,27 @@ class DBSeeder extends Seeder
 				$out['releases'][]	= $release;
 			}
 
+			$credit_id++;
+
+			$artist_credit	= $artist_credit_d;
+			$artist_credit['id']	= $credit_id;
+			$artist_credit['name']	= $row['head_band'];
+			$out['artist_credit'][]	= $artist_credit;
+
+			$artist_credit_name						= $artist_credit_name_d;
+			$artist_credit_name['id']				= $credit_id;
+			$artist_credit_name['artist_credit_id']	= $credit_id;
+			$artist_credit_name['artist_id']		= $row['artists_id'];
+			$artist_credit_name['name']				= $row['head_band'];
+			$out['artist_credit_name'][]			= $artist_credit_name;
+
+
 			$track	= $track_d;
 
-			$track['name']			= $row['track_title'];
+			$track['name']				= $row['track_title'];
 			$track['number']			= $row['track_number'];
 			$track['position']			= $row['track_number'];
-			$track['artist_credit_id']	= $row['artists_id'];
+			$track['artist_credit_id']	= $credit_id;
 			$track['release_id']		= $row['albums_id'];
 
 		//	print_r($track);

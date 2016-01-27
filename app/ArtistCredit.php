@@ -10,14 +10,14 @@ class ArtistCredit extends Model {
 	public $timestamps = true;
 	protected $fillable = array('artist_count');
 
-	public function tracks()
+	public function track()
 	{
-		return $this->hasMany('App\Track');
+		return $this->hasOne('App\Track','artist_credit_id');
 	}
 
-	public function releases()
+	public function release()
 	{
-		return $this->hasMany('App\Release');
+		return $this->hasOne('App\Release','artist_credit_id');
 	}
 
 	public function credit_name()

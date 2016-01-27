@@ -13,7 +13,7 @@ class Track extends Model {
 	use SoftDeletes;
 
 	protected $dates = ['deleted_at'];
-	protected $fillable = array('name', 'length', 'notes');
+	protected $fillable = array('name', 'position','number','length', 'notes','artist_credit_id','release_id');
 
 	public function release()
 	{
@@ -22,7 +22,7 @@ class Track extends Model {
 
 	public function credit()
 	{
-		return $this->belongsTo('App\ArtistCredit','artist_credit_id');
+		return $this->belongsTo('App\ArtistCredit','artist_credit_id','id');
 	}
 
 	public function genre()

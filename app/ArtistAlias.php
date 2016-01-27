@@ -13,16 +13,16 @@ class ArtistAlias extends Model {
 	use SoftDeletes;
 
 	protected $dates = ['deleted_at'];
-	protected $fillable = array('name', 'sort_name', 'begin_date', 'is_ended', 'end_date');
+	protected $fillable = array('name', 'sort_name', 'begin_date', 'is_ended', 'end_date', 'artist_id', 'artist_alias_type_id');
 
-	public function artists()
+	public function artist()
 	{
-		return $this->belongsTo('Artist');
+		return $this->belongsTo('App\Artist','artist_id');
 	}
 
-	public function artistAliasType()
+	public function type()
 	{
-		return $this->belongsTo('ArtistAliasType');
+		return $this->belongsTo('App\ArtistAliasType','artist_alias_type_id');
 	}
 
 }

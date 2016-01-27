@@ -19,7 +19,7 @@ class CreateForeignKeys extends Migration {
 						->onUpdate('cascade');
 		});
 		Schema::table('artist_aliases', function(Blueprint $table) {
-			$table->foreign('artis_alias_type_id')->references('id')->on('artist_alias_types')
+			$table->foreign('artist_alias_type_id')->references('id')->on('artist_alias_types')
 						->onDelete('cascade')
 						->onUpdate('cascade');
 		});
@@ -104,7 +104,7 @@ class CreateForeignKeys extends Migration {
 			$table->dropForeign('artist_aliases_artist_id_foreign');
 		});
 		Schema::table('artist_aliases', function(Blueprint $table) {
-			$table->dropForeign('artist_aliases_artis_alias_type_id_foreign');
+			$table->dropForeign('artist_aliases_artist_alias_type_id_foreign');
 		});
 		Schema::table('releases', function(Blueprint $table) {
 			$table->dropForeign('releases_artist_credit_id_foreign');

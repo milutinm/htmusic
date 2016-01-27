@@ -12,7 +12,7 @@ class ArtistAliasType extends Model {
 
 	public function artist_aliases()
 	{
-		return $this->belongsToMany('ArtistAlias');
+		return $this->belongsToMany('App\ArtistAlias','artist_alias_type_id');
 	}
 
 }

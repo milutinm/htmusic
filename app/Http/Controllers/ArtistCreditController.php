@@ -77,5 +77,3 @@ class ArtistCreditController extends Controller {
   }
   
 }
-
-?>

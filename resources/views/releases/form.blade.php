@@ -7,14 +7,32 @@
 				<div class="panel-heading">{{ trans('htmusic.release') }}</div>
 				<div class="panel-body">
 					{!! Form::open($form_route) !!}
-					<div class="form-group @if ($errors->has('artist_credit_id')) has-error @endif ">
-						{{-- <!-- TODO select credits --> --}}
-						{!! Form::label('artist_credit_id', trans('htmusic.artist').':', ['class' => 'col-md-2 control-label']) !!}
+					<div class="form-group">
+						{!! Form::label('credit_search', trans('htmusic.credit').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::select('artist_credit_id', $artist_credit, $release->artist_credit_id, ['class' => 'form-control']) !!}
+							{!! Form::text('credit_search', '', ['class' => 'form-control','id' => 'credit_search']) !!}
 						</div>
-						@if ($errors->has('artist_credit_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('artist_credit_id') }}</div> @endif
 					</div>
+					<div class="form-group">
+						<div id="credit_search_list" class="row"></div>
+						<div id="credit_selected" class="col-md-offset-2 col-md-10 form-inline">
+							@if (isset($artist_credit))
+								@foreach($artist_credit as $row)
+								<div class="row">
+									<select name="artist_credit[work][]" class="form-control" >
+									@foreach($work_type as $wt_row)
+										<option value="{{ $wt_row->id }}" @if($wt_row->id == $row->work_type_id) selected="selected" @endif>{{ $wt_row->name }}</option>
+									@endforeach
+									</select>
+									<input type="hidden" value="{{ $row->artist_id }}" name="artist_credit[id][]" />
+									<label style="margin-left: 30px;"><a href="/artist/{{ $row->artist_id }}" target="_blank">{{ $row->name }}</a></label>
+									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								</div>
+								@endforeach
+							@endif
+						</div>
+					</div>
+
 					<div class="form-group @if ($errors->has('medium_id')) has-error @endif ">
 						{!! Form::label('medium_id', trans('htmusic.medium').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
@@ -29,6 +47,13 @@
 							</div>
 						@if ($errors->has('release_status_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('release_status_id') }}</div> @endif
 					</div>
+					<div class="form-group @if ($errors->has('release_type_id')) has-error @endif ">
+							{!! Form::label('type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
+						<div class="col-md-10">
+							{!! Form::select('release_type_id', $release_type, $release->release_type_id, ['class' => 'form-control']) !!}
+							</div>
+						@if ($errors->has('release_type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('release_type_id') }}</div> @endif
+					</div>
 					<div class="form-group @if ($errors->has('name')) has-error @endif ">
 							{!! Form::label('name', trans('htmusic.name').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
@@ -39,7 +64,7 @@
 					<div class="form-group @if ($errors->has('barcode')) has-error @endif ">
 							{!! Form::label('barcode', trans('htmusic.barcode').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::text('name', $release->barcode, ['class' => 'form-control']) !!}
+							{!! Form::text('barcode', $release->barcode, ['class' => 'form-control']) !!}
 						</div>
 						@if ($errors->has('barcode')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('barcode') }}</div> @endif
 					</div>
@@ -80,6 +105,47 @@
 				format: 'YYYY-MM-DD',
 				maxDate: Date.now()
 			});
+
+			$('#credit_search_list').btsListFilter('#credit_search', {
+				sourceTmpl: '<a class="list-group-item artist_search_item" href="{id}"><strong>{name}</strong> type:{type} gender:{gender}</a>',
+				sourceData: function(text, callback) {
+					return $.getJSON('/artist/search/'+text, function(json) {
+						callback(json);
+					});
+				}
+			});
+
+			$('#credit_search_list').on('click','a',function(e){
+				e.preventDefault();
+
+				$.ajax({
+					'url'	: '/artist/'+$(this).attr('href')
+				}).done(function(data){
+					console.log(data);
+
+					var work_types = '';
+
+					for(i in data.work_type) {
+						work_types	+= '<option value="'+data.work_type[i].id+'">'+data.work_type[i].name+'</option>'
+					}
+
+					$('#credit_selected').append(
+							'<div class="row">' +
+							'<select name="artist_credit[work][]" class="form-control" >' +
+							work_types+
+							'</select>' +
+							'<input type="hidden" value="'+data.artist.id+'" name="artist_credit[id][]" />' +
+							'<label style="margin-left: 30px;"><a href="/artist/'+data.artist.id+'" target="_blank">'+data.artist.name +'</a></label>' +
+							'<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+							'</div>'
+					);
+				});
+			});
+
+			$('#credit_selected').on('click','button.close',function(e){
+				$(this).parent().remove();
+			});
+
 		});
 	</script>
 @stop

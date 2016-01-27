@@ -11,7 +11,7 @@ class CreateTracksTable extends Migration {
 			$table->increments('id');
 			$table->integer('release_id')->unsigned();
 			$table->integer('artist_credit_id')->unsigned();
-			$table->string('name', 30);
+			$table->string('name', 200);
 			$table->integer('position')->unsigned();
 			$table->integer('number');
 			$table->integer('length');

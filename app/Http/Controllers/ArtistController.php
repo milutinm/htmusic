@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use \App\ArtistType;
 use \App\Artist;
 use App\Http\Requests\ArtistRequest;
+use App\WorkType;
 
 use App\User;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-//use Illuminate\Support\Facades\Gate;
 use Gate;
-//use Illuminate\Contracts\Auth\Access\Gate;
+use Request;
 
 
 class ArtistController extends Controller {
@@ -40,8 +40,6 @@ class ArtistController extends Controller {
    */
   public function create()
   {
-//	  \Illuminate\Support\Facades\Gate::denies('admin');
-
 	  if(Gate::denies('admin')) {
 		  abort(403);
 	  }
@@ -54,7 +52,11 @@ class ArtistController extends Controller {
 		  ]
 	  ];
 
-	  $out['artist']	= Artist::findOrNew(0);
+	  if (count(Request::old())) {
+		  $out['artist']	= Request::old();
+	  } else {
+		  $out['artist']	= Artist::findOrNew(0);
+	  }
 
 	  $out['artist_types']	= ArtistType::lists('name','id');
 
@@ -74,7 +76,7 @@ class ArtistController extends Controller {
 
 	  $artist = Artist::create($request->all());
 
-	  return redirect()->route('artist.show',['artist' => $artist->id])->with('infos', [trans('htmusic.saved')]);
+	  return redirect()->route('artist.show',['artist' => $artist->id])->with('alert-success', [trans('htmusic.saved')]);
   }
 
   /**
@@ -86,6 +88,23 @@ class ArtistController extends Controller {
   public function show($id)
   {
 	  $out['artist']	= Artist::findOrNew((int)$id);
+
+
+	  if(Request::ajax()) {
+		  $out['work_type']	= WorkType::orderBy('id')->get(['id','name']);
+		  return $out;
+	  }
+
+	  $releases	= $out['artist']->credit_name;
+	  foreach ($releases as $row) {
+//		  $out['credits'][$row->work->name]	= $row->credit;
+		  if (isset($row->credit->track->id)) {
+			  $out['credits'][$row->work->name]['tracks'][]	= $row->credit->track;
+		  } elseif (isset($row->credit->release->id)) {
+			  $out['credits'][$row->work->name]['releases'][]	= $row->credit->release;
+		  }
+	  }
+
 
 	  return view('artists.show', $out);
   }
@@ -134,7 +153,7 @@ class ArtistController extends Controller {
 
 	  Artist::find($id)->update($request->all());
 
-	  return redirect()->route('artist.show',['artist' => $id])->with('infos', [trans('htmusic.saved')]);
+	  return redirect()->route('artist.show',['artist' => $id])->with('alert-success', [trans('htmusic.saved')]);
   }
 
   /**
@@ -151,7 +170,17 @@ class ArtistController extends Controller {
 
 	  Artist::destroy($id);
 
-	  return redirect()->route('artist.index')->with('infos', [trans('htmusic.deleted')]);
+	  return redirect()->route('artist.index')->with('alert-success', [trans('htmusic.deleted')]);
   }
-  
+
+
+	public function search($str){
+		$out	= Artist::where('name','LIKE',$str.'%')->get(['id','name','artist_type_id','gender']);
+
+		foreach($out as &$row) {
+			$row->type = $row->type()->first()->name;
+		}
+
+		return $out;
+	}
 }

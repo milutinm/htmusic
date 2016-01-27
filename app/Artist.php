@@ -20,7 +20,7 @@ class Artist extends Model {
 		return $this->belongsTo('App\ArtistType','artist_type_id','id');
 	}
 ///*
-	public function releases()
+	public function credit_name()
 	{
 		return $this->hasMany('App\ArtistCreditName');
 	}
@@ -28,5 +28,9 @@ class Artist extends Model {
 	public function aliases()
 	{
 		return $this->hasMany('App\ArtistAlias','artist_id','id');
+	}
+
+	public function releases() {
+		return $this->hasMany('App\ArtistCreditName');
 	}
 }

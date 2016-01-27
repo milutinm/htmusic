@@ -14,7 +14,14 @@ return [
 	'edit'			=> 'edit',
 	'saved'			=> 'saved',
 	'new'			=> 'new',
+	'remove'		=> 'remove',
 	'homepage'		=> 'home',
+	'add_release'	=> 'add release',
+	'add_track'		=> 'add track',
+	'error'			=> 'error',
+	'warning'		=> 'warning',
+	'success'		=> 'success',
+	'info'			=> 'info',
 
 	// DB data
 	// artist
@@ -37,8 +44,10 @@ return [
 	'note'			=> 'note',
 	'notes'			=> 'notes',
 
-	// reacks
+	// tracks
 	'length'		=> 'length',
+	'number'		=> 'number',
+	'position'		=> 'position',
 
 	'credits'		=> 'credits',
 	'credit'		=> 'credit',

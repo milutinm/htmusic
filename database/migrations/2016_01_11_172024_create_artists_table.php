@@ -9,8 +9,8 @@ class CreateArtistsTable extends Migration {
 	{
 		Schema::create('artists', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('name', 50)->index();
-			$table->string('sort_name', 50)->index();
+			$table->string('name', 100)->index();
+			$table->string('sort_name', 100)->index();
 			$table->date('begin_date');
 			$table->boolean('is_ended');
 			$table->date('end_date');

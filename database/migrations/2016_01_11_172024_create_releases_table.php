@@ -12,6 +12,7 @@ class CreateReleasesTable extends Migration {
 			$table->integer('artist_credit_id')->unsigned();
 			$table->integer('medium_id')->unsigned();
 			$table->integer('release_status_id')->unsigned();
+			$table->integer('release_type_id')->unsigned();
 			$table->string('name', 50);
 			$table->string('barcode', 50);
 			$table->date('date');

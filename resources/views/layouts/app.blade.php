@@ -89,21 +89,29 @@
 
 	@if ($errors->any())
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+		<strong>{{ trans('htmusic.error') }}</strong>
+        <ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul>
     </div>
 	@endif
 
-	@if (isset($infos) && count($infos) > 0)
+	@if (Session::has('alert-danger'))
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($infos->all() as $info)
-                <li>{{ $info }}</li>
-            @endforeach
-        </ul>
+		<strong>{{ trans('htmusic.warning') }}</strong>
+        <ul>@foreach (Session::get('alert-danger') as $row)<li>{{ $row }}</li>@endforeach</ul>
+    </div>
+	@endif
+
+	@if (Session::has('alert-success'))
+    <div class="alert alert-success">
+		<strong>{{ trans('htmusic.success') }}</strong>
+		<ul>@foreach (Session::get('alert-success') as $row)<li>{{ $row }}</li>@endforeach</ul>
+    </div>
+	@endif
+
+	@if (Session::has('alert-info'))
+    <div class="alert alert-info">
+		<strong>{{ trans('htmusic.info') }}</strong>
+        <ul>@foreach (Session::get('alert-info') as $row)<li>{{ $row }}</li>@endforeach</ul>
     </div>
 	@endif
 

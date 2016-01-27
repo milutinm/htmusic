@@ -30,6 +30,15 @@
 							]) !!}
 								{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
 							{!! Form::close() !!}
+
+							{!! Form::open([
+								'method' => 'GET',
+								'route' => ['release.create'],
+								'class'	=> 'navbar-form navbar-right',
+							]) !!}
+								{!! Form::hidden('artist_id',$artist->id) !!}
+								{!! Form::submit(trans('htmusic.add_release'), ['class' => 'btn btn-primary']) !!}
+							{!! Form::close() !!}
 						</div>
 					@endcan
 				</div>
@@ -39,12 +48,38 @@
 						<div class="col-md-2">{{ trans('htmusic.aliases') }}:</div>
 						<div class="col-md-10">
 							@foreach($artist->aliases as $row)
-								{{ $row->name }}
+								{{ Html::linkRoute('artistalias.show', $row->name, [$row->id]) }}
 							@endforeach
 						</div>
 						@endif
+					</div>
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.name') }}:</div>
+						<div class="col-md-10">{{ $artist->name }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.sort_name') }}:</div>
+						<div class="col-md-10">{{ $artist->sort_name }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.begin_date') }}:</div>
+						<div class="col-md-10">{{ $artist->begin_date }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.is_ended') }}:</div>
+						<div class="col-md-10">{{ $artist->is_ended }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.end_date') }}:</div>
+						<div class="col-md-10">{{ $artist->end_date }}</div>
+					</div>
+					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.type') }}:</div>
 						<div class="col-md-10">{{ $artist->type->name }}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.gender') }}:</div>
+						<div class="col-md-10">{{ $artist->gender }}</div>
 					</div>
 				</div>
 			</div>
@@ -52,18 +87,21 @@
 				<div class="panel-heading">Releases</div>
 				<div class="panel-body">
 					{{--{{ $artist->releases() }}--}}
-					@forelse ($artist->releases as $row)
+					@forelse ($credits as $work => $credit_names)
 						<div class="row">
-							<h2>releases</h2>
-							@foreach ($row->credit->releases as $release)
-							<div class="row">
-								<h3>{{ Html::linkRoute('release.show', $release->name, [$release->id]) }} ({{ Carbon::createFromFormat('Y-m-d',$release->date)->format('Y') }})</h3>
-								@foreach ($release->tracks as $track)
+							<h2>{{ $work }}</h2>
+							@foreach ($credit_names as $w_type => $works)
+								<h3>{{ $w_type }}</h3>
+								@foreach ($works as $row)
 								<div class="row">
-									{{ Html::linkRoute('track.show', $track->name, [$track->id]) }}
+									@if ($w_type == 'tracks')
+										{{ Html::linkRoute('track.show', $row->name, [$row->id]) }} - {{ $row->release->name }} @if($row->release->date != '0000-00-00')({{ Carbon::createFromFormat('Y-m-d',$row->release->date)->format('Y') }})@endif
+
+									@else
+										{{ Html::linkRoute('release.show', $row->name, [$row->id]) }} @if($row->date != '0000-00-00')({{ Carbon::createFromFormat('Y-m-d',$row->date)->format('Y') }})@endif
+									@endif
 								</div>
 								@endforeach
-							</div>
 							@endforeach
 						</div>
 					@empty

@@ -43,6 +43,8 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('artistaliastype', 'ArtistAliasTypeController');
 	Route::resource('medium', 'MediumController');
 	Route::resource('genre', 'GenreController');
+	Route::any('artist/search/{str}',['as' => 'artist.search', 'uses' => 'ArtistController@search']);
+	Route::any('release/search/{str}',['as' => 'release.search', 'uses' => 'ReleaseController@search']);
 });
 
 Route::group(['middleware' => 'web'], function () {

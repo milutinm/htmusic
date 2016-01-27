@@ -27,7 +27,7 @@ class TrackRequest extends Request
         return [
 //            'id'				=> '',
 			'position'			=> 'integer',
-			'release_id'		=> 'exists:release,id',
+			'release_id'		=> 'exists:releases,id',
 			'number'			=> 'integer',
 			'name'				=> 'required',
 			'artist_credit_id'	=> 'exists:artist_credit,id',
