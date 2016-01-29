@@ -9,6 +9,8 @@ use App\Release;
 use App\Track;
 use App\WorkType;
 use App\ArtistCreditName;
+use App\Genre;
+use App\GenreTrack;
 use Illuminate\Support\Facades\Route;
 use Gate;
 use Request;
@@ -161,6 +163,7 @@ class TrackController extends Controller {
 	  ];
 
 	  $out['track']			= Track::findOrNew((int)$id);
+	  $out['genre']			= Genre::orderBy('id')->lists('name','id');
 
 	  if (count(Request::old())) {
 		  $old	= Request::old();
@@ -177,6 +180,12 @@ class TrackController extends Controller {
 	  }
 	  $out['work_type']		= WorkType::all();
 
+
+	  $out['genres_selected']	= [];
+	  foreach ($out['track']->genres as $row) {
+		  $out['genres_selected'][]	= $row->id;
+	  }
+
 	  return view('tracks.form',$out);
   }
 
@@ -192,12 +201,29 @@ class TrackController extends Controller {
 		  abort(403);
 	  }
 
-	  $track	= Track::find($id); // Old track data
-	  $req		= $request->all();	// Request data
+	  $track		= Track::find($id); // Old track data
+	  $req			= $request->all();	// Request data
 
-	  $ac		= []; // list of ArtistCreditNames
-	  $ac_old	= []; // List of artist credit names that already exist
-	  $artists	= []; // List of artists, just for counting
+	  $ac			= []; // list of ArtistCreditNames
+	  $ac_old		= []; // List of artist credit names that already exist
+	  $artists		= []; // List of artists, just for counting
+	  $genre		= []; // genre list
+	  $genre_old	= []; // genre list
+
+	  foreach($req['genre'] as $n => $genre_id){
+		  $genre[$n]	= GenreTrack::where('track_id',$id)->where('genre_id', $genre_id)->first();
+		  if ($genre[$n] == null) {
+			  $genre_new	= [
+				  'genre_id'	=> $genre_id,
+				  'track_id'	=> $id,
+			  ];
+			  $genre[$n] = new GenreTrack($genre_new);
+			  $genre[$n]->save();
+		  }
+		  $genre_old[]	= $genre[$n]->id;
+	  }
+	  GenreTrack::where('track_id',$id)->whereNotIn('id', $genre_old)->delete();
+
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];

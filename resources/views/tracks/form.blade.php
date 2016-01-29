@@ -62,6 +62,16 @@
 						</div>
 						@if ($errors->has('name')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('name') }}</div> @endif
 					</div>
+
+
+					<div class="form-group @if ($errors->has('genre')) has-error @endif ">
+							{!! Form::label('type_id', trans('htmusic.genre').':', ['class' => 'col-md-2 control-label']) !!}
+						<div class="col-md-10">
+							{!! Form::select('genre[]', $genre, $genres_selected, ['class' => 'form-control','size' => 10, 'multiple' => 'multiple']) !!}
+							</div>
+						@if ($errors->has('genre')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('genre') }}</div> @endif
+					</div>
+
 					<div class="form-group @if ($errors->has('number')) has-error @endif ">
 							{!! Form::label('number', trans('htmusic.number').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">

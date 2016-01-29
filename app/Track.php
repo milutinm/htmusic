@@ -25,9 +25,9 @@ class Track extends Model {
 		return $this->belongsTo('App\ArtistCredit','artist_credit_id','id');
 	}
 
-	public function genre()
+	public function genres()
 	{
-		return $this->hasManyThrough('App\Genre', 'GenreTrack');
+		return $this->belongsToMany('App\Genre');
 	}
 
 }

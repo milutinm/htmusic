@@ -83,7 +83,7 @@
 						<div class="col-md-2">{{ trans('htmusic.genre') }}:</div>
 						<div class="col-md-10">
 							@foreach($release->genres as $row)
-							{{ $row->name }},
+							{{ $row->name }}@if(isset($track->genres[$n + 1])),@endif
 							@endforeach
 						</div>
 					</div>

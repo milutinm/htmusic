@@ -34,18 +34,47 @@
 					@endcan
 				</div>
 				<div class="panel-body">
+					@if(isset($track->release->name))
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.release') }}:</div>
 						<div class="col-md-10">{{ $track->release->name }}</div>
 					</div>
+					@endif
+					@if(isset($track->length))
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.length') }}:</div>
 						<div class="col-md-10">{{ $track->length }}</div>
 					</div>
+					@endif
+					@if(isset($track->notes))
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.notes') }}:</div>
 						<div class="col-md-10">{{ $track->notes }}</div>
 					</div>
+					@endif
+					@if(isset($track->position))
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.position') }}:</div>
+						<div class="col-md-10">{{ $track->position }}</div>
+					</div>
+					@endif
+					@if(isset($track->number))
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.number') }}:</div>
+						<div class="col-md-10">{{ $track->number }}</div>
+					</div>
+					@endif
+
+					@if(count($track->genres))
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.genre') }}:</div>
+						<div class="col-md-10">
+							@foreach($track->genres as $n => $row)
+							{{ $row->name }} @if(isset($track->genres[$n + 1])),@endif
+							@endforeach
+						</div>
+					</div>
+					@endif
 				</div>
 			</div>
 

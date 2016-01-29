@@ -191,17 +191,10 @@ class ReleaseController extends Controller {
 		  $out['artist_credit']	= $out['release']->credit->credit_name;
 	  }
 
-
+	  $out['genres_selected']	= [];
 	  foreach ($out['release']->genres as $row) {
 		  $out['genres_selected'][]	= $row->id;
 	  }
-
-
-
-
-	  echo '<pre>';
-	  print_r($out['genres_selected']);
-	  echo '</pre>';
 
 	  return view('releases.form',$out);
   }
@@ -234,26 +227,12 @@ class ReleaseController extends Controller {
 				  'genre_id'	=> $genre_id,
 				  'release_id'	=> $id,
 			  ];
-
-			  echo '<pre>';
-			  print_r($genre_new);
-			  echo '</pre>';
-
 			  $genre[$n] = new GenreRelease($genre_new);
-
 			  $genre[$n]->save();
 		  }
-
-//		  echo '<pre>';
-//		  print_r($genre[$n]);
-//		  echo '</pre>';
-
 		  $genre_old[]	= $genre[$n]->id;
-//		  $genre_old[]	= $genre_id;
 	  }
 	  GenreRelease::where('release_id',$id)->whereNotIn('id', $genre_old)->delete();
-
-//	  die();
 
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
