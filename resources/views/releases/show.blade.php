@@ -77,6 +77,17 @@
 						<div class="col-md-10">{{ $release->medium->name }}</div>
 					</div>
 					@endif
+
+					@if(count($release->genres))
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.genre') }}:</div>
+						<div class="col-md-10">
+							@foreach($release->genres as $row)
+							{{ $row->name }},
+							@endforeach
+						</div>
+					</div>
+					@endif
 				</div>
 			</div>
 

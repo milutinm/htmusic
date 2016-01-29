@@ -9,14 +9,16 @@ class GenreRelease extends Model {
 	protected $table = 'genre_release';
 	public $timestamps = true;
 
+	protected $fillable = array('genre_id','release_id');
+
 	public function genre()
 	{
-		return $this->belongsTo('Genre');
+		return $this->belongsTo('App\Genre');
 	}
 
 	public function release()
 	{
-		return $this->belongsTo('Release');
+		return $this->belongsTo('App\Release');
 	}
 
 }

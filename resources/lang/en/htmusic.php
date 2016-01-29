@@ -43,6 +43,7 @@ return [
 	'status'		=> 'status',
 	'note'			=> 'note',
 	'notes'			=> 'notes',
+	'genre'			=> 'genre',
 
 	// tracks
 	'length'		=> 'length',

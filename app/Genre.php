@@ -12,12 +12,12 @@ class Genre extends Model {
 
 	public function release()
 	{
-		return $this->hasManyThrough('Release', 'GenreRelease');
+		return $this->belongsToMany('Release', 'App\GenreRelease');
 	}
 
 	public function tracks()
 	{
-		return $this->hasManyThrough('Track', 'GenreTrack');
+		return $this->belongsToMany('Track', 'App\GenreTrack');
 	}
 
 }

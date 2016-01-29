@@ -10,6 +10,8 @@ use App\ReleaseType;
 use App\WorkType;
 use App\ArtistCreditName;
 use App\Artist;
+use App\Genre;
+use App\GenreRelease;
 use App\Http\Requests\ReleaseRequest;
 use Gate;
 use Request;
@@ -52,6 +54,7 @@ class ReleaseController extends Controller {
 	  $out['medium_types']		= Medium::lists('name','id');
 	  $out['release_status']	= ReleaseStatus::lists('name','id');
 	  $out['release_type']		= ReleaseType::lists('name','id');
+	  $out['genre']				= Genre::orderBy('id')->lists('name','id');
 
 
 
@@ -174,6 +177,7 @@ class ReleaseController extends Controller {
 	  $out['release_status']	= ReleaseStatus::lists('name','id');
 	  $out['release_type']		= ReleaseType::lists('name','id');
 	  $out['work_type']			= WorkType::all();
+	  $out['genre']				= Genre::orderBy('id')->lists('name','id');
 
 
 	  if (count(Request::old())) {
@@ -186,6 +190,18 @@ class ReleaseController extends Controller {
 	  } else {
 		  $out['artist_credit']	= $out['release']->credit->credit_name;
 	  }
+
+
+	  foreach ($out['release']->genres as $row) {
+		  $out['genres_selected'][]	= $row->id;
+	  }
+
+
+
+
+	  echo '<pre>';
+	  print_r($out['genres_selected']);
+	  echo '</pre>';
 
 	  return view('releases.form',$out);
   }
@@ -205,9 +221,40 @@ class ReleaseController extends Controller {
 	  $release	= Release::find($id); // Old track data
 	  $req		= $request->all();	// Request data
 
-	  $ac		= []; // list of ArtistCreditNames
-	  $ac_old	= []; // List of artist credit names that already exist
-	  $artists	= []; // List of artists, just for counting
+	  $ac			= []; // list of ArtistCreditNames
+	  $ac_old		= []; // List of artist credit names that already exist
+	  $artists		= []; // List of artists, just for counting
+	  $genre		= []; // genre list
+	  $genre_old	= []; // genre list
+
+	  foreach($req['genre'] as $n => $genre_id){
+		  $genre[$n]	= GenreRelease::where('release_id',$id)->where('genre_id', $genre_id)->first();
+		  if ($genre[$n] == null) {
+			  $genre_new	= [
+				  'genre_id'	=> $genre_id,
+				  'release_id'	=> $id,
+			  ];
+
+			  echo '<pre>';
+			  print_r($genre_new);
+			  echo '</pre>';
+
+			  $genre[$n] = new GenreRelease($genre_new);
+
+			  $genre[$n]->save();
+		  }
+
+//		  echo '<pre>';
+//		  print_r($genre[$n]);
+//		  echo '</pre>';
+
+		  $genre_old[]	= $genre[$n]->id;
+//		  $genre_old[]	= $genre_id;
+	  }
+	  GenreRelease::where('release_id',$id)->whereNotIn('id', $genre_old)->delete();
+
+//	  die();
+
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];

@@ -46,6 +46,6 @@ class Release extends Model {
 
 	public function genres()
 	{
-		return $this->hasManyThrough('App\Genre', 'GenreRelease');
+		return $this->belongsToMany('App\Genre');
 	}
 }
