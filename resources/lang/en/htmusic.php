@@ -44,6 +44,7 @@ return [
 	'note'			=> 'note',
 	'notes'			=> 'notes',
 	'genre'			=> 'genre',
+	'label'			=> 'label',
 
 	// tracks
 	'length'		=> 'length',

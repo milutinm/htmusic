@@ -39,9 +39,9 @@ class Release extends Model {
 		return $this->belongsTo('App\ArtistCredit','artist_credit_id');
 	}
 
-	public function label()
+	public function labels()
 	{
-		return $this->hasManyThrough('App\Label', 'LabelRelease');
+		return $this->belongsToMany('App\Label');
 	}
 
 	public function genres()

@@ -12,6 +12,8 @@ use App\ArtistCreditName;
 use App\Artist;
 use App\Genre;
 use App\GenreRelease;
+use App\Label;
+use App\LabelRelease;
 use App\Http\Requests\ReleaseRequest;
 use Gate;
 use Request;
@@ -123,9 +125,31 @@ class ReleaseController extends Controller {
 
 	  $req['artist_credit_id']		= $artists_credit->id;
 
-	  $artist = Release::create($req);
+	  $release = Release::create($req);
 
-	  return redirect()->route('release.show',['release' => $artist->id])->with('alert-success', [trans('htmusic.saved')]);
+	   //	  -----------------------------
+	  $label		= []; // label list
+	  foreach($req['label'] as $n => $label_id){
+		  $label_new	= [
+			  'label_id'	=> $label_id,
+			  'release_id'	=> $release->id,
+		  ];
+		  $label[$n] = new LabelRelease($label_new);
+		  $label[$n]->save();
+	  }
+//	  -----------------------------
+	  $genre		= []; // genre list
+	  foreach($req['genre'] as $n => $genre_id){
+		  $genre_new	= [
+			  'genre_id'	=> $genre_id,
+			  'release_id'	=> $release->id,
+		  ];
+		  $genre[$n] = new GenreRelease($genre_new);
+		  $genre[$n]->save();
+	  }
+//	  -----------------------------
+
+	  return redirect()->route('release.show',['release' => $release->id])->with('alert-success', [trans('htmusic.saved')]);
   }
 
   /**
@@ -214,9 +238,25 @@ class ReleaseController extends Controller {
 	  $release	= Release::find($id); // Old track data
 	  $req		= $request->all();	// Request data
 
-	  $ac			= []; // list of ArtistCreditNames
-	  $ac_old		= []; // List of artist credit names that already exist
-	  $artists		= []; // List of artists, just for counting
+	  //	  -----------------------------
+	  $label		= []; // label list
+	  $label_old	= []; // label list
+
+	  foreach($req['label'] as $n => $label_id){
+		  $label[$n]	= LabelRelease::where('release_id',$id)->where('label_id', $label_id)->first();
+		  if ($label[$n] == null) {
+			  $label_new	= [
+				  'label_id'	=> $label_id,
+				  'release_id'	=> $id,
+			  ];
+			  $label[$n] = new LabelRelease($label_new);
+			  $label[$n]->save();
+		  }
+		  $label_old[]	= $label[$n]->id;
+	  }
+	  LabelRelease::where('release_id',$id)->whereNotIn('id', $label_old)->delete();
+
+//	  -----------------------------
 	  $genre		= []; // genre list
 	  $genre_old	= []; // genre list
 
@@ -234,6 +274,11 @@ class ReleaseController extends Controller {
 	  }
 	  GenreRelease::where('release_id',$id)->whereNotIn('id', $genre_old)->delete();
 
+//	  -----------------------------
+
+	  $ac			= []; // list of ArtistCreditNames
+	  $ac_old		= []; // List of artist credit names that already exist
+	  $artists		= []; // List of artists, just for counting
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];

@@ -33,6 +33,25 @@
 						</div>
 					</div>
 
+					<div class="form-group">
+						{!! Form::label('label_search', trans('htmusic.label').':', ['class' => 'col-md-2 control-label']) !!}
+						<div class="col-md-10">
+							{!! Form::text('label_search', '', ['class' => 'form-control','id' => 'label_search']) !!}
+						</div>
+					</div>
+					<div class="form-group">
+						<div id="label_search_list" class="row"></div>
+						<div id="label_selected" class="col-md-offset-2 col-md-10 form-inline">
+							@foreach($release->labels as $row)
+							<div class="row">
+								<input type="hidden" value="{{ $row->id }}" name="label[]" />
+								<label style="margin-left: 30px;"><a href="/label/{{ $row->id }}" target="_blank">{{ $row->name }}</a></label>
+								<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							</div>
+							@endforeach
+						</div>
+					</div>
+
 					<div class="form-group @if ($errors->has('medium_id')) has-error @endif ">
 						{!! Form::label('medium_id', trans('htmusic.medium').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
@@ -55,7 +74,7 @@
 						@if ($errors->has('release_type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('release_type_id') }}</div> @endif
 					</div>
 					<div class="form-group @if ($errors->has('genre')) has-error @endif ">
-							{!! Form::label('type_id', trans('htmusic.genre').':', ['class' => 'col-md-2 control-label']) !!}
+							{!! Form::label('genre', trans('htmusic.genre').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
 							{!! Form::select('genre[]', $genre, $genres_selected, ['class' => 'form-control','size' => 10, 'multiple' => 'multiple']) !!}
 							</div>
@@ -149,7 +168,28 @@
 				});
 			});
 
-			$('#credit_selected').on('click','button.close',function(e){
+			$('#label_search_list').btsListFilter('#label_search', {
+				sourceTmpl: '<a class="list-group-item artist_search_item" href="{id}">{name}</a>',
+				sourceData: function(text, callback) {
+					return $.getJSON('/label/search/'+text, function(json) {
+						callback(json);
+					});
+				}
+			});
+
+			$('#label_search_list').on('click','a',function(e){
+				e.preventDefault();
+
+				$('#label_selected').append(
+					'<div class="row">' +
+					'<input type="hidden" value="'+$(this).attr('href')+'" name="label[]" />' +
+					'<label style="margin-left: 30px;"><a href="/label/'+$(this).attr('href')+'" target="_blank">'+$(this).text() +'</a></label>' +
+					'<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
+					'</div>'
+				);
+			});
+
+			$('#credit_selected, #label_selected').on('click','button.close',function(e){
 				$(this).parent().remove();
 			});
 

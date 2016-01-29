@@ -121,6 +121,16 @@ class TrackController extends Controller {
 
 	  $track = Track::create($req);
 
+	  $genre		= []; // genre list
+	  foreach($req['genre'] as $n => $genre_id){
+		  $genre_new	= [
+			  'genre_id'	=> $genre_id,
+			  'track_id'	=> $track->id,
+		  ];
+		  $genre[$n] = new GenreTrack($genre_new);
+		  $genre[$n]->save();
+	  }
+
 //	  return;
 	  return redirect()->route('track.show',['track' => $track->id])->with('alert-success', [trans('htmusic.saved')]);
   }
@@ -204,9 +214,7 @@ class TrackController extends Controller {
 	  $track		= Track::find($id); // Old track data
 	  $req			= $request->all();	// Request data
 
-	  $ac			= []; // list of ArtistCreditNames
-	  $ac_old		= []; // List of artist credit names that already exist
-	  $artists		= []; // List of artists, just for counting
+
 	  $genre		= []; // genre list
 	  $genre_old	= []; // genre list
 
@@ -224,6 +232,10 @@ class TrackController extends Controller {
 	  }
 	  GenreTrack::where('track_id',$id)->whereNotIn('id', $genre_old)->delete();
 
+
+	  $ac			= []; // list of ArtistCreditNames
+	  $ac_old		= []; // List of artist credit names that already exist
+	  $artists		= []; // List of artists, just for counting
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];

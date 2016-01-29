@@ -82,8 +82,19 @@
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.genre') }}:</div>
 						<div class="col-md-10">
-							@foreach($release->genres as $row)
-							{{ $row->name }}@if(isset($track->genres[$n + 1])),@endif
+							@foreach($release->genres as $n => $row)
+							{{ $row->name }}@if(isset($release->genres[$n + 1])),@endif
+							@endforeach
+						</div>
+					</div>
+					@endif
+
+					@if(count($release->labels))
+					<div class="row">
+						<div class="col-md-2">{{ trans('htmusic.label') }}:</div>
+						<div class="col-md-10">
+							@foreach($release->labels as $n => $row)
+							{{ Html::linkRoute('label.show', $row->name, [$row->id]) }}@if(isset($release->labels[$n + 1])),@endif
 							@endforeach
 						</div>
 					</div>

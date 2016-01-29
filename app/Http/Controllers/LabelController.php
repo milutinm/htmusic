@@ -1,4 +1,9 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Label;
+use Request;
 
 class LabelController extends Controller {
 
@@ -40,7 +45,13 @@ class LabelController extends Controller {
    */
   public function show($id)
   {
-    
+	  $out['label']	= Label::findOrNew((int)$id);
+
+	  if(Request::ajax()) {
+		  return $out;
+	  }
+
+	  return $out;
   }
 
   /**
@@ -75,7 +86,11 @@ class LabelController extends Controller {
   {
     
   }
+
+	public function search($str){
+		$out	= Label::where('name','LIKE',$str.'%')->get(['id','name']);
+
+		return $out;
+	}
   
 }
-
-?>
