@@ -84,7 +84,7 @@
 				</div>
 			</div>
 			<div class="panel panel-default">
-				<div class="panel-heading">Releases</div>
+				<div class="panel-heading">{{ trans('htmusic.credit') }}</div>
 				<div class="panel-body">
 					{{--{{ $artist->releases() }}--}}
 					@forelse ($credits as $work => $credit_names)
@@ -105,7 +105,7 @@
 							@endforeach
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_releases_found') }}</div>
+						<div class="row">{{ trans('htmusic.no_credits_found') }}</div>
 					@endforelse
 				</div>
 			</div>

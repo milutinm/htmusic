@@ -96,6 +96,7 @@ class ArtistController extends Controller {
 	  }
 
 	  $releases	= $out['artist']->credit_name;
+	  $out['credits']   =  [];
 	  foreach ($releases as $row) {
 //		  $out['credits'][$row->work->name]	= $row->credit;
 		  if (isset($row->credit->track->id)) {

@@ -35,7 +35,7 @@ class ReleaseRequest extends Request
 //			'barcode'			=> '',
 //			'notes'				=> '',
 			'genre'				=> 'required|array',
-			'label'				=> 'required|array',
+			'label'				=> 'array',
 		];
     }
 }

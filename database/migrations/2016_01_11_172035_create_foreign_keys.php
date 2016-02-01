@@ -93,6 +93,36 @@ class CreateForeignKeys extends Migration {
 						->onDelete('restrict')
 						->onUpdate('restrict');
 		});
+		Schema::table('artist_image', function(Blueprint $table) {
+			$table->foreign('artist_id')->references('id')->on('artists')
+				->onDelete('no action')
+				->onUpdate('no action');
+		});
+		Schema::table('artist_image', function(Blueprint $table) {
+			$table->foreign('image_id')->references('id')->on('images')
+				->onDelete('no action')
+				->onUpdate('no action');
+		});
+		Schema::table('image_release', function(Blueprint $table) {
+			$table->foreign('image_id')->references('id')->on('images')
+				->onDelete('no action')
+				->onUpdate('no action');
+		});
+		Schema::table('image_release', function(Blueprint $table) {
+			$table->foreign('release_id')->references('id')->on('releases')
+				->onDelete('no action')
+				->onUpdate('no action');
+		});
+		Schema::table('image_track', function(Blueprint $table) {
+			$table->foreign('image_id')->references('id')->on('images')
+				->onDelete('no action')
+				->onUpdate('no action');
+		});
+		Schema::table('image_track', function(Blueprint $table) {
+			$table->foreign('track_id')->references('id')->on('tracks')
+				->onDelete('no action')
+				->onUpdate('no action');
+		});
 	}
 
 	public function down()
@@ -147,6 +177,24 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('genre_track', function(Blueprint $table) {
 			$table->dropForeign('genre_track_track_id_foreign');
+		});
+		Schema::table('artist_image', function(Blueprint $table) {
+			$table->dropForeign('artist_image_artist_id_foreign');
+		});
+		Schema::table('artist_image', function(Blueprint $table) {
+			$table->dropForeign('artist_image_image_id_foreign');
+		});
+		Schema::table('image_release', function(Blueprint $table) {
+			$table->dropForeign('image_release_image_id_foreign');
+		});
+		Schema::table('image_release', function(Blueprint $table) {
+			$table->dropForeign('image_release_release_id_foreign');
+		});
+		Schema::table('image_track', function(Blueprint $table) {
+			$table->dropForeign('image_track_image_id_foreign');
+		});
+		Schema::table('image_track', function(Blueprint $table) {
+			$table->dropForeign('image_track_track_id_foreign');
 		});
 	}
 }

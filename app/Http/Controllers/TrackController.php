@@ -68,6 +68,8 @@ class TrackController extends Controller {
 	  }
 
 	  $out['track']			= Track::findOrNew(0);
+	  $out['genre']			= Genre::orderBy('id')->lists('name','id');
+	  $out['genres_selected']	= [];
 
 	  return view('tracks.form',$out);
   }

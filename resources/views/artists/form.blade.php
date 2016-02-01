@@ -52,12 +52,12 @@
 							</div>
 						@if ($errors->has('end_date')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('end_date') }}</div> @endif
 					</div>
-					<div class="form-group @if ($errors->has('type_id')) has-error @endif ">
-							{!! Form::label('type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
+					<div class="form-group @if ($errors->has('artist_type_id')) has-error @endif ">
+							{!! Form::label('artist_type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::select('type_id', $artist_types, $artist->type_id, ['class' => 'form-control']) !!}
+							{!! Form::select('artist_type_id', $artist_types, $artist->artist_type_id, ['class' => 'form-control']) !!}
 							</div>
-						@if ($errors->has('type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('type_id') }}</div> @endif
+						@if ($errors->has('artist_type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('artist_type_id') }}</div> @endif
 					</div>
 					<div class="form-group @if ($errors->has('gender')) has-error @endif ">
 							{!! Form::label('gender', trans('htmusic.gender').':', ['class' => 'col-md-2 control-label']) !!}

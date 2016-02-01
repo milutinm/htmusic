@@ -13,7 +13,7 @@ class Artist extends Model {
 	use SoftDeletes;
 
 	protected $dates = ['deleted_at'];
-	protected $fillable = array('name', 'sort_name', 'begin_date', 'is_ended', 'end_date', 'gender', 'bio', 'photo_url');
+	protected $fillable = array('name', 'sort_name', 'begin_date', 'is_ended', 'end_date', 'gender', 'bio', 'photo_url', 'artist_type_id');
 
 	public function type()
 	{

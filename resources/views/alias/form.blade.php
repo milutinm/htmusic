@@ -70,12 +70,12 @@
 							</div>
 						@if ($errors->has('end_date')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('end_date') }}</div> @endif
 					</div>
-					<div class="form-group @if ($errors->has('type_id')) has-error @endif ">
-							{!! Form::label('type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
+					<div class="form-group @if ($errors->has('artist_alias_type_id')) has-error @endif ">
+							{!! Form::label('artist_alias_type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::select('artist_alias_type_id', $alias_types, $alias->type_id, ['class' => 'form-control']) !!}
+							{!! Form::select('artist_alias_artist_alias_type_id', $alias_types, $alias->artist_alias_type_id, ['class' => 'form-control']) !!}
 							</div>
-						@if ($errors->has('type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('type_id') }}</div> @endif
+						@if ($errors->has('artist_alias_type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('artist_alias_type_id') }}</div> @endif
 					</div>
 					<div class="form-group">
 							{!! Form::submit(trans('htmusic.submit'), ['class'=> 'btn btn-primary col-md-offset-2']) !!}
