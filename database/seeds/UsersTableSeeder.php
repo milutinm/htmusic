@@ -13,19 +13,19 @@ class UsersTableSeeder extends Seeder
     {
 		DB::table('users')->delete();
 
-		$data = [
-			[
-				'id'		=> 1,
-				'name'		=> 'Kenold Beauplan',
-				'email'		=> 'ken.beano@gmail.com',
-				'password'	=> bcrypt('aDC42KvtuWJfaTK'),
-			],
-			[
-				'id'		=> 2,
-				'name'		=> 'Milutin Milovanovic',
-				'email'		=> 'milutin_milovanovic@yahoo.com',
-				'password'	=> bcrypt('O5rG3bi4rKhVJ1j'),
-			],
+	    $data = [
+		    [
+			    'id'		=> 1,
+			    'name'		=> 'Kenold Beauplan',
+			    'email'		=> 'ken.beano@gmail.com',
+			    'password'	=> bcrypt('aDC42KvtuWJfaTK'),
+		    ],
+		    [
+			    'id'		=> 2,
+			    'name'		=> 'Milutin Milovanovic',
+			    'email'		=> 'milutin_milovanovic@yahoo.com',
+			    'password'	=> bcrypt('O5rG3bi4rKhVJ1j'),
+		    ],
 		];
 
 		foreach ($data as $row) {
