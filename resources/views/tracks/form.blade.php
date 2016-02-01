@@ -48,6 +48,7 @@
 									@endforeach
 									</select>
 									<input type="hidden" value="{{ $row->artist_id }}" name="artist_credit[id][]" />
+									<input type="text" value="{{ $row->join_phrase }}" name="artist_credit[join][]" />
 									<label style="margin-left: 30px;"><a href="/artist/{{ $row->artist_id }}" target="_blank">{{ $row->name }}</a></label>
 									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								</div>
@@ -162,6 +163,7 @@
 								work_types +
 								'</select>' +
 								'<input type="hidden" value="' + data.credit.credit_name[j].artist_id + '" name="artist_credit[id][]" />' +
+								'<input type="text" value="' + data.credit.credit_name[j].join_phrase + '" name="artist_credit[join][]" />' +
 								'<label style="margin-left: 30px;"><a href="/artist/'+data.credit.credit_name[j].artist_id+'" target="_blank">' + data.credit.credit_name[j].name + '</a></label>' +
 								'<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 								'</div>'
@@ -200,6 +202,7 @@
 							work_types+
 							'</select>' +
 							'<input type="hidden" value="'+data.artist.id+'" name="artist_credit[id][]" />' +
+							'<input type="text" value="&" name="artist_credit[join][]" />' +
 							'<label style="margin-left: 30px;"><a href="/artist/'+data.artist.id+'" target="_blank">'+data.artist.name +'</a></label>' +
 							'<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>' +
 							'</div>'

@@ -97,6 +97,7 @@ class ReleaseController extends Controller {
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];
+		  $join_phrase  = $req['artist_credit']['join'][$n];
 		  $artists[$artist_id]	= Artist::find($artist_id)->name; // artiat counter
 
 		  // Creating new ArtistCreditName
@@ -106,16 +107,16 @@ class ReleaseController extends Controller {
 			  'work_type_id'		=> $work_id,
 			  'position'			=> '',
 			  'name'				=> Artist::find($artist_id)->name,
-			  'join_phrase'			=> '&',
+			  'join_phrase'			=> $join_phrase,
 		  ];
 
-		  $ac[$artist_id.'_'.$work_id]	= new ArtistCreditName($ac_new);
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= new ArtistCreditName($ac_new);
 
 		  // Sets position. Not important for now there is no ordering in form
 		  // TODO make ordering in form
-		  $ac[$artist_id.'_'.$work_id]->position = $n;
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->position = $n;
 		  // Saving ArtistCreditNames
-		  $ac[$artist_id.'_'.$work_id]->save();
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->save();
 	  }
 
 	  $artists_credit->artist_count	= count($artists);
@@ -128,14 +129,16 @@ class ReleaseController extends Controller {
 	  $release = Release::create($req);
 
 	   //	  -----------------------------
-	  $label		= []; // label list
-	  foreach($req['label'] as $n => $label_id){
-		  $label_new	= [
-			  'label_id'	=> $label_id,
-			  'release_id'	=> $release->id,
-		  ];
-		  $label[$n] = new LabelRelease($label_new);
-		  $label[$n]->save();
+	  if (isset($req['label']) && is_array($req['label'])) {
+		  $label = []; // label list
+		  foreach ($req['label'] as $n => $label_id) {
+			  $label_new = [
+				  'label_id' => $label_id,
+				  'release_id' => $release->id,
+			  ];
+			  $label[$n] = new LabelRelease($label_new);
+			  $label[$n]->save();
+		  }
 	  }
 //	  -----------------------------
 	  $genre		= []; // genre list
@@ -239,23 +242,24 @@ class ReleaseController extends Controller {
 	  $req		= $request->all();	// Request data
 
 	  //	  -----------------------------
-	  $label		= []; // label list
-	  $label_old	= []; // label list
+	  if (isset($req['label']) && is_array($req['label'])) {
+		  $label = []; // label list
+		  $label_old = []; // label list
 
-	  foreach($req['label'] as $n => $label_id){
-		  $label[$n]	= LabelRelease::where('release_id',$id)->where('label_id', $label_id)->first();
-		  if ($label[$n] == null) {
-			  $label_new	= [
-				  'label_id'	=> $label_id,
-				  'release_id'	=> $id,
-			  ];
-			  $label[$n] = new LabelRelease($label_new);
-			  $label[$n]->save();
+		  foreach ($req['label'] as $n => $label_id) {
+			  $label[$n] = LabelRelease::where('release_id', $id)->where('label_id', $label_id)->first();
+			  if ($label[$n] == null) {
+				  $label_new = [
+					  'label_id' => $label_id,
+					  'release_id' => $id,
+				  ];
+				  $label[$n] = new LabelRelease($label_new);
+				  $label[$n]->save();
+			  }
+			  $label_old[] = $label[$n]->id;
 		  }
-		  $label_old[]	= $label[$n]->id;
+		  LabelRelease::where('release_id', $id)->whereNotIn('id', $label_old)->delete();
 	  }
-	  LabelRelease::where('release_id',$id)->whereNotIn('id', $label_old)->delete();
-
 //	  -----------------------------
 	  $genre		= []; // genre list
 	  $genre_old	= []; // genre list
@@ -282,14 +286,16 @@ class ReleaseController extends Controller {
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];
+		  $join_phrase  = $req['artist_credit']['join'][$n];
 		  $artists[$artist_id]	= Artist::find($artist_id)->name; // artiat counter
 
 		  // Checking if ArtistCreditName already exists
-		  $ac[$artist_id.'_'.$work_id]	= ArtistCreditName::where('work_type_id',(int)$work_id)
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= ArtistCreditName::where('work_type_id',(int)$work_id)
 			  ->where('artist_id',$artist_id)
+			  ->where('join_phrase',$join_phrase)
 			  ->where('artist_credit_id',$release->credit->id)
 			  ->first();
-		  if ($ac[$artist_id.'_'.$work_id] == null) {
+		  if ($ac[$artist_id.'_'.$work_id.'_'.$join_phrase] == null) {
 			  // Creating new ArtistCreditName
 			  $ac_new	= [
 				  'artist_credit_id'	=> $release->credit->id,
@@ -297,19 +303,19 @@ class ReleaseController extends Controller {
 				  'work_type_id'		=> $work_id,
 				  'position'			=> '',
 				  'name'				=> Artist::find($artist_id)->name,
-				  'join_phrase'			=> '&',
+				  'join_phrase'			=> $join_phrase,
 			  ];
 
-			  $ac[$artist_id.'_'.$work_id]	= new ArtistCreditName($ac_new);
+			  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= new ArtistCreditName($ac_new);
 		  }
 		  // Sets position. Not important for now there is no ordering in form
 		  // TODO make ordering in form
-		  $ac[$artist_id.'_'.$work_id]->position = $n;
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->position = $n;
 		  // Saving ArtistCreditNames
-		  $ac[$artist_id.'_'.$work_id]->save();
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->save();
 
 		  // preventing deleting of used ArtistCreditNAmes
-		  $ac_old[] = $ac[$artist_id.'_'.$work_id]->id;
+		  $ac_old[] = $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->id;
 	  }
 
 	  // Delete not used ArtistCreditNames

@@ -93,6 +93,7 @@ class TrackController extends Controller {
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];
+		  $join_phrase  = $req['artist_credit']['join'][$n];
 		  $artists[$artist_id]	= Artist::find($artist_id)->name; // artiat counter
 
 		  // Creating new ArtistCreditName
@@ -102,16 +103,16 @@ class TrackController extends Controller {
 			  'work_type_id'		=> $work_id,
 			  'position'			=> '',
 			  'name'				=> Artist::find($artist_id)->name,
-			  'join_phrase'			=> '&',
+			  'join_phrase'			=> $join_phrase,
 		  ];
 
-		  $ac[$artist_id.'_'.$work_id]	= new ArtistCreditName($ac_new);
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= new ArtistCreditName($ac_new);
 
 		  // Sets position. Not important for now there is no ordering in form
 		  // TODO make ordering in form
-		  $ac[$artist_id.'_'.$work_id]->position = $n;
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->position = $n;
 		  // Saving ArtistCreditNames
-		  $ac[$artist_id.'_'.$work_id]->save();
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->save();
 	  }
 	  
 	  $artists_credit->artist_count	= count($artists);
@@ -241,14 +242,16 @@ class TrackController extends Controller {
 
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];
+		  $join_phrase  = $req['artist_credit']['join'][$n];
 		  $artists[$artist_id]	= Artist::find($artist_id)->name; // artiat counter
 
 		  // Checking if ArtistCreditName already exists
-		  $ac[$artist_id.'_'.$work_id]	= ArtistCreditName::where('work_type_id',(int)$work_id)
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= ArtistCreditName::where('work_type_id',(int)$work_id)
 			  ->where('artist_id',$artist_id)
+			  ->where('join_phrase',$join_phrase)
 			  ->where('artist_credit_id',$track->credit->id)
 			  ->first();
-		  if ($ac[$artist_id.'_'.$work_id] == null) {
+		  if ($ac[$artist_id.'_'.$work_id.'_'.$join_phrase] == null) {
 			  // Creating new ArtistCreditName
 			  $ac_new	= [
 				  'artist_credit_id'	=> $track->credit->id,
@@ -256,19 +259,19 @@ class TrackController extends Controller {
 				  'work_type_id'		=> $work_id,
 				  'position'			=> '',
 				  'name'				=> Artist::find($artist_id)->name,
-				  'join_phrase'			=> '&',
+				  'join_phrase'			=> $join_phrase,
 			  ];
 
-			  $ac[$artist_id.'_'.$work_id]	= new ArtistCreditName($ac_new);
+			  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= new ArtistCreditName($ac_new);
 		  }
 		  // Sets position. Not important for now there is no ordering in form
 		  // TODO make ordering in form
-		  $ac[$artist_id.'_'.$work_id]->position = $n;
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->position = $n;
 		  // Saving ArtistCreditNames
-		  $ac[$artist_id.'_'.$work_id]->save();
+		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->save();
 
 		  // preventing deleting of used ArtistCreditNAmes
-		  $ac_old[] = $ac[$artist_id.'_'.$work_id]->id;
+		  $ac_old[] = $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]->id;
 	  }
 
 	  // Delete not used ArtistCreditNames

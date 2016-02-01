@@ -85,7 +85,7 @@
 {{--					{{ $track->credit->credit_name }}--}}
 					@forelse ($track->credit->credit_name as $row)
 						<div class="row">
-							{{ Html::linkRoute('artist.show', $row->artist->name, [$row->artist->id]) }} ({{ $row->work->name }})
+							{{ $row->join_phrase }} {{ Html::linkRoute('artist.show', $row->artist->name, [$row->artist->id]) }} ({{ $row->work->name }})
 						</div>
 					@empty
 						<div class="row">{{ trans('htmusic.no_credits_found') }}</div>
