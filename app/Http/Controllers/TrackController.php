@@ -94,7 +94,7 @@ class TrackController extends Controller {
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];
 		  $join_phrase  = $req['artist_credit']['join'][$n];
-		  $artists[$artist_id]	= Artist::find($artist_id)->name; // artiat counter
+		  $artists[$artist_id]	= $join_phrase.' '.Artist::find($artist_id)->name; // artiat counter
 
 		  // Creating new ArtistCreditName
 		  $ac_new	= [
@@ -117,7 +117,7 @@ class TrackController extends Controller {
 	  
 	  $artists_credit->artist_count	= count($artists);
 	  $artists_credit->ref_count	= count($ac);
-	  $artists_credit->name			= implode(' & ',$artists);
+	  $artists_credit->name			= trim(implode(' ',$artists),' &');
 	  $artists_credit->save();
 
 	  $req['artist_credit_id']		= $artists_credit->id;
@@ -243,7 +243,7 @@ class TrackController extends Controller {
 	  foreach($req['artist_credit']['work'] as $n => $work_id) {
 		  $artist_id	= $req['artist_credit']['id'][$n];
 		  $join_phrase  = $req['artist_credit']['join'][$n];
-		  $artists[$artist_id]	= Artist::find($artist_id)->name; // artiat counter
+		  $artists[$artist_id]	= $join_phrase.' '.Artist::find($artist_id)->name; // artiat counter
 
 		  // Checking if ArtistCreditName already exists
 		  $ac[$artist_id.'_'.$work_id.'_'.$join_phrase]	= ArtistCreditName::where('work_type_id',(int)$work_id)
@@ -279,7 +279,7 @@ class TrackController extends Controller {
 
 	  $track->credit->artist_count	= count($artists);
 	  $track->credit->ref_count		= count($ac);
-	  $track->credit->name			= implode(' & ',$artists);
+	  $track->credit->name			= trim(implode(' ',$artists),' &');
 	  $track->credit->save();
 
 	  // Saving track data
