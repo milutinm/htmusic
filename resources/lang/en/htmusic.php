@@ -62,6 +62,9 @@ return [
 	'release'		=> 'release',
 	'releases'		=> 'releases',
 
+	// images
+	'images'		=> 'images',
+
 	'male'			=> 'male',
 	'female'		=> 'female',
 	'other'			=> 'other',
@@ -71,6 +74,7 @@ return [
 	'no_releases_found'	=> 'No releases found!',
 	'no_credits_found'	=> 'No credits found!',
 	'no_tracks_found'	=> 'No tracks found!',
+	'no_images_found'	=> 'No images found!',
 	'are_you_sure'		=> 'Are you sure?',
 
 

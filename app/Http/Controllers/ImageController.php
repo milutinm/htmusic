@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Images;
+use App\Image;
 use Storage;
 
 class ImageController extends Controller {
@@ -16,7 +16,7 @@ class ImageController extends Controller {
   {
 	  // Temporary actions to download pictures
 	  // no thumb http://konpa.info/cover-300/000000.jpg
-	  $images = Images::remote()->limit(15)->get();
+	  $images = Image::remote()->limit(15)->get();
 
 	  foreach ($images as &$row) {
 		  $row->ext	= array_pop((explode('.',$row->source)));
@@ -113,10 +113,11 @@ class ImageController extends Controller {
 	public function display($id) {
 		// https://laracasts.com/discuss/channels/laravel/laravel-file-storage
 		// https://laracasts.com/discuss/channels/general-discussion/storage-get-image-as-file
-		$image	= Images::find($id);
-		if (Storage::disk('images')->has($image->path)) {
+		$image	= Image::find($id);
+		if (is_object($image) && Storage::disk('images')->has($image->path)) {
 			return response(Storage::disk('images')->get($image->path),200)->header('Content-Type', $image->mime);
-//			return Response::download($path);
+		} else {
+			return response(Storage::disk('images')->get('image_not_found.png'),200)->header('Content-Type', 'image/png');
 		}
 	}
 }

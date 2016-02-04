@@ -4,7 +4,12 @@
 	 <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
-            <h1>{{ $release->name }} ({{ Carbon::createFromFormat('Y-m-d',$release->date)->format('Y') }})</h1>
+			<div class="col-md-2">
+				{{ Html::image(URL::route('image.display', $release->images[0]->id), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
+			</div>
+			<div class="col-md-10">
+            	<h1>{{ $release->name }} ({{ Carbon::createFromFormat('Y-m-d',$release->date)->format('Y') }})</h1>
+			</div>
         </div>
     </div>
 	<div class="container">
@@ -128,6 +133,20 @@
 						</div>
 					@empty
 						<div class="row">{{ trans('htmusic.no_tracks_found') }}</div>
+					@endforelse
+
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ trans('htmusic.images') }}</div>
+				<div class="panel-body">
+					@forelse ($release->images as $row)
+						<div class="col-md-3">
+							{{ Html::image(URL::route('image.display', $row->id), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
+						</div>
+					@empty
+						<div class="row">{{ trans('htmusic.no_images_found') }}</div>
 					@endforelse
 
 				</div>
