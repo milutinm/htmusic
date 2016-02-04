@@ -152,11 +152,26 @@ class DBSeeder extends Seeder
 			'join_phrase'		=> '&',
 		];
 
-		$artist_credit_d	= [
-//			'id'			=> '',
-			'name'			=> '',
-			'artist_count'	=> 1,
-			'ref_count'		=> 1,
+		$artist_credit_d	    = [
+//			'id'    			=> '',
+			'name'	    		=> '',
+			'artist_count'  	=> 1,
+			'ref_count'		    => 1,
+		];
+
+	    $image_d				= [
+//		    'id'                => '',
+	        'caption'           => '',
+		    'description'       => '',
+		    'ext'               => '',
+		    'mime'		        => '',
+		    'width'             => '',
+		    'height'            => '',
+	    ];
+
+		$image_release			= [
+			'image_id'			=> '',
+			'release_id'		=> '',
 		];
 
 		$file = base_path('_storage/seed.csv');
@@ -228,12 +243,16 @@ class DBSeeder extends Seeder
 				$artist_credit['name']	= $row['head_band'];
 				$out['artist_credit'][]	= $artist_credit;
 
+				//-----------------------------
+
 				$artist_credit_name						= $artist_credit_name_d;
 				$artist_credit_name['id']				= $credit_id;
 				$artist_credit_name['artist_credit_id']	= $credit_id;
 				$artist_credit_name['artist_id']		= $row['artists_id'];
 				$artist_credit_name['name']				= $row['head_band'];
 				$out['artist_credit_name'][]			= $artist_credit_name;
+
+				//-----------------------------
 
 				$releases_id[] = $row['head_album'];
 				$row['albums_id'] = array_search($row['head_album'],$releases_id);
@@ -247,8 +266,26 @@ class DBSeeder extends Seeder
 					$release['medium_id'] = $mediums_id[$row['medium']];
 				}
 
-//				print_r($release);
 				$out['releases'][]	= $release;
+
+				//----------------------------
+				if ($row['cover'] != '' && $row['cover'] != 'http://konpa.info/cover-300/000000.jpg') {
+					$image = $image_d;
+					$image['id']			= $release['id'];
+					$image['caption']		= $row['head_band'] . ' - ' . $release['name'];
+					$image['description']	= $row['head_band'] . ' - ' . $release['name'];
+					$image['source']		= $row['cover'];
+
+					$out['images'][]		= $image;
+
+					//-----------------------------
+
+					$image_release['image_id']		= $image['id'];
+					$image_release['release_id']	= $release['id'];
+
+					$out['image_release'][] = $image_release;
+				}
+				//-----------------------------
 			}
 
 			$credit_id++;
