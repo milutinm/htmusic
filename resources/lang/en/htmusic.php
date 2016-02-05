@@ -62,6 +62,13 @@ return [
 	'release'		=> 'release',
 	'releases'		=> 'releases',
 
+	// link
+	'link'			=> 'link',
+	'links'			=> 'links',
+	'url'			=> 'url',
+	'caption'		=> 'caption',
+	'description'	=> 'description',
+
 	// images
 	'images'		=> 'images',
 
@@ -75,6 +82,8 @@ return [
 	'no_credits_found'	=> 'No credits found!',
 	'no_tracks_found'	=> 'No tracks found!',
 	'no_images_found'	=> 'No images found!',
+	'no_links_found'	=> 'No links found!',
+
 	'are_you_sure'		=> 'Are you sure?',
 
 

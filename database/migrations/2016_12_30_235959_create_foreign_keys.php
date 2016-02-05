@@ -123,6 +123,36 @@ class CreateForeignKeys extends Migration {
 				->onDelete('no action')
 				->onUpdate('no action');
 		});
+		Schema::table('artist_link', function(Blueprint $table) {
+			$table->foreign('artist_id')->references('id')->on('artists')
+						->onDelete('no action')
+						->onUpdate('no action');
+		});
+		Schema::table('artist_link', function(Blueprint $table) {
+			$table->foreign('link_id')->references('id')->on('links')
+						->onDelete('no action')
+						->onUpdate('no action');
+		});
+		Schema::table('link_track', function(Blueprint $table) {
+			$table->foreign('track_id')->references('id')->on('tracks')
+						->onDelete('no action')
+						->onUpdate('no action');
+		});
+		Schema::table('link_track', function(Blueprint $table) {
+			$table->foreign('link_id')->references('id')->on('links')
+						->onDelete('no action')
+						->onUpdate('no action');
+		});
+		Schema::table('link_release', function(Blueprint $table) {
+			$table->foreign('release_id')->references('id')->on('releases')
+						->onDelete('no action')
+						->onUpdate('no action');
+		});
+		Schema::table('link_release', function(Blueprint $table) {
+			$table->foreign('link_id')->references('id')->on('links')
+						->onDelete('no action')
+						->onUpdate('no action');
+		});
 	}
 
 	public function down()
@@ -195,6 +225,24 @@ class CreateForeignKeys extends Migration {
 		});
 		Schema::table('image_track', function(Blueprint $table) {
 			$table->dropForeign('image_track_track_id_foreign');
+		});
+		Schema::table('artist_link', function(Blueprint $table) {
+			$table->dropForeign('artist_link_artist_id_foreign');
+		});
+		Schema::table('artist_link', function(Blueprint $table) {
+			$table->dropForeign('artist_link_link_id_foreign');
+		});
+		Schema::table('link_track', function(Blueprint $table) {
+			$table->dropForeign('link_track_track_id_foreign');
+		});
+		Schema::table('link_track', function(Blueprint $table) {
+			$table->dropForeign('link_track_link_id_foreign');
+		});
+		Schema::table('link_release', function(Blueprint $table) {
+			$table->dropForeign('link_release_release_id_foreign');
+		});
+		Schema::table('link_release', function(Blueprint $table) {
+			$table->dropForeign('link_release_link_id_foreign');
 		});
 	}
 }

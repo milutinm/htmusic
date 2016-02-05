@@ -30,4 +30,7 @@ class Track extends Model {
 		return $this->belongsToMany('App\Genre');
 	}
 
+	public function links() {
+		return $this->belongsToMany('App\Link');
+	}
 }

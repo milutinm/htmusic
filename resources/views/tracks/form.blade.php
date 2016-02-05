@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-	<pre>
-	{{--{{ var_dump($release) }}--}}
-	{{--{{ var_dump($artist_credit) }}--}}
-	</pre>
 	<div class="container">
 		<div class="row">
 			<div class="panel panel-default">

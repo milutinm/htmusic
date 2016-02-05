@@ -33,4 +33,8 @@ class Artist extends Model {
 	public function releases() {
 		return $this->hasMany('App\ArtistCreditName');
 	}
+
+	public function links() {
+		return $this->belongsToMany('App\Link');
+	}
 }

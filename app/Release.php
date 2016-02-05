@@ -53,4 +53,8 @@ class Release extends Model {
 	{
 		return $this->belongsToMany('App\Image');
 	}
+
+	public function links() {
+		return $this->belongsToMany('App\Link');
+	}
 }

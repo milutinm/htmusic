@@ -117,7 +117,8 @@ class ImageController extends Controller {
 		if (is_object($image) && Storage::disk('images')->has($image->path)) {
 			return response(Storage::disk('images')->get($image->path),200)->header('Content-Type', $image->mime);
 		} else {
-			return response(Storage::disk('images')->get('image_not_found.png'),200)->header('Content-Type', 'image/png');
+			return [Storage::disk('images')->get($image->path)];
+//			return response(Storage::disk('images')->get('image_not_found.png'),200)->header('Content-Type', 'image/png');
 		}
 	}
 }

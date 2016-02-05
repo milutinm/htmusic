@@ -34,7 +34,6 @@ class Image extends Model {
 		$dir	= array_reverse(str_split(str_pad(dechex($this->id),10,0,STR_PAD_LEFT),2));
 		array_pop($dir);
 		return implode('/',$dir).'/'.str_pad(dechex($this->id),8,0,STR_PAD_LEFT).'.'.$this->ext;
-//		return storage_path('images/'.implode('/',$dir).'/'.str_pad(dechex($this->id),8,0,STR_PAD_LEFT).'.'.$this->ext);
 	}
 
 	public function getUrlAttribute() {

@@ -305,5 +305,16 @@ class TrackController extends Controller {
 
 	  return redirect()->route('track.index')->with('alert-success', [trans('htmusic.deleted')]);
   }
-  
+
+	public function search($str){
+		$out	= Track::where('name','LIKE',$str.'%')->get(['id','name','release_id']);
+
+		foreach($out as &$row) {
+			$release		= $row->release()->first();
+			$row->release	= $release->name;
+			$row->artist	= $release->credit()->first()->name;
+		}
+
+		return $out;
+	}
 }

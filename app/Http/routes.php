@@ -44,9 +44,13 @@ Route::group(['middleware' => ['web']], function () {
 	Route::resource('medium', 'MediumController');
 	Route::resource('genre', 'GenreController');
 	Route::resource('image', 'ImageController');
+	Route::resource('link', 'LinkController');
+
 	Route::any('artist/search/{str}',['as' => 'artist.search', 'uses' => 'ArtistController@search']);
 	Route::any('release/search/{str}',['as' => 'release.search', 'uses' => 'ReleaseController@search']);
 	Route::any('label/search/{str}',['as' => 'label.search', 'uses' => 'LabelController@search']);
+	Route::any('track/search/{str}',['as' => 'track.search', 'uses' => 'TrackController@search']);
+
 	Route::any('image/display/{img}',['as' => 'image.display', 'uses' => 'ImageController@display']);
 });
 
