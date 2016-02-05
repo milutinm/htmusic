@@ -98,7 +98,7 @@
 										{{ Html::linkRoute('track.show', $row->name, [$row->id]) }} - {{ $row->release->name }} @if($row->release->date != '0000-00-00')({{ Carbon::createFromFormat('Y-m-d',$row->release->date)->format('Y') }})@endif
 
 									@else
-										{{ Html::linkRoute('release.show', $row->name, [$row->id]) }} @if($row->date != '0000-00-00')({{ Carbon::createFromFormat('Y-m-d',$row->date)->format('Y') }})@endif
+										{{ Html::linkRoute('release.show', $row->name, [$row->id]) }} @if($row->date != '0000-00-00')({{ substr($row->date,0,4) }})@endif
 									@endif
 								</div>
 								@endforeach

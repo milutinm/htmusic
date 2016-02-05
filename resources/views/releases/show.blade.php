@@ -8,7 +8,7 @@
 				{{ Html::image(URL::route('image.display', $release->images[0]->id), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
 			</div>
 			<div class="col-md-10">
-            	<h1>{{ $release->name }} ({{ Carbon::createFromFormat('Y-m-d',$release->date)->format('Y') }})</h1>
+            	<h1>{{ $release->name }} ({{ substr($release->date,0,4) }})</h1>
 			</div>
         </div>
     </div>
