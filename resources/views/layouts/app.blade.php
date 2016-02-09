@@ -56,6 +56,7 @@
 				<li class="{{ Request::is('artist*') ? 'active' : '' }}">{{ Html::linkRoute('artist.index', trans('htmusic.artists')) }}</li>
 				<li class="{{ Request::is('release*') ? 'active' : '' }}">{{ Html::linkRoute('release.index', trans('htmusic.releases')) }}</li>
 				<li class="{{ Request::is('track*') ? 'active' : '' }}">{{ Html::linkRoute('track.index', trans('htmusic.tracks')) }}</li>
+				<li class="{{ Request::is('link*') ? 'active' : '' }}">{{ Html::linkRoute('link.index', trans('htmusic.link')) }}</li>
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>

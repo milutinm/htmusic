@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LinkRequest extends Request
 {
@@ -24,13 +25,13 @@ class LinkRequest extends Request
     public function rules()
     {
         return [
-            'id'		 		=> '',
+//            'id'		 		=> '',
             'caption'			=> 'required',
 //            'description'		=> '',
             'url'       		=> 'required|url',
-            'artist_id.*'	    => 'exists:artist,id',
-            'release_id.*'		=> 'exists:release,id',
-            'track_id.*'		=> 'exists:track,id',
+            'artist_id.*'	    => 'exists:artists,id',
+            'release_id.*'		=> 'exists:releases,id',
+            'track_id.*'		=> 'exists:tracks,id',
         ];
     }
 }

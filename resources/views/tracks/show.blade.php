@@ -93,6 +93,33 @@
 
 				</div>
 			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ trans('htmusic.images') }}</div>
+				<div class="panel-body">
+					@forelse ($track->images as $row)
+						<div class="col-md-3">
+							{{ Html::image(URL::route('image.display', $row->id), $track->name, ['class' => 'img-thumbnail img-responsive']) }}
+						</div>
+					@empty
+						<div class="row">{{ trans('htmusic.no_images_found') }}</div>
+					@endforelse
+				</div>
+			</div>
+
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ trans('htmusic.links') }}</div>
+				<div class="panel-body">
+					@forelse ($track->links as $row)
+						<div class="col-md-3">
+							{{ Html::link( $row->url, $row->caption, ['target' => '_blank', 'title' => $row->description]) }} ({{ Html::linkRoute('link.show', trans('htmusic.view'), [$row->id])}})
+						</div>
+					@empty
+						<div class="row">{{ trans('htmusic.no_links_found') }}</div>
+					@endforelse
+				</div>
+			</div>
+
 		</div>
 	</div>
 

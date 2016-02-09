@@ -30,6 +30,11 @@ class Track extends Model {
 		return $this->belongsToMany('App\Genre');
 	}
 
+	public function images()
+	{
+		return $this->belongsToMany('App\Image');
+	}
+
 	public function links() {
 		return $this->belongsToMany('App\Link');
 	}

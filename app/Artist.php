@@ -34,6 +34,11 @@ class Artist extends Model {
 		return $this->hasMany('App\ArtistCreditName');
 	}
 
+	public function images()
+	{
+		return $this->belongsToMany('App\Image');
+	}
+
 	public function links() {
 		return $this->belongsToMany('App\Link');
 	}

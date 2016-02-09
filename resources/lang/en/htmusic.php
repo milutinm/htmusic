@@ -11,6 +11,7 @@ return [
 	'submit'		=> 'submit',
 	'delete'		=> 'delete',
 	'deleted'		=> 'deleted',
+	'view'			=> 'view',
 	'edit'			=> 'edit',
 	'saved'			=> 'saved',
 	'new'			=> 'new',

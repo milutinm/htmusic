@@ -17,11 +17,11 @@
 					<div class="form-group">
 						<div id="artist_search_list" class="row"></div>
 						<div id="artist_selected" class="col-md-offset-2 col-md-10 form-inline">
-							@if (isset($artist))
-								@foreach($artist as $row)
+							@if($link->artists()->count() > 0)
+								@foreach($link->artists as $row)
 								<div class="row">
-									<input type="hidden" value="{{ $row->artist_id }}" name="artist_credit[id][]" />
-									<a href="/artist/{{ $row->artist_id }}" target="_blank">{{ $row->name }}</a>
+									<input type="hidden" value="{{ $row->id }}" name="artist_id[]" />
+									<a href="/artist/{{ $row->id }}" target="_blank">{{ $row->name }}</a>
 									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								</div>
 								@endforeach
@@ -38,8 +38,8 @@
 					<div class="form-group">
 						<div id="release_search_list" class="row"></div>
 						<div id="release_selected" class="col-md-offset-2 col-md-10 form-inline">
-							@if (isset($release))
-								@foreach($release as $row)
+							@if($link->releases()->count() > 0)
+								@foreach($link->releases as $row)
 								<div class="row">
 									<input type="hidden" value="{{ $row->id }}" name="release_id[]" />
 									<a href="/release/{{ $row->id }}" target="_blank">{{ $row->name }}</a>
@@ -59,8 +59,8 @@
 					<div class="form-group">
 						<div id="track_search_list" class="row"></div>
 						<div id="track_selected" class="col-md-offset-2 col-md-10 form-inline">
-							@if (isset($track))
-								@foreach($track as $row)
+							@if($link->tracks()->count() > 0)
+								@foreach($link->tracks as $row)
 									<div class="row">
 										<input type="hidden" value="{{ $row->id }}" name="track_id[]" />
 										<a href="/track/{{ $row->id }}" target="_blank">{{ $row->name }}</a>
