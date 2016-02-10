@@ -24,7 +24,7 @@ class TrackController extends Controller {
    */
   public function index()
   {
-	  $out['tracks']	= Track::orderBy('name')->paginate(45);
+	  $out['tracks']	= Track::orderBy('name')->paginate(20);
 
 	  return view('tracks.list',$out);
   }

@@ -20,7 +20,7 @@
 					<div class="row">
 					@forelse ($releases as $row)
 						{{--<div class="row">--}}
-							<div class="col-md-3 album-thumb">
+							<div class="col-md-3 list-thumb">
 								<a href="{{ route('release.show',['release' => $row->id]) }}">
 {{--									<pre>{{ print_r($row->image) }}</pre>--}}
 									<div class="img-wrap">
