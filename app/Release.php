@@ -57,4 +57,12 @@ class Release extends Model {
 	public function links() {
 		return $this->belongsToMany('App\Link');
 	}
+
+	public function getImageAttribute() {
+		$image = $this->images()->first();
+		if ($image) {
+			return $image;
+		}
+		return ['id' => 0];
+	}
 }

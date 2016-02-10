@@ -9,7 +9,7 @@ class Image extends Model {
 	protected $table = 'images';
 	public $timestamps = true;
 	protected $fillable = array('caption', 'description', 'ext', 'mime_type', 'width', 'height');
-	protected $visible = array('caption', 'description', 'ext', 'mime_type', 'width', 'height');
+	protected $visible = array('id','caption', 'description', 'ext', 'mime_type', 'width', 'height');
 
 	public function artists()
 	{

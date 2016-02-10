@@ -1,10 +1,18 @@
 {
   "private": true,
   "devDependencies": {
-    "gulp": "^3.8.8"
+    "gulp": "^3.8.8",
+    "gulp-load-plugins": "^1.2.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-util": "^3.0.7",
+    "parse-filepath": "^0.6.3",
+    "require-dir": "^0.3.0",
+    "vinyl-buffer": "^1.0.0",
+    "watchify": "^3.7.0"
   },
   "dependencies": {
-    "laravel-elixir": "^4.0.0",
-    "bootstrap-sass": "^3.0.0"
+    "bootstrap-sass": "^3.0.0",
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^4.0.0"
   }
 }

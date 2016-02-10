@@ -1,2 +1,14 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.album-thumb {
+  height: 310px;
+}
+
+.album-thumb .title {
+  height: 45px;
+  font-weight: bold;
+}
+
+.album-thumb .img-wrap {
+  height: 270px;
+}

@@ -20,7 +20,16 @@
 					<div class="row">
 					@forelse ($releases as $row)
 						{{--<div class="row">--}}
-							<div class="col-md-4">{{ Html::linkRoute('release.show', $row->name.' ('.$row->credit->name.')', [$row->id])}}</div>
+							<div class="col-md-3 album-thumb">
+								<a href="{{ route('release.show',['release' => $row->id]) }}">
+{{--									<pre>{{ print_r($row->image) }}</pre>--}}
+									<div class="img-wrap">
+										{{ Html::image(URL::route('image.display', $row->image), $row->name, ['class' => 'img-thumbnail img-responsive', 'width' => '100%']) }}
+									</div>
+									<div class="title">{{ $row->name }}</div>
+									{{--<div class="credit">{{ $row->credit->name }}</div>--}}
+								</a>
+							</div>
 						{{--</div>--}}
 					@empty
 						<div class="row">{{ trans('htmusic.no_releases_found') }}</div>

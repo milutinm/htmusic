@@ -5,7 +5,7 @@
     <div class="jumbotron">
         <div class="container">
 			<div class="col-md-2">
-				{{ Html::image(URL::route('image.display', $release->images[0]->id), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
+				{{ Html::image(URL::route('image.display', $release->image), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
 			</div>
 			<div class="col-md-10">
             	<h1>{{ $release->name }} ({{ substr($release->date,0,4) }})</h1>
