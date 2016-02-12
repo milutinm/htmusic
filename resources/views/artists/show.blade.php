@@ -3,17 +3,23 @@
 @section('content')
     <div class="jumbotron">
         <div class="container">
-            <h1>{{ $artist->name }}</h1>
-            <p>{{ $artist->bio }}</p>
+			<div class="col-md-2">
+				{{ Html::image(URL::route('image.display', $artist->image), $artist->name, ['class' => 'img-thumbnail img-responsive']) }}
+			</div>
+			<div class="col-md-10">
+				<h1>{{ $artist->name }}</h1>
+				<p>{{ $artist->bio }}</p>
+			</div>
         </div>
     </div>
 	<div class="container">
-		<div class="row">
+		<div class="col-md-8">
+
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2 class="col-md-8">{{ $artist->name }}</h2>
+					<h2>{{ $artist->name }}</h2>
 					@can('admin')
-						<div class="col-md-4">
+						<div class="row">
 							{!! Form::open([
 								'method' => 'DELETE',
 								'route' => ['artist.destroy', $artist->id],
@@ -57,14 +63,19 @@
 						<div class="col-md-2">{{ trans('htmusic.name') }}:</div>
 						<div class="col-md-10">{{ $artist->name }}</div>
 					</div>
+					@can('admin')
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.sort_name') }}:</div>
 						<div class="col-md-10">{{ $artist->sort_name }}</div>
 					</div>
+					@endcan
+					@if ($artist->begin_date != '0000-00-00')
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.begin_date') }}:</div>
 						<div class="col-md-10">{{ $artist->begin_date }}</div>
 					</div>
+					@endif
+					@if ($artist->is_ended)
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.is_ended') }}:</div>
 						<div class="col-md-10">{{ $artist->is_ended }}</div>
@@ -73,6 +84,7 @@
 						<div class="col-md-2">{{ trans('htmusic.end_date') }}:</div>
 						<div class="col-md-10">{{ $artist->end_date }}</div>
 					</div>
+					@endif
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.type') }}:</div>
 						<div class="col-md-10">{{ $artist->type->name }}</div>
@@ -89,36 +101,72 @@
 				<div class="panel-body">
 					{{--{{ $artist->releases() }}--}}
 					@forelse ($credits as $work => $credit_names)
-						<div class="row">
+						<div class="">
+							@if ($work != 'N/A')
 							<h2>{{ $work }}</h2>
+							@endif
+
 							@foreach ($credit_names as $w_type => $works)
-								<h3>{{ $w_type }}</h3>
-								@foreach ($works as $row)
 								<div class="row">
+								<h3>{{ $w_type }}</h3>
+								@if ($w_type == 'tracks')
+									<table class="table table-striped">
+										<thead>
+											<tr>
+												<th>{{ trans('htmusic.title') }}</th>
+												<th>{{ trans('htmusic.release') }}</th>
+												<th>{{ trans('htmusic.year') }}</th>
+											</tr>
+										</thead>
+										<tbody>
+								@endif
+
+								@foreach ($works as $row)
 									@if ($w_type == 'tracks')
-										{{ Html::linkRoute('track.show', $row->name, [$row->id]) }} - {{ $row->release->name }} @if($row->release->date != '0000-00-00')({{ Carbon::createFromFormat('Y-m-d',$row->release->date)->format('Y') }})@endif
+										<tr>
+											<td>{{ Html::linkRoute('track.show', $row->name, [$row->id]) }}</td>
+											<td>{{ $row->release->name }}</td>
+											<td>@if($row->release->date != '0000-00-00'){{ substr($row->release->date,0,4) }}@else&nbsp;@endif</td>
+										</tr>
 									@else
-										{{ Html::linkRoute('release.show', $row->name, [$row->id]) }} @if($row->date != '0000-00-00')({{ substr($row->date,0,4) }})@endif
+										<div class="col-md-4">
+											<a href="{{ route('release.show',['release' => $row->id]) }}">
+												{{--									<pre>{{ print_r($row->image) }}</pre>--}}
+												<div class="img-wrap">
+													{{ Html::image(URL::route('image.display', $row->image), $row->name, ['class' => 'img-thumbnail img-responsive', 'width' => '100%']) }}
+												</div>
+												<div class="title">{{ $row->name }} @if($row->date != '0000-00-00')({{ substr($row->date,0,4) }})@endif</div>
+												{{--<div class="credit">{{ $row->credit->name }}</div>--}}
+											</a>
+										</div>
 									@endif
-								</div>
 								@endforeach
+
+								@if ($w_type == 'tracks')
+										</tbody>
+									</table>
+								@endif
+								</div>
 							@endforeach
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_credits_found') }}</div>
+						<div class="">{{ trans('htmusic.no_credits_found') }}</div>
 					@endforelse
 				</div>
 			</div>
 
+		</div>
+
+		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.images') }}</div>
 				<div class="panel-body">
 					@forelse ($artist->images as $row)
-						<div class="col-md-3">
+						<div class="col-md-6">
 							{{ Html::image(URL::route('image.display', $row->id), $artist->name, ['class' => 'img-thumbnail img-responsive']) }}
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_images_found') }}</div>
+						<div class="">{{ trans('htmusic.no_images_found') }}</div>
 					@endforelse
 				</div>
 			</div>
@@ -127,15 +175,14 @@
 				<div class="panel-heading">{{ trans('htmusic.links') }}</div>
 				<div class="panel-body">
 					@forelse ($artist->links as $row)
-						<div class="col-md-3">
+						<div>
 							{{ Html::link( $row->url, $row->caption, ['target' => '_blank', 'title' => $row->description]) }} ({{ Html::linkRoute('link.show', trans('htmusic.view'), [$row->id])}})
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_links_found') }}</div>
+						<div class="">{{ trans('htmusic.no_links_found') }}</div>
 					@endforelse
 				</div>
 			</div>
-
 		</div>
 	</div>
 

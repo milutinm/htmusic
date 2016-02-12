@@ -8,12 +8,12 @@
         </div>
     </div>
 	<div class="container">
-		<div class="row">
+		<div class="col-md-6">
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2 class="col-md-8">{{ $track->number }} - {{ $track->name }} - {{ Html::linkRoute('release.show', $track->release->name, [$track->release->id]) }}</h2>
+					<h2>{{ $track->number }} - {{ $track->name }} - {{ Html::linkRoute('release.show', $track->release->name, [$track->release->id]) }}</h2>
 					@can('admin')
-					<div class="col-md-4">
+					<div>
 						{!! Form::open([
 							'method' => 'DELETE',
 							'route' => ['track.destroy', $track->id],
@@ -93,6 +93,9 @@
 
 				</div>
 			</div>
+
+		</div>
+		<div class="col-md-6">
 
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.images') }}</div>

@@ -25,7 +25,8 @@
 								<div class="img-wrap">
 									{{ Html::image(URL::route('image.display', $row->image), $row->name, ['class' => 'img-thumbnail img-responsive', 'width' => '100%']) }}
 								</div>
-								<div class="title">{{ $row->name }}</div>
+								<div class="title">{{ $row->name }}<br />{{ $row->release->name }}</div>
+								{{--<div class="release">{{ $row->release->name }}</div>--}}
 								{{--<div class="credit">{{ $row->credit->name }}</div>--}}
 							</a>
 							</div>

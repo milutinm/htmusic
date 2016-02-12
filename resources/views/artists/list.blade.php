@@ -22,7 +22,6 @@
 						{{--<div class="row">--}}
 							<div class="col-md-3 list-thumb">
 								<a href="{{ route('artist.show',['release' => $row->id]) }}">
-									{{--									<pre>{{ print_r($row->image) }}</pre>--}}
 									<div class="img-wrap">
 										{{ Html::image(URL::route('image.display', $row->image), $row->name, ['class' => 'img-thumbnail img-responsive', 'width' => '100%']) }}
 									</div>

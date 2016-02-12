@@ -8,17 +8,17 @@
 				{{ Html::image(URL::route('image.display', $release->image), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
 			</div>
 			<div class="col-md-10">
-            	<h1>{{ $release->name }} ({{ substr($release->date,0,4) }})</h1>
+            	<h1>{{ $release->name }} @if($release->date != '0000-00-00')({{ substr($release->date,0,4) }})@endif</h1>
 			</div>
         </div>
     </div>
 	<div class="container">
-		<div class="row">
+		<div class="col-md-8">
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2 class="col-md-8">{{ $release->name }}</h2>
+					<h2>{{ $release->name }}</h2>
 					@can('admin')
-					<div class="col-md-4">
+					<div class="row">
 						{!! Form::open([
 							'method' => 'DELETE',
 							'route' => ['release.destroy', $release->id],
@@ -48,10 +48,10 @@
 					@endcan
 				</div>
 				<div class="panel-body">
-					<div class="row">
+					{{--<div class="row">--}}
 						{{--<div class="col-md-2">{{ trans('htmusic.name') }}:</div>--}}
 						{{--<div class="col-md-10">{{ $release->name }}</div>--}}
-					</div>
+					{{--</div>--}}
 					@if(isset($release->note))
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.note') }}:</div>
@@ -112,7 +112,11 @@
 				<div class="panel-body">
 					{{ $release->credit->name }}
 {{--					{{ $release->credit->credit_name }}--}}
+
 					@forelse ($release->credit->credit_name as $row)
+
+
+
 						<div class="row">
 							{{--{{ $row->name }}<br>--}}
 							{{ $row->join_phrase }} {{ Html::linkRoute('artist.show', $row->artist->name, [$row->artist->id]) }} ({{ $row->work->name }})
@@ -127,12 +131,41 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.tracks') }}</div>
 				<div class="panel-body">
+					<table class="table table-striped">
+						<thead>
+						<tr>
+							<th>{{ trans('htmusic.title') }}</th>
+						</tr>
+						</thead>
+						<tbody>
 					@forelse ($release->tracks as $row)
+						<tr>
+							<td>{{ Html::linkRoute('track.show', $row->name, [$row->id]) }}</td>
+						</tr>
+					@empty
+						<tr>
+							<td>{{ trans('htmusic.no_tracks_found') }}</td>
+						</tr>
+					@endforelse
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{ trans('htmusic.credits') }}</div>
+				<div class="panel-body">
+					{{ $release->credit->name }}
+					{{--					{{ $release->credit->credit_name }}--}}
+					@forelse ($release->credit->credit_name as $row)
 						<div class="row">
-							{{ Html::linkRoute('track.show', $row->name, [$row->id]) }}
+							{{--{{ $row->name }}<br>--}}
+							{{ $row->join_phrase }} {{ Html::linkRoute('artist.show', $row->artist->name, [$row->artist->id]) }} ({{ $row->work->name }})
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_tracks_found') }}</div>
+						<div class="row">{{ trans('htmusic.no_credits_found') }}</div>
 					@endforelse
 
 				</div>
@@ -142,11 +175,11 @@
 				<div class="panel-heading">{{ trans('htmusic.images') }}</div>
 				<div class="panel-body">
 					@forelse ($release->images as $row)
-						<div class="col-md-3">
+						<div class="col-md-6">
 							{{ Html::image(URL::route('image.display', $row->id), $release->name, ['class' => 'img-thumbnail img-responsive']) }}
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_images_found') }}</div>
+						<div>{{ trans('htmusic.no_images_found') }}</div>
 					@endforelse
 				</div>
 			</div>
@@ -155,11 +188,11 @@
 				<div class="panel-heading">{{ trans('htmusic.links') }}</div>
 				<div class="panel-body">
 					@forelse ($release->links as $row)
-						<div class="col-md-3">
+						<div>
 							{{ Html::link( $row->url, $row->caption, ['target' => '_blank', 'title' => $row->description]) }} ({{ Html::linkRoute('link.show', trans('htmusic.view'), [$row->id])}})
 						</div>
 					@empty
-						<div class="row">{{ trans('htmusic.no_links_found') }}</div>
+						<div>{{ trans('htmusic.no_links_found') }}</div>
 					@endforelse
 				</div>
 			</div>

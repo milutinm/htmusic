@@ -46,11 +46,13 @@ return [
 	'notes'			=> 'notes',
 	'genre'			=> 'genre',
 	'label'			=> 'label',
+	'year'			=> 'year',
 
 	// tracks
 	'length'		=> 'length',
 	'number'		=> 'number',
 	'position'		=> 'position',
+	'title'			=> 'title',
 
 	'credits'		=> 'credits',
 	'credit'		=> 'credit',

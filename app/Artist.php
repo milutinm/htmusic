@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Release;
+
 class Artist extends Model {
 
 	protected $table = 'artists';
@@ -30,9 +32,9 @@ class Artist extends Model {
 		return $this->hasMany('App\ArtistAlias','artist_id','id');
 	}
 
-	public function releases() {
-		return $this->hasMany('App\ArtistCreditName');
-	}
+//	public function releases() {
+//		return $this->hasMany('App\ArtistCreditName');
+//	}
 
 	public function images()
 	{
@@ -48,6 +50,15 @@ class Artist extends Model {
 		if ($image) {
 			return $image;
 		}
+
+		// fallback to release image if there is no user image
+		foreach ($this->credit_name as $row) {
+			if (isset($row->credit->release->images[0])) {
+				return $row->credit->release->images[0];
+			}
+		}
+
+		// fallback to image id = 0 that will show no image thumb
 		return ['id' => 0];
 	}
 }

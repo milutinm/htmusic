@@ -44,6 +44,13 @@ class Track extends Model {
 		if ($image) {
 			return $image;
 		}
+
+		// fallback to release image if there is no user image
+		if ($this->release->image) {
+			return $this->release->image;
+		}
+
+		// fallback to image id = 0 that will show no image thumb
 		return ['id' => 0];
 	}
 }
