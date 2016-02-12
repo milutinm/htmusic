@@ -43,7 +43,7 @@
 					@if(isset($track->length))
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.length') }}:</div>
-						<div class="col-md-10">{{ $track->length }}</div>
+						<div class="col-md-10">{{ gmdate('i:s', $track->length) }}</div>
 					</div>
 					@endif
 					@if(isset($track->notes))

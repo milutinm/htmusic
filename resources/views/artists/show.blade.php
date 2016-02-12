@@ -119,6 +119,8 @@
 											</tr>
 										</thead>
 										<tbody>
+								@else
+									<div>
 								@endif
 
 								@foreach ($works as $row)
@@ -129,13 +131,14 @@
 											<td>@if($row->release->date != '0000-00-00'){{ substr($row->release->date,0,4) }}@else&nbsp;@endif</td>
 										</tr>
 									@else
-										<div class="col-md-4">
+										<div class="col-md-4 list-thumb">
 											<a href="{{ route('release.show',['release' => $row->id]) }}">
 												{{--									<pre>{{ print_r($row->image) }}</pre>--}}
 												<div class="img-wrap">
 													{{ Html::image(URL::route('image.display', $row->image), $row->name, ['class' => 'img-thumbnail img-responsive', 'width' => '100%']) }}
 												</div>
 												<div class="title">{{ $row->name }} @if($row->date != '0000-00-00')({{ substr($row->date,0,4) }})@endif</div>
+												<div class="info">{{ count($row->tracks) }} {{ trans('htmusic.tracks') }} @if($row->date != '0000-00-00')&middot; {{ substr($row->date,0,4) }}@endif</div>
 												{{--<div class="credit">{{ $row->credit->name }}</div>--}}
 											</a>
 										</div>
@@ -145,6 +148,8 @@
 								@if ($w_type == 'tracks')
 										</tbody>
 									</table>
+								@else
+									</div>
 								@endif
 								</div>
 							@endforeach

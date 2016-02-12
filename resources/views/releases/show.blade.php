@@ -135,16 +135,18 @@
 						<thead>
 						<tr>
 							<th>{{ trans('htmusic.title') }}</th>
+							<th>{{ trans('htmusic.length') }}</th>
 						</tr>
 						</thead>
 						<tbody>
 					@forelse ($release->tracks as $row)
 						<tr>
 							<td>{{ Html::linkRoute('track.show', $row->name, [$row->id]) }}</td>
+							<td>@if ($row->length > -0){{ gmdate('i:s', $row->length) }}@else&nbsp;@endif</td>
 						</tr>
 					@empty
 						<tr>
-							<td>{{ trans('htmusic.no_tracks_found') }}</td>
+							<td colspan="2">{{ trans('htmusic.no_tracks_found') }}</td>
 						</tr>
 					@endforelse
 

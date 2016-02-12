@@ -27,6 +27,7 @@
 										{{ Html::image(URL::route('image.display', $row->image), $row->name, ['class' => 'img-thumbnail img-responsive', 'width' => '100%']) }}
 									</div>
 									<div class="title">{{ $row->name }}</div>
+									<div class="info">{{ count($row->tracks) }} {{ trans('htmusic.tracks') }} @if($row->date != '0000-00-00')&middot; {{ substr($row->date,0,4) }}@endif</div>
 									{{--<div class="credit">{{ $row->credit->name }}</div>--}}
 								</a>
 							</div>

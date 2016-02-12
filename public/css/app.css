@@ -1,11 +1,20 @@
 .list-thumb {
-  height: 310px; }
+  margin-bottom: 15px; }
+
+.list-thumb div {
+  color: #000000; }
 
 .list-thumb .title {
   height: 45px;
   font-weight: bold; }
 
+.list-thumb .info {
+  font-size: 90%; }
+
 .list-thumb .img-wrap {
-  height: 270px; }
+  width: 20vw;
+  height: 20vw;
+  display: table-cell;
+  vertical-align: middle; }
 
 /*# sourceMappingURL=app.css.map */
