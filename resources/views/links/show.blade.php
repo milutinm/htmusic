@@ -11,27 +11,15 @@
 		<div class="row">
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2 class="col-md-8">{{ $link->name }}</h2>
+					<h2>
+					{{ $link->caption }}
 					@can('admin')
-						<div class="col-md-4">
-							{!! Form::open([
-								'method' => 'DELETE',
-								'route' => ['link.destroy', $link->id],
-								'class'	=> 'navbar-form navbar-right prompt-confirm',
-								'msg'	=> trans('htmusic.are_you_sure')
-							]) !!}
-								{!! Form::submit(trans('htmusic.delete'), ['class' => 'btn btn-danger']) !!}
-							{!! Form::close() !!}
-
-							{!! Form::open([
-								'method' => 'GET',
-								'route' => ['link.edit', $link->id],
-								'class'	=> 'navbar-form navbar-right',
-							]) !!}
-								{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
-							{!! Form::close() !!}
-						</div>
+					<div class="btn-group pull-right">
+						{{ Html::linkRoute('link.edit', trans('htmusic.edit'), ['link' => $link->id], ['class' => 'btn btn-default glyphicons-edit']) }}
+						{{ Html::linkRoute('link.destroy', trans('htmusic.delete'), ['link' => $link->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
+					</div>
 					@endcan
+					</h2>
 				</div>
 				<div class="panel-body">
 					<div class="row">

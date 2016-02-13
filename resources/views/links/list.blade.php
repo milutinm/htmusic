@@ -5,16 +5,11 @@
 		<div class="row">
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2 class="col-md-6">{{ trans('htmusic.links') }} ({{ $links->total() }})</h2>
+					<h2>{{ trans('htmusic.links') }} ({{ $links->total() }})
 					@can('admin')
-					{!! Form::open([
-						'method' => 'GET',
-						'route' => ['link.create'],
-						'class'	=> 'navbar-form navbar-right',
-					]) !!}
-					{!! Form::submit(trans('htmusic.new'), ['class' => 'btn btn-primary']) !!}
-					{!! Form::close() !!}
+						{{ Html::linkRoute('link.create', trans('htmusic.new'), [], ['class' => 'btn btn-default glyphicons-edit pull-right']) }}
 					@endcan
+					</h2>
 				</div>
 				<div class="panel-body">
 					<div class="row">

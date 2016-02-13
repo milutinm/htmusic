@@ -16,35 +16,14 @@
 		<div class="col-md-8">
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2>{{ $release->name }}</h2>
+					<h2>{{ $release->name }}
 					@can('admin')
-					<div class="row">
-						{!! Form::open([
-							'method' => 'DELETE',
-							'route' => ['release.destroy', $release->id],
-							'class'	=> 'navbar-form navbar-right prompt-confirm',
-							'msg'	=> trans('htmusic.are_you_sure')
-						]) !!}
-							{!! Form::submit(trans('htmusic.delete'), ['class' => 'btn btn-danger']) !!}
-						{!! Form::close() !!}
-
-						{!! Form::open([
-							'method' => 'GET',
-							'route' => ['release.edit', $release->id],
-							'class'	=> 'navbar-form navbar-right'
-						]) !!}
-							{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
-						{!! Form::close() !!}
-
-						{!! Form::open([
-								'method' => 'GET',
-								'route' => ['track.create'],
-								'class'	=> 'navbar-form navbar-right',
-							]) !!}
-								{!! Form::hidden('release_id',$release->id) !!}
-								{!! Form::submit(trans('htmusic.add_track'), ['class' => 'btn btn-primary']) !!}
-							{!! Form::close() !!}
-					</div>
+						<div class="btn-group pull-right">
+							{{ Html::linkRoute('track.create', trans('htmusic.add_track'), ['release_id' => $release->id], ['class' => 'btn btn-default glyphicons-edit']) }}
+							{{ Html::linkRoute('release.edit', trans('htmusic.edit'), ['link' => $release->id], ['class' => 'btn btn-default glyphicons-edit']) }}
+							{{ Html::linkRoute('release.destroy', trans('htmusic.delete'), ['link' => $release->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
+						</div>
+					</h2>
 					@endcan
 				</div>
 				<div class="panel-body">
@@ -108,34 +87,14 @@
 			</div>
 
 			<div class="panel panel-default">
-				<div class="panel-heading">{{ trans('htmusic.credits') }}</div>
-				<div class="panel-body">
-					{{ $release->credit->name }}
-{{--					{{ $release->credit->credit_name }}--}}
-
-					@forelse ($release->credit->credit_name as $row)
-
-
-
-						<div class="row">
-							{{--{{ $row->name }}<br>--}}
-							{{ $row->join_phrase }} {{ Html::linkRoute('artist.show', $row->artist->name, [$row->artist->id]) }} ({{ $row->work->name }})
-						</div>
-					@empty
-						<div class="row">{{ trans('htmusic.no_credits_found') }}</div>
-					@endforelse
-
-				</div>
-			</div>
-
-			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.tracks') }}</div>
 				<div class="panel-body">
 					<table class="table table-striped">
 						<thead>
 						<tr>
 							<th>{{ trans('htmusic.title') }}</th>
-							<th>{{ trans('htmusic.length') }}</th>
+							<th>&nbsp;</th>
+							{{--<th>{{ trans('htmusic.length') }}</th>--}}
 						</tr>
 						</thead>
 						<tbody>
@@ -158,20 +117,22 @@
 		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.credits') }}</div>
-				<div class="panel-body">
-					{{ $release->credit->name }}
-					{{--					{{ $release->credit->credit_name }}--}}
+				<div class="list-group">
 					@forelse ($release->credit->credit_name as $row)
-						<div class="row">
-							{{--{{ $row->name }}<br>--}}
-							{{ $row->join_phrase }} {{ Html::linkRoute('artist.show', $row->artist->name, [$row->artist->id]) }} ({{ $row->work->name }})
-						</div>
+						<a href="{{ route('artist.show', $row->artist->id) }}" class="list-group-item">
+							<h4>
+								@if($row->join_phrase != '&')<small>{{ $row->join_phrase }}</small>@endif
+								{{ $row->artist->name }}
+								@if($row->work->name != 'N/A')<small>{{ $row->work->name }}</small>@endif
+							</h4>
+						</a>
 					@empty
-						<div class="row">{{ trans('htmusic.no_credits_found') }}</div>
+						<div class="list-group-item">{{ trans('htmusic.no_credits_found') }}</div>
 					@endforelse
-
 				</div>
 			</div>
+
+
 
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.images') }}</div>
@@ -188,13 +149,14 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.links') }}</div>
-				<div class="panel-body">
+
+				<div class="list-group">
 					@forelse ($release->links as $row)
-						<div>
-							{{ Html::link( $row->url, $row->caption, ['target' => '_blank', 'title' => $row->description]) }} ({{ Html::linkRoute('link.show', trans('htmusic.view'), [$row->id])}})
-						</div>
+						<a href="{{ $row->url }}" class="list-group-item" target="_blank" title="{{ $row->description }}">
+							{{ $row->caption }}<!-- {{ $row->id }} -->
+						</a>
 					@empty
-						<div>{{ trans('htmusic.no_links_found') }}</div>
+						<div class="list-group-item">{{ trans('htmusic.no_links_found') }}</div>
 					@endforelse
 				</div>
 			</div>

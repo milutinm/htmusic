@@ -17,36 +17,15 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2>{{ $artist->name }}</h2>
+					<h2>{{ $artist->name }}
 					@can('admin')
-						<div class="row">
-							{!! Form::open([
-								'method' => 'DELETE',
-								'route' => ['artist.destroy', $artist->id],
-								'class'	=> 'navbar-form navbar-right prompt-confirm',
-								'msg'	=> trans('htmusic.are_you_sure')
-							]) !!}
-								{!! Form::submit(trans('htmusic.delete'), ['class' => 'btn btn-danger']) !!}
-							{!! Form::close() !!}
-
-							{!! Form::open([
-								'method' => 'GET',
-								'route' => ['artist.edit', $artist->id],
-								'class'	=> 'navbar-form navbar-right',
-							]) !!}
-								{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
-							{!! Form::close() !!}
-
-							{!! Form::open([
-								'method' => 'GET',
-								'route' => ['release.create'],
-								'class'	=> 'navbar-form navbar-right',
-							]) !!}
-								{!! Form::hidden('artist_id',$artist->id) !!}
-								{!! Form::submit(trans('htmusic.add_release'), ['class' => 'btn btn-primary']) !!}
-							{!! Form::close() !!}
+						<div class="btn-group pull-right">
+							{{ Html::linkRoute('release.create', trans('htmusic.add_track'), ['release_id' => $artist->id], ['class' => 'btn btn-default glyphicons-edit']) }}
+							{{ Html::linkRoute('artist.edit', trans('htmusic.edit'), ['link' => $artist->id], ['class' => 'btn btn-default glyphicons-edit']) }}
+							{{ Html::linkRoute('artist.destroy', trans('htmusic.delete'), ['link' => $artist->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
 						</div>
 					@endcan
+					</h2>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -114,6 +93,7 @@
 										<thead>
 											<tr>
 												<th>{{ trans('htmusic.title') }}</th>
+												<th>&nbsp;</th>
 												<th>{{ trans('htmusic.release') }}</th>
 												<th>{{ trans('htmusic.year') }}</th>
 											</tr>
@@ -127,6 +107,7 @@
 									@if ($w_type == 'tracks')
 										<tr>
 											<td>{{ Html::linkRoute('track.show', $row->name, [$row->id]) }}</td>
+											<td>@if ($row->length > -0){{ gmdate('i:s', $row->length) }}@else&nbsp;@endif</td>
 											<td>{{ $row->release->name }}</td>
 											<td>@if($row->release->date != '0000-00-00'){{ substr($row->release->date,0,4) }}@else&nbsp;@endif</td>
 										</tr>
@@ -178,16 +159,18 @@
 
 			<div class="panel panel-default">
 				<div class="panel-heading">{{ trans('htmusic.links') }}</div>
-				<div class="panel-body">
+
+				<div class="list-group">
 					@forelse ($artist->links as $row)
-						<div>
-							{{ Html::link( $row->url, $row->caption, ['target' => '_blank', 'title' => $row->description]) }} ({{ Html::linkRoute('link.show', trans('htmusic.view'), [$row->id])}})
-						</div>
+						<a href="{{ $row->url }}" class="list-group-item" target="_blank" title="{{ $row->description }}">
+							{{ $row->caption }}<!-- {{ $row->id }} -->
+						</a>
 					@empty
-						<div class="">{{ trans('htmusic.no_links_found') }}</div>
+						<div class="list-group-item">{{ trans('htmusic.no_links_found') }}</div>
 					@endforelse
 				</div>
 			</div>
+
 		</div>
 	</div>
 

@@ -204,6 +204,10 @@ class LinkController extends Controller
 			abort(403);
 		}
 
+		LinkRelease::where('link_id',$id)->delete();
+		LinkTrack::where('link_id',$id)->delete();
+		ArtistLink::where('link_id',$id)->delete();
+
 		Link::destroy($id);
 
 		return redirect()->route('link.index')->with('alert-success', [trans('htmusic.deleted')]);
