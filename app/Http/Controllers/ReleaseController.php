@@ -57,6 +57,7 @@ class ReleaseController extends Controller {
 	  $out['release_status']	= ReleaseStatus::lists('name','id');
 	  $out['release_type']		= ReleaseType::lists('name','id');
 	  $out['genre']				= Genre::orderBy('id')->lists('name','id');
+	  $out['genres_selected']	= [];
 
 
 
