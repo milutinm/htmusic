@@ -20,7 +20,7 @@
 					<h2>{{ $artist->name }}
 					@can('admin')
 						<div class="btn-group pull-right">
-							{{ Html::linkRoute('release.create', trans('htmusic.add_track'), ['release_id' => $artist->id], ['class' => 'btn btn-default glyphicons-edit']) }}
+							{{ Html::linkRoute('release.create', trans('htmusic.add_release'), ['artist_id' => $artist->id], ['class' => 'btn btn-default glyphicons-edit']) }}
 							{{ Html::linkRoute('artist.edit', trans('htmusic.edit'), ['link' => $artist->id], ['class' => 'btn btn-default glyphicons-edit']) }}
 							{{ Html::linkRoute('artist.destroy', trans('htmusic.delete'), ['link' => $artist->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
 						</div>
