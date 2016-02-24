@@ -52,14 +52,12 @@ class ArtistAliasController extends Controller {
 		  $out['alias']->artist_id		= $old['artist_id'];
 		  $out['alias']->artist_name	= Artist::findOrNew($old['artist_id'])->name;
 
-		  echo '<hr /><pre>'.print_r($out['alias'],1).'</pre><hr />';
-
 	  } elseif((int)Request::get('artist_id') > 0) {
 		  $out['alias']	= Artist::findOrNew(Request::get('artist_id'));
 		  $out['alias']->artist_id = (int)Request::get('artist_id');
 		  $out['alias']->artist_name = $out['alias']->name;
 	  } else {
-		  $out['alias']	= Artist::findOrNew(0);
+		  $out['alias']	= new Artist;
 	  }
 
 	  $out['alias_types']	= ArtistAliasType::lists('name','id');

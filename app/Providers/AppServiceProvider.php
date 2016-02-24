@@ -18,10 +18,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(GateContract $gate)
     {
         $this->registerPolicies($gate);
-
-        $gate->define('admin', function ($user) {
-            return $user->isAdmin();
-        });
     }
 
     /**

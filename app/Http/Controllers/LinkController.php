@@ -50,9 +50,9 @@ class LinkController extends Controller
 		];
 
 		if (count(Request::old())) {
-			$out['link']	= Request::old();
+			$out['link']	= new Link(Request::old());
 		} else {
-			$out['link']	= Link::findOrNew(0);
+			$out['link']	= new Link;
 		}
 
 		return view('links.form',$out);
@@ -132,7 +132,7 @@ class LinkController extends Controller
 		];
 
 		if (count(Request::old())) {
-			$out['link']	= Request::old();
+			$out['link']	= new Link(Request::old());
 		} else {
 			$out['link']	= Link::findOrNew($id);
 		}

@@ -58,22 +58,33 @@ class ReleaseController extends Controller {
 	  $out['release_type']		= ReleaseType::lists('name','id');
 	  $out['genre']				= Genre::orderBy('id')->lists('name','id');
 	  $out['genres_selected']	= [];
+	  $out['work_type']			= WorkType::all();
 
 
 
 	  if (count(Request::old())) {
 		  $old	= Request::old();
 
+//		  echo '<pre>';
+//		  print_r($old);
+//		  echo '</pre>';
+
 		  if(isset($old['artist_credit']['id']))
 			  foreach ($old['artist_credit']['id'] as $n => $ac_id) {
-			  $out['artist_credit'][$n]	= ArtistCreditName::find($ac_id);
-			  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
+				  $artist = Artist::where('id',$ac_id)->firstOrFail();
+				  if (count($artist)) {
+					  $out['artist_credit'][$n]['name']	= $artist->name;
+					  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
+					  $out['artist_credit'][$n]['join_phrase']	= $old['artist_credit']['join'][$n];
+					  $out['artist_credit'][$n]['artist_id']	= $old['artist_credit']['id'][$n];
+				  }
 		  }
 
-		  $out['work_type']		= WorkType::all();
+//		  echo '<pre>';
+//		  print_r($out);
+//		  echo '</pre>';
 	  } elseif((int)Request::get('artist_id') > 0) {
 		  $out['artist_credit'][0]	= ArtistCreditName::where('artist_id',Request::get('artist_id'))->first();
-		  $out['work_type']		= WorkType::all();
 	  }
 
 	  return view('releases.form',$out);
@@ -212,8 +223,13 @@ class ReleaseController extends Controller {
 		  $old	= Request::old();
 		  if(isset($old['artist_credit']['id']))
 			  foreach ($old['artist_credit']['id'] as $n => $ac_id) {
-			  $out['artist_credit'][$n]	= ArtistCreditName::find($ac_id);
-			  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
+				  $artist = Artist::where('id',$ac_id)->firstOrFail();
+				  if (count($artist)) {
+					  $out['artist_credit'][$n]['name']	= $artist->name;
+					  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
+					  $out['artist_credit'][$n]['join_phrase']	= $old['artist_credit']['join'][$n];
+					  $out['artist_credit'][$n]['artist_id']	= $old['artist_credit']['id'][$n];
+				  }
 		  }
 	  } else {
 		  $out['artist_credit']	= $out['release']->credit->credit_name;

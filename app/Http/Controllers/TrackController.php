@@ -52,7 +52,9 @@ class TrackController extends Controller {
 	  if (count(Request::old())) {
 		  $old	= Request::old();
 
-		  $out['release']		= Release::find($old['release_id']);
+		  if (isset($old['release_id'])) {
+			  $out['release']		= Release::find($old['release_id']);
+		  }
 		  if(isset($old['artist_credit']['id']))
 			  foreach ($old['artist_credit']['id'] as $n => $ac_id) {
 			  $out['artist_credit'][$n]	= ArtistCreditName::find($ac_id);

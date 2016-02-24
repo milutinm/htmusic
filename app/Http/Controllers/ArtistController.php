@@ -53,9 +53,9 @@ class ArtistController extends Controller {
 	  ];
 
 	  if (count(Request::old())) {
-		  $out['artist']	= Request::old();
+		  $out['artist']	= new Artist(Request::old());
 	  } else {
-		  $out['artist']	= Artist::findOrNew(0);
+		  $out['artist']	= new Artist;
 	  }
 
 	  $out['artist_types']	= ArtistType::lists('name','id');

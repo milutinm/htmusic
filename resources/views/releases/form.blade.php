@@ -21,12 +21,12 @@
 								<div class="row">
 									<select name="artist_credit[work][]" class="form-control" >
 									@foreach($work_type as $wt_row)
-										<option value="{{ $wt_row->id }}" @if($wt_row->id == $row->work_type_id) selected="selected" @endif>{{ $wt_row->name }}</option>
+										<option value="{{ $wt_row->id }}" @if($wt_row->id == $row['work_type_id']) selected="selected" @endif>{{ $wt_row->name }}</option>
 									@endforeach
 									</select>
-									<input type="hidden" value="{{ $row->artist_id }}" name="artist_credit[id][]" />
-									<input type="text" value="{{ $row->join_phrase }}" name="artist_credit[join][]" />
-									<label style="margin-left: 30px;"><a href="/artist/{{ $row->artist_id }}" target="_blank">{{ $row->name }}</a></label>
+									<input type="hidden" value="{{ $row['artist_id'] }}" name="artist_credit[id][]" />
+									<input type="text" value="{{ $row['join_phrase'] }}" name="artist_credit[join][]" />
+									<label style="margin-left: 30px;"><a href="/artist/{{ $row['artist_id'] }}" target="_blank">{{ $row['name'] }}</a></label>
 									<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 								</div>
 								@endforeach

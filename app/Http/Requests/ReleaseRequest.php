@@ -27,15 +27,16 @@ class ReleaseRequest extends Request
     {
         return [ // release
 //			'id'				=> '',
-			'artist_credit_id'	=> 'exists:artist_credit,id',
-			'medium_id'			=> 'exists:mediums,id',
-			'release_status_id'	=> 'exists:release_status,id',
-			'name'				=> 'required',
-			'date'				=> 'date',
-//			'barcode'			=> '',
-//			'notes'				=> '',
-			'genre'				=> 'required|array',
-			'label'				=> 'array',
+			'artist_credit.id'		=> 'required|array',
+			'artist_credit.id.*'	=> 'required|exists:artists,id',
+			'medium_id'				=> 'exists:mediums,id',
+			'release_status_id'		=> 'exists:release_status,id',
+			'name'					=> 'required',
+			'date'					=> 'date',
+//			'barcode'				=> '',
+//			'notes'					=> '',
+			'genre'					=> 'required|array',
+			'label'					=> 'array',
 		];
     }
 }
