@@ -19,6 +19,7 @@ return [
 	'homepage'		=> 'home',
 	'add_release'	=> 'add release',
 	'add_track'		=> 'add track',
+	'add_alias'		=> 'add alias',
 	'error'			=> 'error',
 	'warning'		=> 'warning',
 	'success'		=> 'success',

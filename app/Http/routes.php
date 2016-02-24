@@ -29,20 +29,20 @@
 
 Route::group(['middleware' => ['web']], function () {
 	Route::resource('artist', 'ArtistController');
-	Route::resource('artisttype', 'ArtistTypeController');
+//	Route::resource('artisttype', 'ArtistTypeController');
 	Route::resource('artistalias', 'ArtistAliasController');
 	Route::resource('release', 'ReleaseController');
-	Route::resource('releasestatus', 'ReleaseStatusController');
+//	Route::resource('releasestatus', 'ReleaseStatusController');
 	Route::resource('label', 'LabelController');
-	Route::resource('labelrelease', 'LabelReleaseController');
+//	Route::resource('labelrelease', 'LabelReleaseController');
 	Route::resource('track', 'TrackController');
-	Route::resource('releasetype', 'ReleaseTypeController');
-	Route::resource('genrerelease', 'GenreReleaseController');
-	Route::resource('artistcreditname', 'ArtistCreditNameController');
-	Route::resource('artistcredit', 'ArtistCreditController');
-	Route::resource('artistaliastype', 'ArtistAliasTypeController');
-	Route::resource('medium', 'MediumController');
-	Route::resource('genre', 'GenreController');
+//	Route::resource('releasetype', 'ReleaseTypeController');
+//	Route::resource('genrerelease', 'GenreReleaseController');
+//	Route::resource('artistcreditname', 'ArtistCreditNameController');
+//	Route::resource('artistcredit', 'ArtistCreditController');
+//	Route::resource('artistaliastype', 'ArtistAliasTypeController');
+//	Route::resource('medium', 'MediumController');
+//	Route::resource('genre', 'GenreController');
 	Route::resource('image', 'ImageController');
 	Route::resource('link', 'LinkController');
 

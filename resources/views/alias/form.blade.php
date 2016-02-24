@@ -73,7 +73,7 @@
 					<div class="form-group @if ($errors->has('artist_alias_type_id')) has-error @endif ">
 							{!! Form::label('artist_alias_type_id', trans('htmusic.type').':', ['class' => 'col-md-2 control-label']) !!}
 						<div class="col-md-10">
-							{!! Form::select('artist_alias_artist_alias_type_id', $alias_types, $alias->artist_alias_type_id, ['class' => 'form-control']) !!}
+							{!! Form::select('artist_alias_type_id', $alias_types, $alias->artist_alias_type_id, ['class' => 'form-control']) !!}
 							</div>
 						@if ($errors->has('artist_alias_type_id')) <div class="col-md-offset-2 col-md-10 help-block">{{ $errors->first('artist_alias_type_id') }}</div> @endif
 					</div>

@@ -26,14 +26,20 @@ class TrackRequest extends Request
     {
         return [
 //            'id'				=> '',
-			'position'			=> 'integer',
-			'release_id'		=> 'required|exists:releases,id',
-			'number'			=> 'integer',
-			'name'				=> 'required',
-			'artist_credit_id'	=> 'exists:artist_credit,id',
-			'length'			=> 'integer',
-			'artist_credit'		=> 'required|array',
-//			'notes'				=> '',
+			'artist_credit.id'		=> 'required|array',
+			'artist_credit.id.*'	=> 'required|exists:artists,id',
+			'artist_credit.work'	=> 'required|array',
+			'artist_credit.work.*'	=> 'required|exists:work_type,id',
+			'position'				=> 'integer',
+			'release_id'			=> 'required|exists:releases,id',
+			'number'				=> 'integer',
+			'name'					=> 'required',
+			'artist_credit_id'		=> 'exists:artist_credit,id',
+			'length'				=> 'integer',
+			'artist_credit'			=> 'required|array',
+			'genre'					=> 'required|array',
+			'genre.*'				=> 'required|exists:genres,id',
+//			'notes'					=> '',
         ];
     }
 }

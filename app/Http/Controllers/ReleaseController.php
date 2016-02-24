@@ -27,7 +27,7 @@ class ReleaseController extends Controller {
    */
   public function index()
   {
-	  $out['releases']	= Release::orderBy('name')->paginate(20);
+	  $out['releases']	= Release::orderBy('date','DESC')->paginate(20);
 
 	  return view('releases.list',$out);
   }

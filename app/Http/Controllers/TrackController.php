@@ -55,20 +55,26 @@ class TrackController extends Controller {
 		  if (isset($old['release_id'])) {
 			  $out['release']		= Release::find($old['release_id']);
 		  }
+
 		  if(isset($old['artist_credit']['id']))
 			  foreach ($old['artist_credit']['id'] as $n => $ac_id) {
-			  $out['artist_credit'][$n]	= ArtistCreditName::find($ac_id);
-			  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
-		  }
+				  $artist = Artist::where('id',$ac_id)->firstOrFail();
+				  if (count($artist)) {
+					  $out['artist_credit'][$n]['name']	= $artist->name;
+					  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
+					  $out['artist_credit'][$n]['join_phrase']	= $old['artist_credit']['join'][$n];
+					  $out['artist_credit'][$n]['artist_id']	= $old['artist_credit']['id'][$n];
+				  }
+			  }
 
-		  $out['work_type']		= WorkType::all();
+
 	  } elseif((int)Request::get('release_id') > 0) {
 		  $out['release']	=  Release::find((int)Request::get('release_id'));
 		  $out['artist_credit']	= $out['release']->credit->credit_name;
 
-		  $out['work_type']		= WorkType::all();
 	  }
 
+	  $out['work_type']		= WorkType::all();
 	  $out['track']			= Track::findOrNew(0);
 	  $out['genre']			= Genre::orderBy('id')->lists('name','id');
 	  $out['genres_selected']	= [];
@@ -186,9 +192,14 @@ class TrackController extends Controller {
 		  $out['release']		= Release::find($old['release_id']);
 		  if(isset($old['artist_credit']['id']))
 			  foreach ($old['artist_credit']['id'] as $n => $ac_id) {
-			  $out['artist_credit'][$n]	= ArtistCreditName::find($ac_id);
-			  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
-		  }
+				  $artist = Artist::where('id',$ac_id)->firstOrFail();
+				  if (count($artist)) {
+					  $out['artist_credit'][$n]['name']	= $artist->name;
+					  $out['artist_credit'][$n]['work_type_id']	= $old['artist_credit']['work'][$n];
+					  $out['artist_credit'][$n]['join_phrase']	= $old['artist_credit']['join'][$n];
+					  $out['artist_credit'][$n]['artist_id']	= $old['artist_credit']['id'][$n];
+				  }
+			  }
 	  } else {
 		  $out['release']		= $out['track']->release;
 		  $out['artist_credit']	= $out['track']->credit->credit_name;

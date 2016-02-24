@@ -26,8 +26,8 @@ class ArtistAliasRequest extends Request
     public function rules()
     {
         return [
-			'id'			 		=> '',
-			'artist_id'				=> 'exists:artists,id',
+//			'id'			 		=> '',
+			'artist_id'				=> 'required|exists:artists,id',
 			'name'					=> 'required',
 			'sort_name'				=> 'required',
 			'begin_date'			=> 'date',//|before:end_date',

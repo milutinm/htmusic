@@ -45,7 +45,7 @@ class ArtistAliasController extends Controller {
 	  if (count(Request::old())) {
 		  $old	= Request::old();
 
-		  $out['alias']	= (object)Request::old();
+		  $out['alias']	= (object)$old;
 		  if (!isset($out['alias']->is_ended)) {
 			  $out['alias']->is_ended		= 0;
 		  }

@@ -29,6 +29,8 @@ class ReleaseRequest extends Request
 //			'id'				=> '',
 			'artist_credit.id'		=> 'required|array',
 			'artist_credit.id.*'	=> 'required|exists:artists,id',
+			'artist_credit.work'	=> 'required|array',
+			'artist_credit.work.*'	=> 'required|exists:work_type,id',
 			'medium_id'				=> 'exists:mediums,id',
 			'release_status_id'		=> 'exists:release_status,id',
 			'name'					=> 'required',
@@ -36,6 +38,7 @@ class ReleaseRequest extends Request
 //			'barcode'				=> '',
 //			'notes'					=> '',
 			'genre'					=> 'required|array',
+			'genre.*'				=> 'required|exists:genres,id',
 			'label'					=> 'array',
 		];
     }
