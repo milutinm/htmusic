@@ -14,10 +14,16 @@
 					<h2>
 					{{ $link->caption }}
 					@can('admin')
-					<div class="btn-group pull-right">
-						{{ Html::linkRoute('link.edit', trans('htmusic.edit'), ['link' => $link->id], ['class' => 'btn btn-default glyphicons-edit']) }}
-						{{ Html::linkRoute('link.destroy', trans('htmusic.delete'), ['link' => $link->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
-					</div>
+						<div class="dropdown  pull-right">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-wrench"></span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li>{{ Html::linkRoute('link.edit', trans('htmusic.edit'), ['link' => $link->id]) }}</li>
+								<li>{{ Html::linkRoute('link.destroy', trans('htmusic.delete'), ['link' => $link->id], ['data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}</li>
+							</ul>
+						</div>
 					@endcan
 					</h2>
 				</div>

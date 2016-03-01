@@ -11,28 +11,20 @@
 		<div class="row">
 			<div class="panel panel-default">
 				<div class="panel-heading collapse navbar-collapse">
-					<h2 class="col-md-8">{{ $alias->name }} ({{ Html::linkRoute('artist.show', $alias->artist->name, [$alias->artist->id]) }})</h2>
+					<h2>{{ $alias->name }} ({{ Html::linkRoute('artist.show', $alias->artist->name, [$alias->artist->id]) }})
 					@can('admin')
-						<div class="col-md-4">
-							{!! Form::open([
-								'method' => 'DELETE',
-								'route' => ['artistalias.destroy', $alias->id],
-								'class'	=> 'navbar-form navbar-right prompt-confirm',
-								'msg'	=> trans('htmusic.are_you_sure')
-							]) !!}
-								{!! Form::submit(trans('htmusic.delete'), ['class' => 'btn btn-danger']) !!}
-							{!! Form::close() !!}
-
-							{!! Form::open([
-								'method' => 'GET',
-								'route' => ['artistalias.edit', $alias->id],
-								'class'	=> 'navbar-form navbar-right',
-							]) !!}
-								{!! Form::submit(trans('htmusic.edit'), ['class' => 'btn btn-primary']) !!}
-							{!! Form::close() !!}
-
+						<div class="dropdown  pull-right">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-wrench"></span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li>{{ Html::linkRoute('artistalias.edit', trans('htmusic.edit'), ['artistalias' => $alias->id]) }}</li>
+								<li>{{ Html::linkRoute('artistalias.destroy', trans('htmusic.delete'), ['artistalias' => $alias->id], ['data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}</li>
+							</ul>
 						</div>
 					@endcan
+					</h2>
 				</div>
 				<div class="panel-body">
 					<div class="row">

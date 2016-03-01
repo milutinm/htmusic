@@ -17,7 +17,7 @@
 					<div class="form-group">
 						<div id="artist_search_list" class="row"></div>
 						<div id="artist_selected" class="col-md-offset-2 col-md-10 form-inline">
-							@if($link->artists()->count() > 0)
+							@if($link->artists->count() > 0)
 								@foreach($link->artists as $row)
 								<div class="row">
 									<input type="hidden" value="{{ $row->id }}" name="artist_id[]" />
@@ -38,7 +38,7 @@
 					<div class="form-group">
 						<div id="release_search_list" class="row"></div>
 						<div id="release_selected" class="col-md-offset-2 col-md-10 form-inline">
-							@if($link->releases()->count() > 0)
+							@if($link->releases->count() > 0)
 								@foreach($link->releases as $row)
 								<div class="row">
 									<input type="hidden" value="{{ $row->id }}" name="release_id[]" />
@@ -59,7 +59,7 @@
 					<div class="form-group">
 						<div id="track_search_list" class="row"></div>
 						<div id="track_selected" class="col-md-offset-2 col-md-10 form-inline">
-							@if($link->tracks()->count() > 0)
+							@if($link->tracks->count() > 0)
 								@foreach($link->tracks as $row)
 									<div class="row">
 										<input type="hidden" value="{{ $row->id }}" name="track_id[]" />

@@ -13,6 +13,10 @@ use App\LinkTrack;
 use App\ArtistLink;
 use App\Http\Requests\LinkRequest;
 
+use App\Artist;
+use App\Release;
+use App\Track;
+
 use Gate;
 use Request;
 
@@ -41,6 +45,8 @@ class LinkController extends Controller
 			abort(403);
 		}
 
+		// TODO "Add Link" button
+
 		$out	= [
 			'form_route' => [
 				'route'		=> 'link.store',
@@ -63,7 +69,19 @@ class LinkController extends Controller
 				$out['link']->tracks	= Track::whereIn('id',$rq['track_id'])->get();
 			}
 		} else {
+			$rq			= Request::all(['artist_id','release_id','track_id']);
+
 			$out['link']	= new Link;
+
+			if (isset($rq['artist_id']) && (int)$rq['artist_id'] > 0) {
+				$out['link']->artists	= Artist::where('id',(int)$rq['artist_id'])->get();
+			}
+			if (isset($rq['release_id']) && (int)$rq['release_id'] > 0) {
+				$out['link']->releases	= Release::where('id',(int)$rq['release_id'])->get();
+			}
+			if (isset($rq['track_id']) && (int)$rq['track_id'] > 0) {
+				$out['link']->tracks	= Track::where('id',(int)$rq['track_id'])->get();
+			}
 		}
 
 		return view('links.form',$out);

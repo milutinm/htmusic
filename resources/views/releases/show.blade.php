@@ -18,13 +18,22 @@
 				<div class="panel-heading collapse navbar-collapse">
 					<h2>{{ $release->name }}
 					@can('admin')
-						<div class="btn-group pull-right">
-							{{ Html::linkRoute('track.create', trans('htmusic.add_track'), ['release_id' => $release->id], ['class' => 'btn btn-default glyphicons-edit']) }}
-							{{ Html::linkRoute('release.edit', trans('htmusic.edit'), ['link' => $release->id], ['class' => 'btn btn-default glyphicons-edit']) }}
-							{{ Html::linkRoute('release.destroy', trans('htmusic.delete'), ['link' => $release->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
+						<div class="dropdown  pull-right">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-wrench"></span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li>{{ Html::linkRoute('release.edit', trans('htmusic.edit'), ['release' => $release->id]) }}</li>
+								<li>{{ Html::linkRoute('release.destroy', trans('htmusic.delete'), ['release' => $release->id], ['data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}</li>
+								<li role="separator" class="divider"></li>
+								<li>{{ Html::linkRoute('link.create', trans('htmusic.add_link'), ['release_id' => $release->id]) }}</li>
+								<li>{{ Html::linkRoute('image.create', trans('htmusic.add_image'), ['release_id' => $release->id]) }}</li>
+								<li>{{ Html::linkRoute('track.create', trans('htmusic.add_track'), ['release_id' => $release->id]) }}</li>
+							</ul>
 						</div>
-					</h2>
 					@endcan
+					</h2>
 				</div>
 				<div class="panel-body">
 					{{--<div class="row">--}}
@@ -140,8 +149,8 @@
 					@forelse ($release->images as $row)
 						<div class="col-md-6">
 							<a href="{{ URL::route('image.show', $row->id) }}">
-							{{ Html::image(URL::route('image.display', $row->id), $release->caption, ['class' => 'img-thumbnail img-responsive']) }}
-								<div>{{ $artist->caption }}</div>
+							{{ Html::image(URL::route('image.display', $row->id), $row->caption, ['class' => 'img-thumbnail img-responsive']) }}
+								<div>{{ $row->caption }}</div>
 							</a>
 						</div>
 					@empty

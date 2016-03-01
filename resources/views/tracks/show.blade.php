@@ -18,10 +18,19 @@
 				<div class="panel-heading collapse navbar-collapse">
 					<h2>{{ $track->number }} - {{ $track->name }}{{-- - {{ Html::linkRoute('release.show', $track->release->name, [$track->release->id]) }} --}}
 					@can('admin')
-					<div class="btn-group pull-right">
-						{{ Html::linkRoute('track.edit', trans('htmusic.edit'), ['link' => $track->id], ['class' => 'btn btn-default glyphicons-edit']) }}
-						{{ Html::linkRoute('track.destroy', trans('htmusic.delete'), ['link' => $track->id], ['class' => 'btn btn-default', 'data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}
-					</div>
+						<div class="dropdown  pull-right">
+							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="glyphicon glyphicon-wrench"></span>
+								<span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+								<li>{{ Html::linkRoute('track.edit', trans('htmusic.edit'), ['track' => $track->id]) }}</li>
+								<li>{{ Html::linkRoute('track.destroy', trans('htmusic.delete'), ['track' => $track->id], ['data-confirm' => trans('htmusic.are_you_sure'), 'data-token' => csrf_token(),'data-method' => 'DELETE']) }}</li>
+								<li role="separator" class="divider"></li>
+								<li>{{ Html::linkRoute('link.create', trans('htmusic.add_link'), ['track_id' => $track->id]) }}</li>
+								<li>{{ Html::linkRoute('image.create', trans('htmusic.add_image'), ['track_id' => $track->id]) }}</li>
+							</ul>
+						</div>
 					@endcan
 					</h2>
 				</div>

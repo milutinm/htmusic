@@ -93,7 +93,19 @@ class ImageController extends Controller {
 			  $out['image']->tracks	= Track::whereIn('id',$rq['track_id'])->get();
 		  }
 	  } else {
+		  $rq			= Request::all(['artist_id','release_id','track_id']);
+
 		  $out['image']	= new Image;
+
+		  if (isset($rq['artist_id']) && (int)$rq['artist_id'] > 0) {
+			  $out['image']->artists	= Artist::where('id',(int)$rq['artist_id'])->get();
+		  }
+		  if (isset($rq['release_id']) && (int)$rq['release_id'] > 0) {
+			  $out['image']->releases	= Release::where('id',(int)$rq['release_id'])->get();
+		  }
+		  if (isset($rq['track_id']) && (int)$rq['track_id'] > 0) {
+			  $out['image']->tracks	= Track::where('id',(int)$rq['track_id'])->get();
+		  }
 	  }
 
 
@@ -192,6 +204,8 @@ class ImageController extends Controller {
 	  if(Gate::denies('admin')) {
 		  abort(403);
 	  }
+
+	  // TODO "Add Image" button
 
 	  $out	= [
 		  'form_route' => [

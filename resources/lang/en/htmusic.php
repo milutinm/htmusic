@@ -20,6 +20,8 @@ return [
 	'add_release'	=> 'add release',
 	'add_track'		=> 'add track',
 	'add_alias'		=> 'add alias',
+	'add_image'		=> 'add image',
+	'add_link'		=> 'add link',
 	'error'			=> 'error',
 	'warning'		=> 'warning',
 	'success'		=> 'success',
