@@ -150,7 +150,10 @@
 				<div class="panel-body">
 					@forelse ($artist->images as $row)
 						<div class="col-md-6">
-							{{ Html::image(URL::route('image.display', $row->id), $artist->name, ['class' => 'img-thumbnail img-responsive']) }}
+							<a href="{{ URL::route('image.show', $row->id) }}">
+							{{ Html::image(URL::route('image.display', $row->id), $artist->caption, ['class' => 'img-thumbnail img-responsive']) }}
+								<div>{{ $artist->caption }}</div>
+							</a>
 						</div>
 					@empty
 						<div class="">{{ trans('htmusic.no_images_found') }}</div>

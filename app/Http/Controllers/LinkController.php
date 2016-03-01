@@ -50,7 +50,18 @@ class LinkController extends Controller
 		];
 
 		if (count(Request::old())) {
-			$out['link']	= new Link(Request::old());
+			$rq				= Request::old();
+			$out['link']	= new Link($rq);
+
+			if (isset($rq['artist_id']) && is_array($rq['artist_id'])) {
+				$out['link']->artists	= Artist::whereIn('id',$rq['artist_id'])->get();
+			}
+			if (isset($rq['release_id']) && is_array($rq['release_id'])) {
+				$out['link']->releases	= Release::whereIn('id',$rq['release_id'])->get();
+			}
+			if (isset($rq['track_id']) && is_array($rq['track_id'])) {
+				$out['link']->tracks	= Track::whereIn('id',$rq['track_id'])->get();
+			}
 		} else {
 			$out['link']	= new Link;
 		}
@@ -70,21 +81,21 @@ class LinkController extends Controller
 
 		$link				= Link::create($rq);
 
-		if (is_array($rq['artist_id'])) {
+		if (isset($rq['artist_id']) && is_array($rq['artist_id'])) {
 			$rq['artist_id']	= array_unique($rq['artist_id'],SORT_NUMERIC);
 			foreach ($rq['artist_id'] as $aid) {
 				$link_a	= ArtistLink::create(['artist_id' => $aid, 'link_id' => $link->id]);
 			}
 		}
 
-		if (is_array($rq['release_id'])) {
+		if (isset($rq['release_id']) && is_array($rq['release_id'])) {
 			$rq['release_id']	= array_unique($rq['release_id'],SORT_NUMERIC);
 			foreach ($rq['release_id'] as $rid) {
 				$link_r	= LinkRelease::create(['release_id' => $rid, 'link_id' => $link->id]);
 			}
 		}
 
-		if (is_array($rq['track_id'])) {
+		if (isset($rq['track_id']) && is_array($rq['track_id'])) {
 			$rq['track_id']	= array_unique($rq['track_id'],SORT_NUMERIC);
 			foreach ($rq['track_id'] as $tid) {
 				$link_t	= LinkTrack::create(['track_id' => $tid, 'link_id' => $link->id]);
@@ -132,7 +143,18 @@ class LinkController extends Controller
 		];
 
 		if (count(Request::old())) {
-			$out['link']	= new Link(Request::old());
+			$rq				= Request::old();
+			$out['link']	= new Link($rq);
+
+			if (isset($rq['artist_id']) && is_array($rq['artist_id'])) {
+				$out['link']->artists	= Artist::whereIn('id',$rq['artist_id'])->get();
+			}
+			if (isset($rq['release_id']) && is_array($rq['release_id'])) {
+				$out['link']->releases	= Release::whereIn('id',$rq['release_id'])->get();
+			}
+			if (isset($rq['track_id']) && is_array($rq['track_id'])) {
+				$out['link']->tracks = Track::whereIn('id', $rq['track_id'])->get();
+			}
 		} else {
 			$out['link']	= Link::findOrNew($id);
 		}
@@ -158,7 +180,7 @@ class LinkController extends Controller
 		Link::find($id)->update($rq);
 
 		$link_a_a	= [];
-		if (is_array($rq['artist_id'])) {
+		if (isset($rq['artist_id']) && is_array($rq['artist_id'])) {
 			$rq['artist_id']	= array_unique($rq['artist_id'],SORT_NUMERIC);
 			foreach ($rq['artist_id'] as $aid) {
 				$link_a	= ArtistLink::create(['artist_id' => $aid, 'link_id' => $id]);
@@ -168,7 +190,7 @@ class LinkController extends Controller
 		ArtistLink::where('link_id',$id)->whereNotIn('id',$link_a_a)->delete();
 
 		$link_r_a	= [];
-		if (is_array($rq['release_id'])) {
+		if (isset($rq['release_id']) && is_array($rq['release_id'])) {
 			$rq['release_id']	= array_unique($rq['release_id'],SORT_NUMERIC);
 			foreach ($rq['release_id'] as $rid) {
 				$link_r	= LinkRelease::create(['release_id' => $rid, 'link_id' => $id]);
@@ -178,7 +200,7 @@ class LinkController extends Controller
 		LinkRelease::where('link_id',$id)->whereNotIn('id',$link_r_a)->delete();
 
 		$link_t_a	= [];
-		if (is_array($rq['track_id'])) {
+		if (isset($rq['track_id']) && is_array($rq['track_id'])) {
 			$rq['track_id']	= array_unique($rq['track_id'],SORT_NUMERIC);
 			foreach ($rq['track_id'] as $tid) {
 				$link_t	= LinkTrack::create(['track_id' => $tid, 'link_id' => $id]);

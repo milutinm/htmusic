@@ -75,6 +75,9 @@ return [
 
 	// images
 	'images'		=> 'images',
+	'image'			=> 'image',
+	'source'		=> 'source',
+	'file'			=> 'file',
 
 	'male'			=> 'male',
 	'female'		=> 'female',
