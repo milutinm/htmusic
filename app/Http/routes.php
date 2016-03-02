@@ -27,7 +27,7 @@
 */
 
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web','auth']], function () { // TODO remove 'auth'
 	Route::resource('artist', 'ArtistController');
 //	Route::resource('artisttype', 'ArtistTypeController');
 	Route::resource('artistalias', 'ArtistAliasController');

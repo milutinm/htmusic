@@ -43,7 +43,7 @@
 						<div class="col-md-2">{{ trans('htmusic.path') }}:</div>
 						<div class="col-md-10">{{ $image->path }}</div>
 					</div>
-					@if(isset($image->source) && $image->source != '')
+					@if(isset($image->source) && $image->source != '' && strpos($image->source,'konpa.info') === false)
 					<div class="row">
 						<div class="col-md-2">{{ trans('htmusic.url') }}:</div>
 						<div class="col-md-10">{{ Html::link( $image->source,$image->source,['target' => '_blank']) }}</div>
