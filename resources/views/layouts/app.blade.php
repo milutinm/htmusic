@@ -52,15 +52,18 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
+				@can('admin')
 				<li class="{{ Request::is('/') ? 'active' : '' }}"><a href="/">{{ trans('htmusic.homepage') }}</a></li>
 				<li class="{{ Request::is('artist*') ? 'active' : '' }}">{{ Html::linkRoute('artist.index', trans('htmusic.artists')) }}</li>
 				<li class="{{ Request::is('release*') ? 'active' : '' }}">{{ Html::linkRoute('release.index', trans('htmusic.releases')) }}</li>
 				<li class="{{ Request::is('track*') ? 'active' : '' }}">{{ Html::linkRoute('track.index', trans('htmusic.tracks')) }}</li>
 				<li class="{{ Request::is('link*') ? 'active' : '' }}">{{ Html::linkRoute('link.index', trans('htmusic.links')) }}</li>
                 <!-- Authentication Links -->
+				@endcan
+
                 @if (Auth::guest())
                     <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+{{--                    <li><a href="{{ url('/register') }}">Register</a></li>--}}
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
